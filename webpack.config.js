@@ -28,11 +28,11 @@ module.exports = {
         }]
     },
     plugins: [
-        new HTMLWebpackPlugin(path.resolve(__dirname,'index.html'))
+        new HTMLWebpackPlugin({template: path.resolve(__dirname,'index.html')})
     ],
     devServer: {
     port: 3000,
     open: true,
-    hot: IS_DEV
+    hot: IS_DEV,
     }
 };
