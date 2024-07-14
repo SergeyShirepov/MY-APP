@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const webpack = require('webpack');
 const NODE_ENV = process.env.NODE_ENV;
 
 module.exports = {
@@ -29,6 +30,7 @@ module.exports = {
             options: {
               modules: {
                 mode: 'local',
+                localIdentName: "[path][name]__[local]--[hash:base64:5]",
                 exportOnlyLocals: true, // Экспортирует только локальные классы
               },
             },
