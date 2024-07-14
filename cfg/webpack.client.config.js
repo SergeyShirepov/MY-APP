@@ -6,7 +6,7 @@ const IS_PROD = NODE_ENV === 'production';
 
 function setupDevtool() {
     if (IS_DEV) return 'eval';
-    if (IS_PROD) return 'false';
+    if (IS_PROD) return false; // Отключение source maps для продакшн
 }
 
 module.exports = {
@@ -19,11 +19,38 @@ module.exports = {
         path: path.resolve(__dirname, '../dist/client'),
         filename: 'client.js'
     },
-    module:{
-        rules: [{
-            test: /\.[tj]sx?$/,
-            use: ['ts-loader']
-        }]
+    devtool: setupDevtool(),
+    module: {
+        rules: [
+            {
+                test: /\.[tj]sx?$/,
+                use: ['ts-loader'],
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                mode: 'local',
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
     },
-    // devtool: setupDevtool(),
+    optimization: {
+        minimize: IS_PROD,
+        splitChunks: {
+            chunks: 'all',
+        },
+    },
+    plugins: [
+        // Добавьте HTMLWebpackPlugin, если необходимо
+        // new HTMLWebpackPlugin({ template: path.resolve(__dirname, '../src/client/index.html') })
+    ],
 };

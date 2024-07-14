@@ -1,6 +1,5 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-// const { Template } = require('webpack');
 
 const NODE_ENV = process.env.NODE_ENV;
 const IS_DEV = NODE_ENV === 'development';
@@ -8,7 +7,7 @@ const IS_PROD = NODE_ENV === 'production';
 
 function setupDevtool() {
     if (IS_DEV) return 'eval';
-    if (IS_PROD) return 'false';
+    if (IS_PROD) return false; // Отключение source maps для продакшн
 }
 
 module.exports = {
@@ -21,19 +20,37 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'index.js'
     },
-    module:{
-        rules: [{
-            test: /\.[tj]sx?$/,
-            use: ['ts-loader']
-        }]
+    module: {
+        rules: [
+            {
+                test: /\.[tj]sx?$/,
+                use: ['ts-loader'],
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                mode: 'local',
+                            },
+                        },
+                    },
+                ],
+            },
+        ]
     },
     plugins: [
-        new HTMLWebpackPlugin({template: path.resolve(__dirname,'./index.html')})
+        new HTMLWebpackPlugin({ template: path.resolve(__dirname, './index.html') })
     ],
+    devtool: setupDevtool(),
     devServer: {
-    port: 3000,
-    open: true,
-    hot: IS_DEV,
+        port: 3000,
+        open: true,
+        hot: IS_DEV,
     }
 };
 
