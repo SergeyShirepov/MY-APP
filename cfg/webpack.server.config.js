@@ -23,7 +23,7 @@ module.exports = {
         exclude: /node_modules/, // Исключает node_modules из обработки
       },
       {
-        test: /\.css$/, // Обрабатывает CSS файлы
+        test: /\.less$/, // Обрабатывает CSS файлы
         use: [
           {
             loader: 'css-loader',
@@ -35,6 +35,7 @@ module.exports = {
               },
             },
           },
+          'less-loader',
         ],
         exclude: /node_modules/, // Исключает node_modules из обработки
       }
