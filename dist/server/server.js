@@ -16,7 +16,7 @@
   \*************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
-eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.indexTemplate = void 0;\nconst indexTemplate = (content) => {\n    return `<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>My App</title>\r\n    <link rel=\"stylesheet\" href=\"/styles.css\">\r\n</head>\r\n<body>\r\n    <div id=\"root\">${content}</div>\r\n    <script src=\"/bundle.js\"></script>\r\n</body>\r\n</html>`;\n};\nexports.indexTemplate = indexTemplate;\n\n\n//# sourceURL=webpack://my-app/./src/server/indexTemplate.js?");
+eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.indexTemplate = indexTemplate;\nfunction indexTemplate(content) {\n    return `<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>My App</title>\r\n    <link rel=\"stylesheet\" href=\"/styles.css\">\r\n</head>\r\n<body>\r\n    <div id=\"root\">${content}</div>\r\n    <script src=\"/bundle.js\"></script>\r\n</body>\r\n</html>`;\n}\n;\n\n\n//# sourceURL=webpack://my-app/./src/server/indexTemplate.js?");
 
 /***/ }),
 
