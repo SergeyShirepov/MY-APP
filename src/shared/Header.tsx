@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as styles from './header.less';
+import * as styles from './header.css';
 
 export function Header() {
     return (

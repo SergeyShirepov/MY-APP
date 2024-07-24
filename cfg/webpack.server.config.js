@@ -2,6 +2,7 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const NODE_ENV = process.env.NODE_ENV;
+const GLOBAL_CSS_REGEXP = /\.global\.css$/;
 
 module.exports = {
   target: "node", // Указывает, что сборка предназначена для Node.js
@@ -23,7 +24,7 @@ module.exports = {
         exclude: /node_modules/, // Исключает node_modules из обработки
       },
       {
-        test: /\.less$/, // Обрабатывает CSS файлы
+        test: /\.css$/, // Обрабатывает CSS файлы
         use: [
           {
             loader: 'css-loader',
@@ -37,8 +38,13 @@ module.exports = {
           },
           'less-loader',
         ],
+        exclude: GLOBAL_CSS_REGEXP,
         exclude: /node_modules/, // Исключает node_modules из обработки
-      }
+      },
+      {
+        test: GLOBAL_CSS_REGEXP,
+        use: ['css-loader']
+    }
     ]
   },
   optimization: {
