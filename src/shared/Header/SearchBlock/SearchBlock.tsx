@@ -3,7 +3,7 @@ import * as styles from './searchblock.css';
 
 export function SearchBlock() {
   return (
-    <div className={styles.searchBlock}>
+    <div className={styles.serchblock}>
       search block
     </div>
 
