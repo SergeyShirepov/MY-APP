@@ -5,13 +5,13 @@ interface IItem {
   text: string;
   id: string;
   onClick: (id:string) => void;
-  className: string;
+  className?: string;
   As?: 'a' | 'li' | 'button' | 'div';
   href?: string;
 }
 
 
-interface IMylistProps {
+interface IGenericListProps {
   list: IItem[];
 }
  
@@ -20,7 +20,7 @@ const noop = () => {};
 export function GenericList({list}: IGenericListProps) {
   return (
 <>
-{list.map(({As:"a"|... = 'div', text:String, onclick:...= noop, className: String, id: String}) => (
+{list.map(({As='div', text, onClick= noop, className, id, href}) => (
 <As
 className={className}
 onClick={() => onClick(id)}
