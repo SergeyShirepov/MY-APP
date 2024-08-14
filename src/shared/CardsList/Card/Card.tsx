@@ -8,7 +8,7 @@ export function Card() {
         <div className={styles.metaData} >
           <div className={styles.userlink} >
             <img className={styles.avatar}
-              src="https://s3-alpha-sig.figma.com/img/f828/c447/d830944f3ea5ae5c8d76c45951601e8c?Expires=1723420800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=DIHNLH4sp04jnOtGnzNHKtlGasn1jtWlzI4a7lf-0lcd05UUoDE1Oq3pVsj8dWxJKsCxBgGTBEZ0kWdKTx~ENr~qBm92WhlpGXEjjph1TBvggrTP64HTGRhI-805tpMsVa6NdzAMt-Gxc1C~INIB2zdf7SH2VbuDNNmcWoiSFM53t3kZdt6frJPABssin5X7OUFWXW1DyDRS5cHZJ8gIRpz70osS76nNAK8qkfMB5uPCCbEXvhzou~zOTDMuZSfTarjTEYTOw~KJpYMrvvyzN65VVi1TRRc4bzIkHuIK1I9PhnKA6gR~NunwyMxB3nXkNTqjL35F7Xi2wO-uPGEoEg__"
+              src='src/img/d830944f3ea5ae5c8d76c45951601e8c.png'
               alt="avatar"
             />
             <div className={styles.avtor}>
@@ -38,7 +38,7 @@ export function Card() {
       <div className={styles.preview}>
 <img
 className={styles.previewImg}
-src="https://s3-alpha-sig.figma.com/img/950e/9963/7d81fad861199b9986f4bf1a230d79ac?Expires=1723420800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TuG-woupK0GOkvjWZciByR-bVWEdjQhtuPs~6U2kW5ihHFS78nkpYv--inHwgQRPGTH-yf~ZIjxzJGsEPoRXjaFtArkZIUmk5u5NxihMl95eh1F~g-rSkwvFlgSa93TfYUbkrxk2NTvIqsD-VmQaxthaHsCx87yMdb8ICIax06CzzqhhxQ3NrTjzgQBXFoT-k51eIRfirBo70vhOAytM4wss83Be-yPJSlS-VS8ihoz78oFMFvBxwa-GpG9RUdBJNoa-1nMipqcDBK8EdNIIC-hEDLRM~BhuPxkfZisLYsf-y2Spyv7j6lcNLdmozF~WnYMGhsPSYsAT8UJVbDLCdA__"
+src='src/img/7d81fad861199b9986f4bf1a230d79ac.png'
 />
 </div>
       <div className={styles.controls} >
