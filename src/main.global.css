@@ -39,6 +39,7 @@
     --white: hsl(0, 0%, calc(var(--whitelightness)));
     --grayf4: hsl(0, 0%, calc(var(--whitelightness) - 4%));
     --grayf3: hsl(0, 0%, calc(var(--whitelightness) - 5%));
+    --grayEC: hsl(0, 0%, calc(var(--whitelightness) - 7%));
     --grayd9: hsl(0, 0%, calc(var(--whitelightness) - 15%));
     --grayc4: hsl(0, 0%, calc(var(--whitelightness) - 23%));
     --gray99: hsl(0, 0%, calc(var(--whitelightness) - 40%));
