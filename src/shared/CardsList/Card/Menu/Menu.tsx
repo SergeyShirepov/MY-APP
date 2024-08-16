@@ -2,7 +2,7 @@ import React from 'react';
 import * as styles from './menu.css';
 import { MenuIcon } from '../../../Icons';
 import { Dropdown } from '../../../Dropdown';
-// import {EColors, Text} from '../../../Text';
+import {EColor, Text} from '../../../Text';
 import {MenuItemList} from './MenuItemList';
 
 export function Menu() {
@@ -18,9 +18,9 @@ button ={
   <div className={styles.dropDown}>
     <MenuItemList postId='1234'/> 
   <button className={styles.closeButton}>
-    {/* <Text mobileSize={12} size={14} color={EColors.grey66} > */}
+    <Text mobileSize={12} size={14} color={EColor.gray66} >
       Закрыть
-    {/* </Text> */}
+    </Text>
   </button>
   </div>
 
