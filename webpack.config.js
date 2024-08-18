@@ -1,5 +1,9 @@
-const path = require('path');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import HTMLWebpackPlugin from 'html-webpack-plugin';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const NODE_ENV = process.env.NODE_ENV;
 const IS_DEV = NODE_ENV === 'development';
@@ -10,7 +14,7 @@ function setupDevtool() {
     if (IS_PROD) return false; // Отключение source maps для продакшн
 }
 
-module.exports = {
+export default {
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
     },
@@ -68,11 +72,3 @@ module.exports = {
         hot: IS_DEV,
     }
 };
-
-// const clientConfig = require('./cfg/webpack.client.config');
-// const serverConfig = require('./cfg/webpack.server.config');
-
-// module.exports = [
-//     clientConfig,
-//     serverConfig,
-// ];
