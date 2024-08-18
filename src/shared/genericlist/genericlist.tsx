@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from './genericlist.css';
+import * as styles from './genericlist';
 
 interface IItem {
   text: string;

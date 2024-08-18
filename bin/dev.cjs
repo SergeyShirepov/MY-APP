@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const webpackConfig = require('../webpack.config');
+const webpackConfig = require('../webpack.config.js/index.js');
 const nodemon = require('nodemon');
 const path = require('path');
 const { watch } = require('fs');
@@ -19,7 +19,7 @@ compiler.watch({}, (err) =>{
 })
 
 nodemon({
-    script: path.resolve(__dirname, '../dist/server/server.js'),
+    script: path.resolve(__dirname, '../src/server/server.js'),
     watch: [
         path.resolve(__dirname, '../dist/server'),
         path.resolve(__dirname, '../dist/client'),

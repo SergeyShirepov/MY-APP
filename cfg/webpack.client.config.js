@@ -1,10 +1,11 @@
-const path = require('path');
+import path from 'path';
+import {DefinePlugin} from 'webpack';
 
 const NODE_ENV = process.env.NODE_ENV;
 const IS_DEV = NODE_ENV === 'development';
 const IS_PROD = NODE_ENV === 'production';
 const GLOBAL_CSS_REGEXP = /\.global\.css$/;
-
+const COMMON_PLUGINS = [ new DefinePlugin({ 'process.env.CLIENT_ID': "'SI6_ql3msvAkDVKeffKG_w'" }) ]
 
 function setupDevtool() {
     if (IS_DEV) return 'eval';
@@ -75,5 +76,6 @@ module.exports = {
     plugins: [
         // Добавьте HTMLWebpackPlugin, если необходимо
         // new HTMLWebpackPlugin({ template: path.resolve(__dirname, '../src/client/index.html') })
+        new DefinePlugin({ 'process.env.CLIENT_ID': "'$process.env.CLIENT_ID'" })
     ],
 };
