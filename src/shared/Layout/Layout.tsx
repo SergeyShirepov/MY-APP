@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import * as styles from './layout.css';
+
 
 interface IlayoutProps {
   children?: React.ReactNode;
