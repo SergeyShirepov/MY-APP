@@ -1,0 +1,1 @@
+{"version":3,"file":"stopPropagation.js","sourceRoot":"","sources":["../../../src/utils/react/stopPropagation.tsx"],"names":[],"mappings":";;AAEA,0CAKC;AALD,SAAgB,eAAe,CAA6B,EAAK;IAC7D,OAAO,CAAsC,CAAI,EAAE,EAAE;QACjD,CAAC,CAAC,eAAe,EAAE,CAAC;QACpB,EAAE,CAAC,CAAC,CAAC,CAAC;IACV,CAAC,CAAA;AACL,CAAC"}

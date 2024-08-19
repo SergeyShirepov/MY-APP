@@ -7,11 +7,11 @@ const app = express();
 
 app.use('/static', express.static('./dist/client'));
 
-app.get('/', (req, res) => {
-res.send(
-    indexTemplate(ReactDOMServer.renderToString(App())),
-);
-});
+// app.get('/', (req, res) => {
+// res.send(
+//     indexTemplate(ReactDOMServer.renderToString(App())),
+// );
+// });
 
 
 app.get('/auth', (req, res) => {
@@ -19,10 +19,9 @@ app.get('/auth', (req, res) => {
     res.send(
         indexTemplate(ReactDOMServer.renderToString(App())),
     );
-    console.log('Server started on http://');
 });
 
 
-// app.listen(3000, () => {
-//     console.log('Server started on http://localhost:3000');
-// });
+app.listen(3000, () => {
+    console.log('Server started on http://localhost:3000');
+});
