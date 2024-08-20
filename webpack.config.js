@@ -67,8 +67,12 @@ export default {
     ],
     devtool: setupDevtool(),
     devServer: {
+        static: {
+            directory: path.join(__dirname, 'dist'), // Каталог для статики
+          },
         port: 3000,
         open: true,
         hot: IS_DEV,
+        historyApiFallback: true,
     }
 };
