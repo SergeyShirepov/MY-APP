@@ -12,8 +12,8 @@ return `<!DOCTYPE html>
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <div id="react_root">${content}</div>
-    <script src="/bundle.js"></script>
+    <div id="root">${content}</div>
+    <script src="./bundle.js"></script>
 </body>
 </html>`;
 };
