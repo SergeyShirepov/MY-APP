@@ -1,76 +1,96 @@
 import path from 'path';
-import {DefinePlugin} from 'webpack';
-
+import { fileURLToPath } from 'url';
 import nodeExternals from 'webpack-node-externals';
 import webpack from 'webpack';
+import HTMLWebpackPlugin from 'html-webpack-plugin';
+
+const { DefinePlugin } = webpack;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const NODE_ENV = process.env.NODE_ENV;
 const GLOBAL_CSS_REGEXP = /\.global\.css$/;
 
-module.exports = {
-  target: "node", // Указывает, что сборка предназначена для Node.js
-  mode: NODE_ENV ? NODE_ENV : 'development', // Устанавливает режим сборки
-  entry: path.resolve(__dirname, '../src/server/server.js'), // Входной файл
-  output: {
-    path: path.resolve(__dirname, '../dist/server'), // Директория для выходного файла
-    filename: 'server.js' // Имя выходного файла
-  },
+const serverConfig = {
+  target: "node",
+  mode: NODE_ENV ? NODE_ENV : 'development',
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'], // Расширения файлов для обработки
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
   },
-  externals: [nodeExternals()], // Исключает node_modules из сборки
+  entry: path.resolve(__dirname, '../src/server/server.js'),
+  output: {
+    path: path.resolve(__dirname, '../dist/server'),
+    filename: 'server.js',
+    publicPath: '/static/',
+    libraryTarget: 'module',
+    chunkFormat: 'module',
+  },
+  externals: [nodeExternals({ importType: 'module' })],
+  experiments: {
+    outputModule: true,
+  },
   module: {
     rules: [
       {
-        test: /\.[jt]sx?$/, // Обрабатывает файлы с расширениями .js, .jsx, .ts, .tsx
-        use: ['ts-loader'], // Использует ts-loader для обработки TypeScript файлов
-        exclude: /node_modules/, // Исключает node_modules из обработки
+        test: /\.[jt]sx?$/,
+        use: ['ts-loader'],
+        exclude: [
+          path.resolve(__dirname, 'node_modules'),
+        ],
       },
       {
-        test: /\.css$/, // Обрабатывает CSS файлы
+        test: /\.css$/,
         use: [
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
               modules: {
                 mode: 'local',
                 localIdentName: "[path][name]__[local]--[hash:base64:5]",
-                exportOnlyLocals: true, // Экспортирует только локальные классы
               },
             },
           },
-          'less-loader',
         ],
-        exclude: GLOBAL_CSS_REGEXP,
-        exclude: /node_modules/, // Исключает node_modules из обработки
+        exclude: [
+          path.resolve(__dirname, 'node_modules'),
+          GLOBAL_CSS_REGEXP
+        ],
       },
       {
         test: GLOBAL_CSS_REGEXP,
-        use: ['css-loader']
-    },
-    {
-      test: /\.(png|jpe?g|gif|svg)$/i,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            name: '[path][name].[ext]',
-            context: 'src', // Prevents the [path] from being too long
-            outputPath: 'images',
-            publicPath: 'images',
+        use: ['css-loader'],
+        exclude: [
+          path.resolve(__dirname, 'node_modules'),
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+              context: 'src',
+              outputPath: 'images',
+              publicPath: 'images',
+            },
           },
-        },
-      ],
-    },
+        ],
+        exclude: [
+          path.resolve(__dirname, 'dist'),
+          path.resolve(__dirname, 'node_modules'),
+        ],
+      },
     ]
   },
   optimization: {
-    minimize: false, // Отключает минимизацию для серверного кода
+    minimize: false,
   },
   plugins: [
-    // Добавьте DefinePlugin, если необходимо
-    // new webpack.DefinePlugin({
-    //   'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
-    // })
-    new DefinePlugin({ 'process.env.CLIENT_ID': "'$process.env.CLIENT_ID'" })
+    new HTMLWebpackPlugin({ template: path.resolve(__dirname, '../index.html') }),
+    new DefinePlugin({ 'process.env.CLIENT_ID': JSON.stringify(process.env.CLIENT_ID) })
   ],
 };
+
+export default serverConfig;

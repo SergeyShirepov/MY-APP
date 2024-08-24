@@ -12,3 +12,5 @@ window.addEventListener('load', () => {
         console.error('No element with id "react_root" found.');
     }
 });
+
+

@@ -18,18 +18,18 @@
     display: inline;
 }
 
-top.s4 {
+.top.s4 {
     padding: 4px 0 0;
 }
-top.s8 {
+.top.s8 {
     padding: 8px 0 0;
 }
-top.s12 {
+.top.s12 {
     padding: 12px 0 0;
 }
-top.s16 {
+.top.s16 {
     padding: 16px 0 0;
 }
-top.s20 {
+.top.s20 {
     padding: 20px 0 0;
 }
