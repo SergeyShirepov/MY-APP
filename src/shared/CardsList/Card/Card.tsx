@@ -9,7 +9,7 @@ export function Card() {
         <div className={styles.metaData} >
           <div className={styles.userlink} >
             <img className={styles.avatar}
-              src={require('./img/123.png').default}
+              src='./img/123.png'
               alt="avatar"
             />
             <div className={styles.avtor}>
@@ -31,7 +31,7 @@ export function Card() {
       <div className={styles.preview}>
 <img
 className={styles.previewImg}
-src={require('./img/456.png').default}
+src='./img/456.png'
 />
 </div>
       <div className={styles.controls} >

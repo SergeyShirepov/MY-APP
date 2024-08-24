@@ -5,6 +5,6 @@ import {App} from '../App';
 window.addEventListener(
     'load', 
     () => {
-    ReactDOM.createRoot(document.getElementById('react_root'),).render(<App />);
+    ReactDOM.hydrateRoot(<App />, document.getElementById('react_root'));
     }
 );
