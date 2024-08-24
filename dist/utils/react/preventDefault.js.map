@@ -1,0 +1,1 @@
+{"version":3,"file":"preventDefault.js","sourceRoot":"","sources":["../../../src/utils/react/preventDefault.tsx"],"names":[],"mappings":";;AAEA,wCAKC;AALD,SAAgB,cAAc,CAA6B,EAAK;IAC5D,OAAO,CAAsC,CAAI,EAAC,EAAE;QAChD,CAAC,CAAC,cAAc,EAAE,CAAC;QACnB,EAAE,CAAC,CAAC,CAAC,CAAC;IACV,CAAC,CAAA;AACL,CAAC"}

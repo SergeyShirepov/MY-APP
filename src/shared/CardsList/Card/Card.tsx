@@ -22,7 +22,7 @@ export function Card() {
           </span>
                     </div>
                     <h2 className={styles.title}>
-                      <a href="post-url" className={styles.postlink}>
+                      <a href="/" className={styles.postlink}>
                         Реплицированные с зарубежных источников возможности 
                         </a>                      
                         </h2>                    
