@@ -4,6 +4,7 @@ import { Header } from './shared/Header/Header';
 import { Content } from './shared/Content';
 import './main.global.css';
 import { CardsList } from './shared/CardsList';
+import { useToken } from './Hooks/useToken';
 // import { GenericList } from './shared/genericlist/genericlist';
 // import { assignId, generateId, generateRandomString } from '../utils/react/generateRandomIndex';
 // import { merge } from '../utils/js/merge';
@@ -22,11 +23,12 @@ export function App() {
     // const handleItemClick = (id:string) => {
     //     setList(list.concat(generateId({text: generateRandomString(), As: 'a' as const })));
     // }
+const [token] = useToken();
 
     return (
 
         <Layout>
-            <Header />
+            <Header token={token} />
             <Content>
                 <CardsList />
                 <div style={{ padding: 20 }}>

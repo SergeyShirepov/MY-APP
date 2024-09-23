@@ -100,7 +100,7 @@ const clientConfig = {
   },
   plugins: [
     new HTMLWebpackPlugin({ template: path.resolve(__dirname, '../index.html') }),
-    new DefinePlugin({ 'process.env.CLIENT_ID': "'SI6_ql3msvAkDVKeffKG_w'" })
+    new DefinePlugin({ 'process.env.CLIENT_ID': "SI6_ql3msvAkDVKeffKG_w" })
   ],
 };
 
