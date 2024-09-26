@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import webpack from 'webpack';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 
+
 const { DefinePlugin } = webpack;
 
 const __filename = fileURLToPath(import.meta.url);
@@ -26,6 +27,7 @@ const clientConfig = {
   output: {
     path: path.resolve(__dirname, '../dist/client'),
     filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js',
     publicPath: '/static/',
   },
   devtool: setupDevtool(),
@@ -82,7 +84,7 @@ const clientConfig = {
               name: '[path][name].[ext]',
               context: 'src',
               outputPath: 'images',
-              publicPath: 'images',
+              publicPath: 'static/images',
             },
           },
         ],
@@ -92,15 +94,53 @@ const clientConfig = {
       },
     ],
   },
+  devServer: {
+    open: true,
+    hot: true,
+    devMiddleware: {
+      index: true,
+      mimeTypes: { html: 'text/html' },
+      publicPath: '/static/',
+      serverSideRender: true,
+      writeToDisk: true,
+    },
+    client: {
+      logging: 'info',
+      overlay: true,
+    },
+    allowedHosts: ['all'],
+    static: {
+      directory: path.join(__dirname, '../dist/client/'),
+    },
+    compress: true,
+    port: 8080,
+    proxy: [
+      {
+        context: () => true,
+        target: 'http://localhost:3000',
+      },
+    ],
+  },
   optimization: {
     minimize: IS_PROD,
     splitChunks: {
       chunks: 'all',
+      name: 'vendors',
+      cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
     },
   },
   plugins: [
-    new HTMLWebpackPlugin({ template: path.resolve(__dirname, '../index.html') }),
-    new DefinePlugin({ 'process.env.CLIENT_ID': "SI6_ql3msvAkDVKeffKG_w" })
+    new HTMLWebpackPlugin({
+      template: path.resolve(__dirname, '../index.html'), // Входной HTML-файл
+      inject: 'body',  // Автоматическая вставка всех JS-файлов в тело страницы
+    }),
+    new DefinePlugin({ 'process.env.CLIENT_ID': "'SI6_ql3msvAkDVKeffKG_w'" })
   ],
 };
 

@@ -4,7 +4,7 @@ import {UserBlock} from './UserBlock/UserBlock';
 import axios, { AxiosResponse } from 'axios';
 
 interface ISearchBlockProps {
-  token: string
+  token?: string | undefined
 }
 
 interface IUserData {
@@ -15,15 +15,17 @@ interface IUserData {
 export function SearchBlock({token}: ISearchBlockProps) {
   const [data, setData] = useState<IUserData>({});
   useEffect(() => {
-axios.get('https://oauth.reddit.com/api/v1/me', {
-  headers: { Authorization: `bearer ${token}` }
-})
-.then((resp) => {
-const userData = resp.data;
-setData({ name: userData.name, iconImg: userData.icon_img })
-})
-.catch(console.log);
-}, [token]);
+    if (token) {
+      axios.get('https://oauth.reddit.com/api/v1/me', {
+        headers: { Authorization: `bearer ${token}` }
+      })
+      .then((resp) => {
+        const userData = resp.data;
+        setData({ name: userData.name, iconImg: userData.icon_img });
+      })
+      .catch(console.log);
+    }
+  }, [token]);
 
   return (
     <div className={styles.serchblock}>

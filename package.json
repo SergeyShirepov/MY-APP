@@ -4,14 +4,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build:dev": "webpack --config webpack.config.js",
-    "build:prod": "NODE_ENV=production webpack --config webpack.config.js",
-    "dev": "NODE_ENV=development CLIENT_ID=SI6_ql3msvAkDVKeffKG_w webpack-dev-server --config ./cfg/webpack.client.config.js",
-    "start": "NODE_ENV=development CLIENT_ID=SI6_ql3msvAkDVKeffKG_w node ./bin/dev.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev1": "webpack-dev-server --config ./cfg/webpack.client.config.js",
-    "build1": "webpack --config cfg/webpack.client.config.js && webpack --config cfg/webpack.server.config.js",
-    "start1": "ts-node dist/server/server.js"
+    "dev": "NODE_ENV=development webpack serve --config ./webpack.config.js",
+    "build:client": "webpack-dev-server --config ./cfg/webpack.client.config.js",
+    "build:server": "webpack-dev-server --config ./cfg/webpack.server.config.js",
+    "build": "npm run build:client && npm run build:server",
+    "start": "node dist/server/server.js"
   },
   "author": "",
   "license": "ISC",

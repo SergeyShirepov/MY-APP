@@ -1,4 +1,5 @@
 import express from 'express';
+import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -15,50 +16,28 @@ const app = express();
 app.use('/static', express.static(path.join(__dirname, '../../dist/client')));
 
 app.get('/', (req, res) => {
-  const appString = ReactDOMServer.renderToString(App());
-  res.send(indexTemplate(appString));
+  const appString = ReactDOMServer.renderToString(React.createElement(App));
+  res.send(indexTemplate(appString, null)); // Передаем null, так как у нас нет access_token
 });
 
 app.get('/auth', (req, res) => {
   axios.post(
-    'https://www.reddit.com/api/v1/access_token',
-    `grant_type=authorization_code&code=${req.query.code}&redirect_uri=https://localhost:3000/auth`,
-    {
-      auth: {username: process.env.CLIENT_ID, password: ''},
-      headers: { 'Content-type': 'application/x-www-form-urlencoded' }
-    }
+      'https://www.reddit.com/api/v1/access_token',
+      `grant_type=authorization_code&code=${req.query.code}&redirect_uri=http://localhost:3000/auth`,
+      {
+        auth: { username: process.env.CLIENT_ID, password: 'uW5RuT-6oP0vLKBIyjP9w09YyhRmcQ' },
+        headers: { 'Content-type': 'application/x-www-form-urlencoded' }
+      }
   )
-.then(({ data }) =>{
-  res.send(
-    indexTemplate(ReactDOM.renderToString(App(), data['access_token'])),
-  );
-})
+      .then(({ data }) => {
+        const appString = ReactDOMServer.renderToString(React.createElement(App, { token: data['access_token'] }));
+        res.send(indexTemplate(appString, data['access_token']));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error.response ? error.response.data : error.message);
+        res.status(500).send(`Error fetching data: ${error.response ? error.response.data : error.message}`);
+      });
 });
-
-
-// app.get('/auth', async (req, res) => {
-//   try {
-//     const response = await axios.post('https://www.reddit.com/api/v1/access_token', new URLSearchParams({
-//       grant_type: 'authorization_code',
-//       code: req.query.code,
-//       redirect_uri: 'http://localhost:3000/auth'
-//     }), {
-//       auth: {
-//         username: 'YOUR_CLIENT_ID', // Замените на ваш клиентский идентификатор
-//         password: 'YOUR_CLIENT_SECRET' // Замените на ваш клиентский секрет
-//       },
-//       headers: {
-//         'Content-Type': 'application/x-www-form-urlencoded'
-//       }
-//     });
-
-//     res.json(response.data);
-//   } catch (error) {
-//     console.error('Error fetching data:', error.response ? error.response.data : error.message);
-//     res.status(500).send('Error fetching data');
-//   }
-// });
-///////////////
 
 app.listen(3000, () => {
   console.log('SSR Server started on http://localhost:3000');
