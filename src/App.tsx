@@ -17,7 +17,6 @@ import { useToken } from './Hooks/useToken';
 // ].map(generateId)
 
 
-export function App() {
     // const [list, setList] =React.useState(LIST);
 
     // const handleItemClick = (id:string) => {
