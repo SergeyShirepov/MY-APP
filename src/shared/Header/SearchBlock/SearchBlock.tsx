@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as styles from './searchblock.css';
-import {UserBlock} from './UserBlock/UserBlock';
+import {UserBlock} from './UserBlock';
 import axios, { AxiosResponse } from 'axios';
 
 interface ISearchBlockProps {

@@ -4,7 +4,7 @@ import { App } from '../App';
 
 const container = document.getElementById('react_root');
 if (container) {
-    hydrateRoot(container, <App token={window.__token__} />);
+    hydrateRoot(container, <App token='{window.__token__}' />);
 } else {
-    console.error('Root container not found or is not an Element');
+    console.error('Root container not found');
 }

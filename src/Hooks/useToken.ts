@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-export function useToken(initialToken: string | undefined) {
+export function useToken() {
   // Инициализируем токен значением initialToken, если оно есть
-  const [token, setToken] = useState<string | undefined>(initialToken);
+  const [token, setToken] = useState('');
 
   useEffect(() => {
-    // Если в глобальном объекте window существует токен, обновляем состояние
     if (window.__token__) {
       setToken(window.__token__);
     }

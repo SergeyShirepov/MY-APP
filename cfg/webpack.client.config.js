@@ -96,7 +96,7 @@ const clientConfig = {
   },
   devServer: {
     open: true,
-    hot: true,
+    hot: false,
     devMiddleware: {
       index: true,
       mimeTypes: { html: 'text/html' },
