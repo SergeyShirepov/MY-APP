@@ -2,7 +2,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import nodeExternals from 'webpack-node-externals';
 import webpack from 'webpack';
-import HTMLWebpackPlugin from 'html-webpack-plugin';
+
+
 
 const { DefinePlugin } = webpack;
 
@@ -22,6 +23,7 @@ const serverConfig = {
     path: path.resolve(__dirname, '../dist/server'),
     filename: 'server.js',
     publicPath: '/static/',
+    chunkFilename: '[name].bundle.js',
     libraryTarget: 'module',
     chunkFormat: 'module',
   },
@@ -64,32 +66,23 @@ const serverConfig = {
           path.resolve(__dirname, 'node_modules'),
         ],
       },
-      {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[path][name].[ext]',
-              context: 'src',
-              outputPath: 'images',
-              publicPath: 'images',
-            },
-          },
-        ],
-        exclude: [
-          path.resolve(__dirname, 'dist'),
-          path.resolve(__dirname, 'node_modules'),
-        ],
-      },
     ]
   },
   optimization: {
-    minimize: false,
+    splitChunks: {
+      chunks: 'all',
+      name: 'vendors',
+      cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
   },
   plugins: [
-    new HTMLWebpackPlugin({ template: path.resolve(__dirname, '../index.html') }),
-    new DefinePlugin({ 'process.env.CLIENT_ID': JSON.stringify(process.env.CLIENT_ID) })
+    new DefinePlugin({ 'process.env.CLIENT_ID': "'SI6_ql3msvAkDVKeffKG_w'" })
   ],
 };
 
