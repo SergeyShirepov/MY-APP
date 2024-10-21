@@ -20,13 +20,6 @@ export function App() {
                     <Header  />
                     <Content>
                         <CardsList />
-                        <div style={{ padding: 20 }}>
-                            <br />
-
-                        </div>
-                        {/* <ul>
-                        <GenericList list={LIST.map(merge({ onClick: handleItemClick }))} />
-                        </ul> */}
                     </Content>
                 </Layout>
             </UserContextProvider>

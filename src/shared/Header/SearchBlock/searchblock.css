@@ -16,5 +16,7 @@
         margin: 0 0 0 auto;
         background-color: transparent;
         border-radius: 0;
+        background-color: none;
+        box-shadow: none;
     }
 }
