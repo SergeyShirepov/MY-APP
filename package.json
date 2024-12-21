@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=development webpack serve --config ./webpack.config.js",
-    "build:client": "webpack-dev-server --config ./cfg/webpack.client.config.js",
-    "build:server": "webpack-dev-server --config ./cfg/webpack.server.config.js",
+    "dev:client": "NODE_ENV=development webpack serve --config ./cfg/webpack.client.config.js",
+    "dev:server": "NODE_ENV=development webpack serve --config ./cfg/webpack.server.config.js",
+    "dev": "npm run dev:client & npm run dev:server",
+    "build:client": "NODE_ENV=production webpack --config ./cfg/webpack.client.config.js",
+    "build:server": "NODE_ENV=production webpack --config ./cfg/webpack.server.config.js",
     "build": "npm run build:client && npm run build:server",
     "start": "node dist/server/server.js"
   },
