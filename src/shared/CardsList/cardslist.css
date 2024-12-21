@@ -1,8 +1,9 @@
-@media all and (min-width: 724px) {
-    .cardlist {
-        padding: 40px 0;
-    }
-}
-
 .cardlist {}
 .default {}
+
+
+@media all and (min-width: 724px) {
+    .cardlist {
+        padding: 40px;
+    }
+}

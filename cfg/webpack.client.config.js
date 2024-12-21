@@ -96,7 +96,7 @@ const clientConfig = {
   },
   devServer: {
     open: true,
-    hot: false,
+    hot: true,
     devMiddleware: {
       index: true,
       mimeTypes: { html: 'text/html' },
@@ -137,10 +137,11 @@ const clientConfig = {
   },
   plugins: [
     new HTMLWebpackPlugin({
-      template: path.resolve(__dirname, '../index.html'), // Входной HTML-файл
-      inject: 'body',  // Автоматическая вставка всех JS-файлов в тело страницы
+      template: path.resolve(__dirname, '../index.html'),
+      inject: 'body',
     }),
-    new DefinePlugin({ 'process.env.CLIENT_ID': "'SI6_ql3msvAkDVKeffKG_w'" })
+    new DefinePlugin({ 'process.env.CLIENT_ID': "'SI6_ql3msvAkDVKeffKG_w'" }),
+    new webpack.HotModuleReplacementPlugin(),
   ],
 };
 
