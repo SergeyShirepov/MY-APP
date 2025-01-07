@@ -2,7 +2,18 @@ import React, { useState } from 'react';
 import * as styles from './card.css';
 import { Menu } from './Menu';
 
-export function Card() {
+interface CardProps {
+  card: {
+    id: string;
+    tittle: string;
+    cardPreview: string;
+    timePublished: string;
+    timeViewed: string;
+    avtor: string;
+  };
+}
+
+export function Card({ card }: CardProps) {
   const [karmaValue, setKarmaValue] = useState(234);
 
   const handleUpClick = () => {
@@ -12,31 +23,108 @@ export function Card() {
   const handleDownClick = () => {
     setKarmaValue(karmaValue - 1);
   };
+ 
+  
+
+  function getTimeAgo({ card }: CardProps): string {
+    const publishedDate = new Date(card.timePublished);
+    const currentDate = new Date();
+    const timeDifference = currentDate.getTime() - publishedDate.getTime();
+  
+    const millisecondsInHour = 1000 * 60 * 60;
+    const millisecondsInDay = millisecondsInHour * 24;
+    const millisecondsInMonth = millisecondsInDay * 30; // Упрощенно считаем месяц как 30 дней
+    const millisecondsInYear = millisecondsInDay * 365; // Упрощенно считаем год как 365 дней
+  
+    if (timeDifference >= millisecondsInYear) {
+      const yearsAgo = Math.floor(timeDifference / millisecondsInYear);
+      if (yearsAgo===1){
+        return `более года назад`;
+      }else{
+      return `более ${yearsAgo} лет назад`;
+      }
+    } else if (timeDifference >= millisecondsInMonth) {
+      const monthsAgo = Math.floor(timeDifference / millisecondsInMonth);
+      if (monthsAgo===1){
+        return `более месяца назад`;
+      }else{
+      return `более ${monthsAgo} месяцев назад`;
+      }
+    } else if (timeDifference >= millisecondsInDay) {
+      const daysAgo = Math.floor(timeDifference / millisecondsInDay);
+      if (daysAgo===1){
+        return `более 1 дня назад`;
+      }else{
+      return `более ${daysAgo} дней назад`;
+      }
+    } else if (timeDifference >= millisecondsInHour) {
+      const hoursAgo = Math.floor(timeDifference / millisecondsInHour);
+      if (hoursAgo===1){
+        return `более часа назад`;
+      }else{
+      return `более ${hoursAgo} часов назад`;
+      }
+    } else {
+      return 'Меньше часа назад';
+    }
+  }
+  
+
+  function getviewAgo({ card }: CardProps): string {
+    const ViewedDate = new Date(card.timeViewed);
+    const currentDate = new Date();
+    const timeDifference = currentDate.getTime() - ViewedDate.getTime();
+  
+    const millisecondsInHour = 1000 * 60 * 60;
+    const millisecondsInDay = millisecondsInHour * 24;
+    const millisecondsInMonth = millisecondsInDay * 30; // Упрощенно считаем месяц как 30 дней
+    const millisecondsInYear = millisecondsInDay * 365; // Упрощенно считаем год как 365 дней
+  
+    if (timeDifference >= millisecondsInYear) {
+      const yearsAgo = Math.floor(timeDifference / millisecondsInYear);
+       if (yearsAgo === 1) {
+        return'более 1 года назад';
+        }else{ 
+        return `более ${yearsAgo} лет назад`;
+        }
+    } else if (timeDifference >= millisecondsInMonth) {
+      const monthsAgo = Math.floor(timeDifference / millisecondsInMonth);
+      return `более ${monthsAgo} месяцев назад`;
+    } else if (timeDifference >= millisecondsInDay) {
+      const daysAgo = Math.floor(timeDifference / millisecondsInDay);
+      return `более ${daysAgo} дней назад`;
+    } else if (timeDifference >= millisecondsInHour) {
+      const hoursAgo = Math.floor(timeDifference / millisecondsInHour);
+      return `более ${hoursAgo} часов назад`;
+    } else {
+      return 'Меньше часа назад';
+    }
+  }
 
   return (
     <li className={styles.card}>
       <div className={styles.textContent}>
         <div className={styles.metaData}>
           <div className={styles.userlink}>
-            <img className={styles.avatar} src="/static/images/shared/img/123.png" alt="avatar" />
+            <img className={styles.avatar} src="/static/images/123.png" alt="avatar" />
             <div className={styles.avtor}>
-              Дмитрий Гришин
+              {card.avtor}
             </div>
           </div>
           <span className={styles.createdAt}>
             <span className={styles.publishedLabel}>опубликовано </span>
-            4 часа назад
+            {getTimeAgo({card})}
           </span>
         </div>
         <h2 className={styles.title}>
           <a href="" className={styles.postlink} onClick={() => console.log('clicked!')}>
-          Реализация намеченных плановых заданий
+            {card.tittle}
           </a>
         </h2>
       </div>
       <Menu />
       <div className={styles.preview}>
-        <img className={styles.previewImg} src="/static/images/shared/img/456.png" alt="preview" />
+        <img className={styles.previewImg} src={card.cardPreview} alt="preview" />
       </div>
       <div className={styles.controls}>
         <div className={styles.karmaCounter}>

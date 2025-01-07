@@ -2,7 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import webpack from 'webpack';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
-
+import CopyPlugin from "copy-webpack-plugin";
 
 const { DefinePlugin } = webpack;
 
@@ -12,6 +12,7 @@ const NODE_ENV = process.env.NODE_ENV;
 const GLOBAL_CSS_REGEXP = /\.global\.css$/;
 const IS_DEV = NODE_ENV === 'development';
 const IS_PROD = NODE_ENV === 'production';
+
 
 function setupDevtool() {
   if (IS_DEV) return 'eval';
@@ -142,6 +143,11 @@ const clientConfig = {
     }),
     new DefinePlugin({ 'process.env.CLIENT_ID': "'SI6_ql3msvAkDVKeffKG_w'" }),
     new webpack.HotModuleReplacementPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: "src/shared/img", to: "images" },
+      ],
+    }),
   ],
 };
 
