@@ -13,6 +13,7 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
+
 app.use('/static', express.static(path.join(__dirname, '../../dist/client')));
 
 app.get('/', (req, res) => {
