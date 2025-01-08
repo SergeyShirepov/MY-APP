@@ -24,8 +24,10 @@
 
 
 .textContent {
+    height: 71px;
     display: flex;
     flex-direction: column-reverse;
+    justify-content: space-between;
     margin-left: 38px;
     min-width: 540px;
 }
@@ -80,6 +82,10 @@
     height: 107px;
     object-fit: cover;
     border-radius: 3px;
+}
+
+.whitespace {
+    margin-left: 5px;
 }
 
 .controls {

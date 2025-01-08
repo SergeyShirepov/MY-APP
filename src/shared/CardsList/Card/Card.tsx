@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as styles from './card.css';
 import { Menu } from './Menu';
 
-interface CardProps {
+interface ICardProps {
   card: {
     id: string;
     tittle: string;
@@ -10,10 +10,11 @@ interface CardProps {
     timePublished: string;
     timeViewed: string;
     avtor: string;
+    avatar: string;
   };
 }
 
-export function Card({ card }: CardProps) {
+export function Card({ card }: ICardProps) {
   const [karmaValue, setKarmaValue] = useState(234);
 
   const handleUpClick = () => {
@@ -23,70 +24,70 @@ export function Card({ card }: CardProps) {
   const handleDownClick = () => {
     setKarmaValue(karmaValue - 1);
   };
- 
-  
 
-  function getTimeAgo({ card }: CardProps): string {
+
+
+  function getTimeAgo({ card }: ICardProps): string {
     const publishedDate = new Date(card.timePublished);
     const currentDate = new Date();
     const timeDifference = currentDate.getTime() - publishedDate.getTime();
-  
+
     const millisecondsInHour = 1000 * 60 * 60;
     const millisecondsInDay = millisecondsInHour * 24;
     const millisecondsInMonth = millisecondsInDay * 30; // Упрощенно считаем месяц как 30 дней
     const millisecondsInYear = millisecondsInDay * 365; // Упрощенно считаем год как 365 дней
-  
+
     if (timeDifference >= millisecondsInYear) {
       const yearsAgo = Math.floor(timeDifference / millisecondsInYear);
-      if (yearsAgo===1){
+      if (yearsAgo === 1) {
         return `более года назад`;
-      }else{
-      return `более ${yearsAgo} лет назад`;
+      } else {
+        return `более ${yearsAgo} лет назад`;
       }
     } else if (timeDifference >= millisecondsInMonth) {
       const monthsAgo = Math.floor(timeDifference / millisecondsInMonth);
-      if (monthsAgo===1){
+      if (monthsAgo === 1) {
         return `более месяца назад`;
-      }else{
-      return `более ${monthsAgo} месяцев назад`;
+      } else {
+        return `более ${monthsAgo} месяцев назад`;
       }
     } else if (timeDifference >= millisecondsInDay) {
       const daysAgo = Math.floor(timeDifference / millisecondsInDay);
-      if (daysAgo===1){
+      if (daysAgo === 1) {
         return `более 1 дня назад`;
-      }else{
-      return `более ${daysAgo} дней назад`;
+      } else {
+        return `более ${daysAgo} дней назад`;
       }
     } else if (timeDifference >= millisecondsInHour) {
       const hoursAgo = Math.floor(timeDifference / millisecondsInHour);
-      if (hoursAgo===1){
+      if (hoursAgo === 1) {
         return `более часа назад`;
-      }else{
-      return `более ${hoursAgo} часов назад`;
+      } else {
+        return `более ${hoursAgo} часов назад`;
       }
     } else {
       return 'Меньше часа назад';
     }
   }
-  
 
-  function getviewAgo({ card }: CardProps): string {
+
+  function getviewAgo({ card }: ICardProps): string {
     const ViewedDate = new Date(card.timeViewed);
     const currentDate = new Date();
     const timeDifference = currentDate.getTime() - ViewedDate.getTime();
-  
+
     const millisecondsInHour = 1000 * 60 * 60;
     const millisecondsInDay = millisecondsInHour * 24;
     const millisecondsInMonth = millisecondsInDay * 30; // Упрощенно считаем месяц как 30 дней
     const millisecondsInYear = millisecondsInDay * 365; // Упрощенно считаем год как 365 дней
-  
+
     if (timeDifference >= millisecondsInYear) {
       const yearsAgo = Math.floor(timeDifference / millisecondsInYear);
-       if (yearsAgo === 1) {
-        return'более 1 года назад';
-        }else{ 
+      if (yearsAgo === 1) {
+        return 'более 1 года назад';
+      } else {
         return `более ${yearsAgo} лет назад`;
-        }
+      }
     } else if (timeDifference >= millisecondsInMonth) {
       const monthsAgo = Math.floor(timeDifference / millisecondsInMonth);
       return `более ${monthsAgo} месяцев назад`;
@@ -104,16 +105,26 @@ export function Card({ card }: CardProps) {
   return (
     <li className={styles.card}>
       <div className={styles.textContent}>
+        <div className={styles.createdAt}>
+          <svg width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 0C4.36364 0 1.25818 2.28067 0 5.5C1.25818 8.71933 4.36364 11 8 11C11.6364 11 14.7418 8.71933 16 5.5C14.7418 2.28067 11.6364 0 8 0ZM8 9.16667C5.99273 9.16667 4.36364 7.524 4.36364 5.5C4.36364 3.476 5.99273 1.83333 8 1.83333C10.0073 1.83333 11.6364 3.476 11.6364 5.5C11.6364 7.524 10.0073 9.16667 8 9.16667ZM8 3.3C6.79273 3.3 5.81818 4.28267 5.81818 5.5C5.81818 6.71733 6.79273 7.7 8 7.7C9.20727 7.7 10.1818 6.71733 10.1818 5.5C10.1818 4.28267 9.20727 3.3 8 3.3Z" fill="#999999" />
+          </svg>
+          <span className={styles.whitespace}>
+          {getviewAgo({ card })}
+          </span>
+        </div>
         <div className={styles.metaData}>
           <div className={styles.userlink}>
-            <img className={styles.avatar} src="/static/images/123.png" alt="avatar" />
+            <img className={styles.avatar} src={card.avatar} alt="avatar" />
             <div className={styles.avtor}>
               {card.avtor}
             </div>
           </div>
           <span className={styles.createdAt}>
-            <span className={styles.publishedLabel}>опубликовано </span>
-            {getTimeAgo({card})}
+            <span className={styles.publishedLabel}>опубликовано</span>
+            <span className={styles.whitespace}>
+            {getTimeAgo({ card })}
+            </span>
           </span>
         </div>
         <h2 className={styles.title}>
