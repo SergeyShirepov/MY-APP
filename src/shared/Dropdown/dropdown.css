@@ -1,6 +1,10 @@
 .container {
     width: 100%;
     flex: 1 1 0%;
+    position: absolute;
+    right: 30px;
+    top: -10px;
+    z-index: 1;
 }
 
 .listContainer {
