@@ -12,6 +12,7 @@ export const indexTemplate = (content: string, token: any) => {
   </head>
   <body>
       <div id="react_root">${content}</div>
+      <div id="modal_root"></div>
       <script src="/static/vendors.bundle.js"></script>
       <script src="/static/main.bundle.js"></script>
   </body>
