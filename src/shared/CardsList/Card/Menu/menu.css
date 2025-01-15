@@ -2,7 +2,7 @@
     position: absolute;
     top: 47px;
     right: 65px;
-    
+    z-index: 1;
 }
 
 .menuButton {

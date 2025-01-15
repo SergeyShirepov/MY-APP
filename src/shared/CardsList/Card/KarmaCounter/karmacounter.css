@@ -1,0 +1,36 @@
+.karmaCounter {
+    display: flex;
+    flex-direction: column;
+    width: 25px;
+    height: 50px;
+
+}
+
+.karmavalue, .commentsNumber {
+    color: var(--gray66);
+    text-align: center;
+}
+
+.down {
+    transform: rotate(180deg);
+}
+
+.up :hover {
+    fill: var(--green);
+}
+
+.down :hover {
+    fill: var(--orange);
+}
+
+.down :active, .up :active {
+    fill: var(--gray99);
+}
+
+.karmaCounter {
+    /* Ваши стили */
+}
+
+.up {
+    /* Ваши стили */
+}
