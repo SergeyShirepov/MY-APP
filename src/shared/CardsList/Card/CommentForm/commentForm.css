@@ -1,0 +1,33 @@
+.form {
+    width: 840px;
+    height: 139px;
+    top: 2606px;
+    left: 540px;
+    gap: 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    
+}
+
+.input {
+    width: 840px;
+    height: 89px;
+    top: 2606px;
+    left: 540px;
+    gap: 0px;
+    border-radius: 3px 3px 0px 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    
+}
+
+.button {
+    width: 220px;
+    height: 50px;
+    top: 2695px;
+    left: 1160px;
+    gap: 0px;
+    border-radius: 0px 0px 3px 0px;
+    opacity: 0px;
+    background-color: #CC6633;
+}
