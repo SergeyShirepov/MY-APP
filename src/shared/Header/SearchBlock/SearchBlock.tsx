@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import * as styles from './searchblock.css';
 import {UserBlock} from './UserBlock';
-import { userContext } from '../../context/userContext';
+import { userContext } from '../../context/useContext';
 
 
 
