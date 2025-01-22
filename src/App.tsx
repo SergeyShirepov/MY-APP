@@ -10,22 +10,33 @@ import { tokenContext } from './shared/context/tokenContext';
 import { UserContextProvider } from './shared/context/useContext';
 import { commentContext } from './shared/Content/commentContext';
 
+import { Provider } from 'react-redux';
+// store.js
+import { configureStore } from '@reduxjs/toolkit';
 
+const store = configureStore({
+  reducer: {
+    // Мои редьюсеры здесь
+  },
+});
+
+export default store;
 
 export function App() {
     const [commentValue, setCommentValue] = useState('');
 
     const [token] = useToken();
-    const { Provider } = tokenContext;
 
+    const TokenProvider = tokenContext.Provider;
     const CommentProvider = commentContext.Provider;
 
     return (
+        <Provider store={store}>
         <CommentProvider value={{
             value: commentValue,
             onChange: setCommentValue,
         }}>
-            <Provider value={token}>
+            <TokenProvider value={token}>
                 <UserContextProvider>
                     <Layout>
                         <Header />
@@ -34,8 +45,9 @@ export function App() {
                         </Content>
                     </Layout>
                 </UserContextProvider>
-            </Provider>
+            </TokenProvider>
         </CommentProvider>
+        </Provider>
     );
 
 }
