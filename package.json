@@ -16,6 +16,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@redux-devtools/core": "^4.0.0",
+    "@redux-devtools/dock-monitor": "^4.0.1",
+    "@redux-devtools/log-monitor": "^5.0.1",
     "@types/classnames": "^2.3.1",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.4.1",
@@ -49,13 +52,16 @@
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
     "@babel/register": "^7.24.6",
+    "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.4",
     "classnames": "^2.5.1",
     "css-modules-typescript-loader": "^4.0.1",
     "express": "^4.19.2",
     "nodemon": "^3.1.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-redux": "^9.2.0",
+    "redux": "^5.0.1"
   },
   "description": ""
 }
