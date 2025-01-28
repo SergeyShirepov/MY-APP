@@ -2,9 +2,8 @@ import React, {useEffect, useRef, useState} from "react";
 import {createPortal} from "react-dom";
 import * as styles from "./post.css";
 import AvtorPublished from "../AvtorPublished/AvtorPublished";
-import {Tittle} from "../Tittle";
 import KarmaCounter from "../KarmaCounter/KarmaCounter";
-import { CommentForm } from "../CommentForm/CommentForm";
+import { CommentFormContainer } from "../CommentFormContainer/CommentFormContainer";
 
 interface ICardProps {
     card: {
@@ -81,7 +80,7 @@ export function Post({card, onClose}: ICardProps) {
                     конкретные выводы,
                     разумеется, описаны максимально подробно.
                 </div>
-                <CommentForm />
+                <CommentFormContainer />
             </div>
         </div>,
         node
