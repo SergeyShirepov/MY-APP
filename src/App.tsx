@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 // The main App component
 export function App() {
   const [token] = useToken();
+  
 
   return (
     <Provider store={store}>
@@ -31,5 +32,3 @@ export function App() {
     </Provider>
   );
 }
-
-export default store;
