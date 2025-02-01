@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateComment } from '../../../../store'; // Импортируйте экшен из commentSlice
+import { updateComment } from '../../../../store/store'; // Импортируйте экшен из commentSlice
 import { CommentForm } from '../CommentForm/CommentForm';
 
 interface RootState {

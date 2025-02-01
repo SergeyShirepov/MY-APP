@@ -6,28 +6,22 @@ import './main.global.css';
 import { CardsList } from './shared/CardsList';
 import { useToken } from './Hooks/useToken';
 import { tokenContext } from './shared/context/tokenContext';
-import { UserContextProvider } from './shared/context/useContext';
-import { store } from './store';
+import { store } from './store/store';
 import { Provider } from 'react-redux';
-
-
 
 // The main App component
 export function App() {
   const [token] = useToken();
   
-
   return (
     <Provider store={store}>
       <tokenContext.Provider value={token}>
-        <UserContextProvider>
-          <Layout>
-            <Header />
-            <Content>
-              <CardsList />
-            </Content>
-          </Layout>
-        </UserContextProvider>
+        <Layout>
+          <Header />
+          <Content>
+            <CardsList />
+          </Content>
+        </Layout>
       </tokenContext.Provider>
     </Provider>
   );
