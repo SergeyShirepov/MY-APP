@@ -1,29 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import { tokenContext } from '../shared/context/tokenContext';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { IUserData, meRequestAsync, useAppDispatch } from '../store/actions';
 
-  
-interface IUserData {
-    name?:string;
-    iconImg?: string;
-  }
-
-export function useUserData () {
-  const [data, setData] = useState<IUserData>({});
-  const token = useContext(tokenContext);
+export function useUserData() {
+  const data = useSelector<RootState, IUserData>(state => state.userData.data);
+  const loading = useSelector<RootState, boolean>(state => state.userData.loading);
+  const error = useSelector<RootState, Error | null>(state => state.userData.error);
+  const token = useSelector<RootState, string | null>(state => state.comment.token);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (token) {
-      axios.get('https://oauth.reddit.com/api/v1/me', {
-        headers: { Authorization: `bearer ${token}` }
-      })
-      .then((resp) => {
-        const userData = resp.data;
-        setData({ name: userData.name, iconImg: userData.icon_img });
-      })
-      .catch(console.log);
-    }
-  }, [token]);
+    if (!token) return;
+    dispatch(meRequestAsync());
+  }, [token, dispatch]);
 
-return [data];
+  return { data, loading, error };
 }

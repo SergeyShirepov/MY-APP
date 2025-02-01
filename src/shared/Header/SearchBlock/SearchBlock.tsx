@@ -1,17 +1,20 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import * as styles from './searchblock.css';
 import {UserBlock} from './UserBlock';
-import { userContext } from '../../context/useContext';
-
-
+import { useUserData } from '../../../Hooks/useUserData';
 
 export function SearchBlock() {
-  const {iconImg, name} = useContext(userContext)
+  const {data, loading} = useUserData();
+  
+  console.log('SearchBlock render:', { data, loading });
 
   return (
     <div className={styles.serchblock}>
-      <UserBlock avatarSrc={iconImg} username={name} />
+      <UserBlock 
+        avatarSrc={data?.iconImg} 
+        username={data?.name} 
+        loading={loading} 
+      />
     </div>
-
   );
 }
