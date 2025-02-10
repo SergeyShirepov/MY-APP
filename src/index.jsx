@@ -14,6 +14,7 @@ if (rootElement) {
       root.render(<NextApp />);
     });
   }
+
 } else {
   console.error('No element with id "root" found.');
 }

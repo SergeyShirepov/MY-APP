@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from './Card';
 import * as styles from './cardslist.css';
-import { cardsArray } from '../../data';
 
 interface ICardType {
   id: string;
@@ -14,11 +13,38 @@ interface ICardType {
 }
 
 export function CardsList() {
-  return (
-    <ul className={styles.cardlist}>
-      {cardsArray.map((card: ICardType) => (
-        <Card key={card.id} card={card} />
+  const [posts, setPosts] = useState<ICardType[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetch('/api/posts')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((posts) => {
+        setPosts(posts);
+      })
+      .catch((error) => {
+        setError('Ошибка загрузки данных');
+        console.error('Error:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (error) return <div>{error}</div>;
+  
+  return isLoading
+    ? "Loading..."
+    : (<ul className={styles.cardlist}>
+      {posts?.map((post: ICardType) => (
+        <Card key={post.id} card={post} />
       ))}
-    </ul>
-  );
+      </ul>)
 }
+

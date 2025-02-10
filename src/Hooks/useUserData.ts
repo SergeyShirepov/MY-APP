@@ -7,7 +7,7 @@ export function useUserData() {
   const data = useSelector<RootState, IUserData>(state => state.userData.data);
   const loading = useSelector<RootState, boolean>(state => state.userData.loading);
   const error = useSelector<RootState, Error | null>(state => state.userData.error);
-  const token = useSelector<RootState, string | null>(state => state.comment.token);
+  const token = useSelector<RootState, string | null>(state => state.userData.token);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
