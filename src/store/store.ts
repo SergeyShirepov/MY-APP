@@ -7,23 +7,22 @@ interface IUserData {
   iconImg?: string;
 }
 
-// Расширенный тип RootState
+// Обновляем тип RootState
 export type RootState = {
   comment: {
     commentText: string;
-    token: string | null;
   };
   userData: {
     loading: boolean;
     error: Error | null;
     data: IUserData;
+    token: string | null;
   };
 };
 
 // Начальное состояние для комментариев
 const initialCommentState = {
   commentText: 'Privet',
-  token: null as string | null, // Явно указываем тип token как string | null
 };
 
 // Слайс для комментариев
@@ -34,9 +33,6 @@ const commentSlice = createSlice({
     updateComment(state, action: PayloadAction<string>) {
       state.commentText = action.payload;
     },
-    setToken(state, action: PayloadAction<string | null>) {
-      state.token = action.payload; // Тип action.payload соответствует string | null
-    },
   },
 });
 
@@ -45,13 +41,18 @@ const initialUserDataState = {
   loading: false,
   error: null as Error | null, // Явно указываем тип error как Error | null
   data: {} as IUserData,
+  token: null as string | null, // Явно указываем тип token как string | null
 };
 
 // Слайс для пользовательских данных
 const userDataSlice = createSlice({
   name: 'userData',
   initialState: initialUserDataState,
-  reducers: {},
+  reducers: {
+    setToken(state, action: PayloadAction<string | null>) {
+      state.token = action.payload; // Тип action.payload соответствует string | null
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(ME_REQUEST, (state) => {
@@ -80,11 +81,9 @@ const rootReducer = combineReducers({
   userData: userDataSlice.reducer,
 });
 
-// Экспортируем только actions из commentSlice
-export const { updateComment, setToken } = commentSlice.actions;
-
-// Убираем экспорт actions из userDataSlice, так как они определены в actions.ts
-// export const { meRequest, meRequestSuccess, meRequestError } = userDataSlice.actions;
+// Экспортируем actions из обоих слайсов
+export const { updateComment } = commentSlice.actions;
+export const { setToken } = userDataSlice.actions;
 
 // Настраиваем хранилище
 export const store = configureStore({

@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import webpack from 'webpack';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import CopyPlugin from "copy-webpack-plugin";
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const { DefinePlugin } = webpack;
 
@@ -146,7 +147,15 @@ const clientConfig = {
     new CopyPlugin({
       patterns: [
         { from: "src/shared/img", to: "images" },
+        { from: "src/mockServiceWorker.js", to: "mockServiceWorker.js" },
       ],
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'server',
+      analyzerPort: 8888,
+      openAnalyzer: true,
+      generateStatsFile: true,
+      statsFilename: 'stats.json',
     }),
   ],
 };

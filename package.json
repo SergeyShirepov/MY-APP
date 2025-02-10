@@ -11,7 +11,8 @@
     "build:client": "NODE_ENV=production webpack --config ./cfg/webpack.client.config.js",
     "build:server": "NODE_ENV=production webpack --config ./cfg/webpack.server.config.js",
     "build": "npm run build:client && npm run build:server",
-    "start": "node dist/server/server.js"
+    "start": "node dist/server/server.js",
+    "analyze": "set STATS=server && npm run build"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "@redux-devtools/log-monitor": "^5.0.1",
     "@types/classnames": "^2.3.1",
     "@types/jest": "^29.5.12",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^22.4.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -32,6 +34,7 @@
     "jest": "^29.7.0",
     "less": "^4.2.0",
     "less-loader": "^12.2.0",
+    "msw": "^2.7.0",
     "style-loader": "^4.0.0",
     "ts-jest": "^29.2.2",
     "ts-loader": "^9.5.1",
@@ -39,6 +42,7 @@
     "typescript": "^5.5.4",
     "url-loader": "^4.1.1",
     "webpack": "^5.97.1",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-middleware": "^7.2.1",
     "webpack-dev-server": "^5.0.4",
@@ -55,8 +59,10 @@
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.4",
     "classnames": "^2.5.1",
+    "cors": "^2.8.5",
     "css-modules-typescript-loader": "^4.0.1",
     "express": "^4.19.2",
+    "js-cookie": "^3.0.5",
     "nodemon": "^3.1.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -64,5 +70,11 @@
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0"
   },
-  "description": ""
+  "description": "",
+  "msw": {
+    "workerDirectory": [
+      "src",
+      "dist\\client"
+    ]
+  }
 }

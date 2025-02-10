@@ -53,9 +53,12 @@ export const meRequestSuccess: ActionCreator<MeRequestSuccessAction> = (data: IU
 export const ME_REQUEST_ERROR = 'ME_REQUEST_ERROR';
 export type MeRequestErrorAction = {
     type: typeof ME_REQUEST_ERROR;
-    error: Error;
+    error: {
+        message: string;
+        code: number;
+    };
 }
-export const meRequestError: ActionCreator<MeRequestErrorAction> = (error: Error) => ({
+export const meRequestError: ActionCreator<MeRequestErrorAction> = (error: { message: string; code: number }) => ({
     type: ME_REQUEST_ERROR,
     error,
 });
@@ -69,7 +72,7 @@ interface IRedditMeResponse {
 // Асинхронное действие
 export const meRequestAsync = (): ThunkAction<void, RootState, unknown, Action<string>> => 
   (dispatch, getState) => {
-    const { token } = getState().comment;
+    const { token } = getState().userData;
     const { data } = getState().userData;
 
     if (!token || (data && data.name)) return;
@@ -91,6 +94,9 @@ export const meRequestAsync = (): ThunkAction<void, RootState, unknown, Action<s
       })
       .catch((error) => {
         console.error('API error:', error);
-        dispatch(meRequestError(error instanceof Error ? error : new Error('An unknown error occurred')));
+        dispatch(meRequestError({
+          message: error.message,
+          code: error.code || 0, // Убедитесь, что код ошибки всегда число
+        }));
       });
   };

@@ -7,12 +7,21 @@ import { dirname } from 'path';
 import { App } from '../App.tsx';
 import { indexTemplate } from './indexTemplate.tsx';
 import axios from 'axios';
+import cors from 'cors';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
 
+// Добавляем middleware для CORS
+app.use(cors({
+  origin: 'http://localhost:8080',
+  credentials: true
+}));
+
+// Добавляем отдельный middleware для mockServiceWorker.js
+app.use('/mockServiceWorker.js', express.static(path.join(__dirname, '../../dist/client/mockServiceWorker.js')));
 
 app.use('/static', express.static(path.join(__dirname, '../../dist/client')));
 
