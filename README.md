@@ -1,3 +1,7 @@
-Для запуска проекта нужно выполнить следующие команды: <br>
+Для установки проекта нужно выполнить следующие команды: <br>
 npm install  <br>
-npx msw init ./dist/client
+npx msw init ./dist/client <br>
+webpack <br><br>
+Запуск <br>
+npm run start <br>
+npm run dev <br>
