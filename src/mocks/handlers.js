@@ -1,8 +1,12 @@
 import { http, HttpResponse } from 'msw';
 
-const postsResolver = () => {
-    return HttpResponse.json([
-        {
+const postsResolver = ({ request }) => {
+  const url = new URL(request.url);
+  const limit = parseInt(url.searchParams.get('limit')) || 6; // По умолчанию 6 постов
+  const offset = parseInt(url.searchParams.get('offset')) || 0;
+
+  const allPosts = [
+      {
             id: '1',
             tittle: 'Противоположная точка зрения на данную проблему',
             cardPreview: '/static/images/6752015f611bbf6dae5d5d1bfca3a222.jpg',
@@ -56,7 +60,118 @@ const postsResolver = () => {
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/0ca6a655c3e85932027ca9c3a8f8b13d.jpg',
           },
-    ]);
+          {
+            id: '7',
+            tittle: 'А ещё диаграммы связей ограничены исключительно',
+            cardPreview: '/static/images/9f2d972393291d264f5714e97bc3fdf7.jpg',
+            timePublished: '2023-10-11T12:00:00Z',
+            timeViewed: '2023-10-12T12:00:00Z',
+            avtor: 'Рашид Гаев',
+            avatar: '/static/images/d5bfbc966738da2bd35395967c9a1754.jpg',
+          },
+          {
+            id: '8',
+            tittle: 'Вот вам яркий пример современных тенденций',
+            cardPreview: '/static/images/050c2a67a7a6312771a79882c0309033.jpg',
+            timePublished: '2023-10-11T12:00:00Z',
+            timeViewed: '2023-10-12T12:00:00Z',
+            avtor: 'Мария Белова',
+            avatar: '/static/images/eeadb05bd433a816487cb204f7b15a3e.jpg',
+          },
+          {
+            id: '9',
+            tittle: 'Являясь всего лишь частью общей картины, сторонники',
+            cardPreview: '/static/images/3bc3712f73583c3da512d653611c8b7c.jpg',
+            timePublished: '2023-10-11T12:00:00Z',
+            timeViewed: '2023-10-12T12:00:00Z',
+            avtor: 'Инга Золотова',
+            avatar: '/static/images/30c62d8876aae07c862c94bcd47c391c.jpg',
+          },
+          {
+            id: '10',
+            tittle: 'Идейные соображения высшего порядка',
+            cardPreview: '/static/images/e9f359e7307fb922d3f05764ddde2a70.jpg',
+            timePublished: '2023-10-11T12:00:00Z',
+            timeViewed: '2023-10-12T12:00:00Z',
+            avtor: 'Арсен Кааянц',
+            avatar: '/static/images/917a8c7c98dcafff723bccecbf9dd539.jpg',
+          },
+          {
+            id: '11',
+            tittle: 'И нет сомнений, что многие известные личности значимы',
+            cardPreview: '/static/images/3adea03f65c4884b4733d6dd9289de1f.jpg',
+            timePublished: '2023-10-11T12:00:00Z',
+            timeViewed: '2023-10-12T12:00:00Z',
+            avtor: 'Мария Белова',
+            avatar: '/static/images/eeadb05bd433a816487cb204f7b15a3e.jpg',
+          },
+          {
+            id: '12',
+            tittle: 'Не следует, однако, забывать, что современная обстановка ',
+            cardPreview: '/static/images/fdea71b77982ed24ae744c87a93e5bab.jpg',
+            timePublished: '2023-10-11T12:00:00Z',
+            timeViewed: '2023-10-12T12:00:00Z',
+            avtor: 'Виктор Пылёв',
+            avatar: '/static/images/8cbe7d2546755e0333cd6eebc66b4386.jpg',
+          },
+          {
+            id: '13',
+            tittle: 'Равным образом, перспективное планирование помогает узнать всё...',
+            cardPreview: '/static/images/027057f736a538954b047ebbd742a36c.jpg',
+            timePublished: '2023-10-11T12:00:00Z',
+            timeViewed: '2023-10-12T12:00:00Z',
+            avtor: 'Владислав Куняев',
+            avatar: '/static/images/0ca6a655c3e85932027ca9c3a8f8b13d.jpg',
+          },
+          {
+            id: '14',
+            tittle: 'С другой стороны, курс на социально-ориентированный',
+            cardPreview: '/static/images/acf19a4b292173a2ca6ea0470686c272.jpg',
+            timePublished: '2023-10-11T12:00:00Z',
+            timeViewed: '2023-10-12T12:00:00Z',
+            avtor: 'Алексей Минаев',
+            avatar: '/static/images/281aa067a45f28630b0e6bbc85f7a687.jpg',
+          },
+          {
+            id: '15',
+            tittle: 'Прежде всего, семантический разбор внешних противодействий',
+            cardPreview: '/static/images/9bdb4efbaccad0ac6a01719e1ffb820d.jpg',
+            timePublished: '2023-10-11T12:00:00Z',
+            timeViewed: '2023-10-12T12:00:00Z',
+            avtor: 'Инна Семёнова',
+            avatar: '/static/images/ceb17f0a2c236eb7ea1c4dfb38af6b24.jpg',
+          },
+          {
+            id: '16',
+            tittle: 'Есть над чем задуматься: некоторые особенности внутренней',
+            cardPreview: '/static/images/f50df9ba60acfcfa1052ff0b7ae18c8f.jpg',
+            timePublished: '2023-10-11T12:00:00Z',
+            timeViewed: '2023-10-12T12:00:00Z',
+            avtor: 'Олег Звеньев',
+            avatar: '/static/images/b741c992952abd58393cac9b729ea13c.jpg',
+          },
+          {
+            id: '17',
+            tittle: 'Предварительные выводы неутешительны: курс доллара',
+            cardPreview: '/static/images/990a8721be49385071f52cadb5cb6b24.jpg',
+            timePublished: '2023-10-11T12:00:00Z',
+            timeViewed: '2023-10-12T12:00:00Z',
+            avtor: 'София Ломова',
+            avatar: '/static/images/5e6dca4423329dd52bf9df2bdfeb2b93.jpg',
+          },
+          {
+            id: '18',
+            tittle: 'Для современного мира повышение уровня гражданского',
+            cardPreview: '/static/images/dc3e51054cce6d6fa871718494ae06e0.jpg',
+            timePublished: '2023-10-11T12:00:00Z',
+            timeViewed: '2023-10-12T12:00:00Z',
+            avtor: 'Дмитрий Швец',
+            avatar: '/static/images/34bfb238ea654d377506fe099501b3fc.jpg',
+          },
+    ];
+    const posts = allPosts.slice(offset, offset + limit);
+
+    return HttpResponse.json(posts);
   };
 
 // request handler
