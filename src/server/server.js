@@ -25,11 +25,6 @@ app.use('/mockServiceWorker.js', express.static(path.join(__dirname, '../../dist
 
 app.use('/static', express.static(path.join(__dirname, '../../dist/client')));
 
-app.get('/', (req, res) => {
-  const appString = ReactDOMServer.renderToString(React.createElement(App));
-  res.send(indexTemplate(appString, null)); // Передаем null, так как у нас нет access_token
-});
-
 app.get('/auth', (req, res) => {
   axios.post(
       'https://www.reddit.com/api/v1/access_token',
@@ -47,6 +42,11 @@ app.get('/auth', (req, res) => {
         console.error('Error fetching data:', error.response ? error.response.data : error.message);
         res.status(500).send(`Error fetching data: ${error.response ? error.response.data : error.message}`);
       });
+});
+
+app.get('*', (req, res) => {
+  const appString = ReactDOMServer.renderToString(React.createElement(App));
+  res.send(indexTemplate(appString, null)); // Передаем null, так как у нас нет access_token
 });
 
 app.listen(3000, () => {

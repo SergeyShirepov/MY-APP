@@ -4,6 +4,7 @@ import * as styles from "./post.css";
 import AvtorPublished from "../AvtorPublished/AvtorPublished";
 import KarmaCounter from "../KarmaCounter/KarmaCounter";
 import { CommentFormContainer } from "../CommentFormContainer/CommentFormContainer";
+import { useNavigate } from 'react-router-dom';
 
 interface ICardProps {
     card: {
@@ -15,12 +16,12 @@ interface ICardProps {
         avtor: string;
         avatar: string;
     };
-    onClose?: () => void;
 }
 
-export function Post({card, onClose}: ICardProps) {
+export function Post({card}: ICardProps) {
     const ref = useRef<HTMLDivElement>(null);
     const [isInitialClickIgnored, setIsInitialClickIgnored] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         function handleClick(event: MouseEvent) {
@@ -30,7 +31,7 @@ export function Post({card, onClose}: ICardProps) {
             }
 
             if (event.target instanceof Node && !ref.current?.contains(event.target)) {
-                onClose?.();
+                navigate('/');
             }
         }
 
@@ -39,7 +40,7 @@ export function Post({card, onClose}: ICardProps) {
         return () => {
             document.removeEventListener("click", handleClick);
         };
-    }, [onClose, isInitialClickIgnored]);
+    }, [navigate('/'), isInitialClickIgnored]);
 
 
     const node = document.querySelector("#modal_root");

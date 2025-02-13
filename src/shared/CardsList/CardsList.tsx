@@ -13,16 +13,15 @@ interface ICardType {
 }
 
 export function CardsList() {
-  const [posts, setPosts] = useState<ICardType[]>([]); // Начинаем с пустого массива
-  const [isLoading, setIsLoading] = useState(false);
+  const [posts, setPosts] = useState<ICardType[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [offset, setOffset] = useState(0);
   const limit = 6;
   const observerTarget = useRef(null); // Референс на элемент-триггер
-  const [hasMore, setHasMore] = useState(true); // Флаг, есть ли еще посты для загрузки
 
   // Функция для загрузки постов
-  const loadPosts = useCallback(async (offset: number, limit: number) => {
+  const loadPosts = async (offset: number, limit: number) => {
     try {
       const response = await fetch(`/api/posts?limit=${limit}&offset=${offset}`);
       if (!response.ok) {
@@ -35,33 +34,30 @@ export function CardsList() {
       console.error('Error:', error);
       return [];
     }
-  }, []);
+  };
 
   // Загрузка первых постов при монтировании компонента
   useEffect(() => {
     const fetchInitialPosts = async () => {
-      setIsLoading(true);
       const initialPosts = await loadPosts(offset, limit);
       setPosts(initialPosts);
       setIsLoading(false);
     };
     fetchInitialPosts();
-  }, [loadPosts]);
+  }, []);
 
   // Автоматическая подгрузка постов при достижении конца списка
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !isLoading && hasMore) {
-          // Если триггер виден, загрузка не выполняется и есть еще посты
+        if (entries[0].isIntersecting && !isLoading) {
+          // Если триггер виден и загрузка не выполняется
           setIsLoading(true);
           const newOffset = offset + limit;
           loadPosts(newOffset, limit).then((newPosts) => {
             if (newPosts.length > 0) {
-              setPosts((prevPosts) => [...prevPosts, ...newPosts]); // Добавляем новые посты
+              setPosts((prevPosts) => (prevPosts ? [...prevPosts, ...newPosts] : newPosts));
               setOffset(newOffset);
-            } else {
-              setHasMore(false); // Если постов больше нет, останавливаем загрузку
             }
             setIsLoading(false);
           });
@@ -79,21 +75,20 @@ export function CardsList() {
         observer.unobserve(observerTarget.current); // Останавливаем наблюдение при размонтировании
       }
     };
-  }, [isLoading, offset, hasMore, loadPosts]);
+  }, [isLoading, offset]);
 
   if (error) return <div>{error}</div>;
 
   return (
     <div>
       <ul className={styles.cardlist}>
-        {posts.map((post: ICardType) => (
+        {posts?.map((post: ICardType) => (
           <Card key={post.id} card={post} />
         ))}
       </ul>
       {/* Элемент-триггер для автоматической подгрузки */}
       <div ref={observerTarget} style={{ height: '10px' }}></div>
       {isLoading && <div>Loading...</div>}
-      {!hasMore && <div>Больше постов нет</div>}
     </div>
   );
 }
