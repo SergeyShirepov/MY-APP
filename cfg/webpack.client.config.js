@@ -4,6 +4,7 @@ import webpack from 'webpack';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import CopyPlugin from "copy-webpack-plugin";
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
 const { DefinePlugin } = webpack;
 
@@ -13,7 +14,6 @@ const NODE_ENV = process.env.NODE_ENV;
 const GLOBAL_CSS_REGEXP = /\.global\.css$/;
 const IS_DEV = NODE_ENV === 'development';
 const IS_PROD = NODE_ENV === 'production';
-
 
 function setupDevtool() {
   if (IS_DEV) return 'eval';
@@ -99,18 +99,6 @@ const clientConfig = {
   devServer: {
     open: true,
     hot: true,
-    devMiddleware: {
-      index: true,
-      mimeTypes: { html: 'text/html' },
-      publicPath: '/static/',
-      serverSideRender: true,
-      writeToDisk: true,
-    },
-    client: {
-      logging: 'info',
-      overlay: true,
-    },
-    allowedHosts: ['all'],
     static: {
       directory: path.join(__dirname, '../dist/client/'),
     },
@@ -122,6 +110,11 @@ const clientConfig = {
         target: 'http://localhost:3000',
       },
     ],
+    devMiddleware: {
+      writeToDisk: (filePath) => {
+        return /\.(html|json|png|jpe?g|gif|svg|js|woff2)$/.test(filePath);
+      },
+    },
   },
   optimization: {
     minimize: IS_PROD,
@@ -156,6 +149,11 @@ const clientConfig = {
       openAnalyzer: true,
       generateStatsFile: true,
       statsFilename: 'stats.json',
+    }),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: [
+        path.join(__dirname, '../dist/client/**/*'), // Очищает папку dist/client
+      ],
     }),
   ],
 };

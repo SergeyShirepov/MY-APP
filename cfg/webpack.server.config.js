@@ -42,21 +42,21 @@ const serverConfig = {
       },
       {
         test: /\.css$/,
+        exclude: [
+          path.resolve(__dirname, 'node_modules'),
+          GLOBAL_CSS_REGEXP
+        ],
         use: [
-          'style-loader',
           {
             loader: 'css-loader',
             options: {
               modules: {
                 mode: 'local',
                 localIdentName: "[path][name]__[local]--[hash:base64:5]",
+                exportOnlyLocals: true, // Важно для сервера!
               },
             },
           },
-        ],
-        exclude: [
-          path.resolve(__dirname, 'node_modules'),
-          GLOBAL_CSS_REGEXP
         ],
       },
       {
@@ -69,17 +69,6 @@ const serverConfig = {
     ]
   },
   optimization: {
-    splitChunks: {
-      chunks: 'all',
-      name: 'vendors',
-      cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      },
-    },
   },
   plugins: [
     new DefinePlugin({ 'process.env.CLIENT_ID': "'SI6_ql3msvAkDVKeffKG_w'" })
