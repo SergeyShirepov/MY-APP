@@ -27,7 +27,7 @@ export function Tittle ({ card }: ICardProps) {
 
     return (
         <h2 className={styles.tittle}>
-            <Link to="/posts/1" className={styles.postlink} >
+            <Link to={`/posts/${card.id}`} className={styles.postlink} >
                 {cardTittle}
             </Link>
 
