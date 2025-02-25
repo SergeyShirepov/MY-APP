@@ -1,7 +1,8 @@
+  Это простое приложение на React 18, использующее webpack 5.97.1 с SSR на Axios, использующее Redux, react-router-dom и MSW.
 Для установки проекта нужно выполнить следующие команды: <br>
 npm install  <br>
 npx msw init ./dist/client <br>
-webpack <br><br>
-Запуск <br>
-npm run start <br>
-npm run dev <br>
+
+Запуск dev<br>
+npm run dev соберет dev версию и будет слушать порт сервера <br>
+npm run start запускает сервер <br>
