@@ -1,4 +1,4 @@
-  Это простое приложение на React 18, использующее webpack 5.97.1 с SSR на Axios, Redux, react-router-dom и MSW.
+  Это простое приложение на React 18, использующее webpack 5.97.1 с SSR на Axios, Redux, react-router-dom и MSW. <br>
 Для установки проекта нужно выполнить следующие команды: <br>
 npm install  <br>
 npx msw init ./dist/client <br>
