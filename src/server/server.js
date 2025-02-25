@@ -84,13 +84,13 @@ app.get('/auth', (req, res) => {
         maxAge: 3600000 // 1 час
       });
 
-      const appString = ReactDOMServer.renderToString(React.createElement(App));
-      res.send(indexTemplate(appString));
+      res.redirect('http://localhost:8080');
     })
     .catch(error => {
       console.error('Error:', error.response?.data || error.message);
       res.status(500).send('Authorization failed');
     });
+
 });
 
 app.get('*', (req, res) => {
