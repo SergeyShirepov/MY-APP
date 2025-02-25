@@ -15,7 +15,7 @@ async function startServiceWorker() {
 startServiceWorker().then(() => {
   const container = document.getElementById('react_root');
   if (container) {
-    hydrateRoot(container, <App token={window.__token__} />);
+    hydrateRoot(container, <App />);
   } else {
     console.error('Root container not found');
   }

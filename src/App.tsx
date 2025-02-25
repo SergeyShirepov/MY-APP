@@ -8,7 +8,7 @@ import { useToken } from './Hooks/useToken';
 import { tokenContext } from './shared/context/tokenContext';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Link, Routes, Router, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Post } from './shared/CardsList/Card/Post';
 
 // The main App component
@@ -31,8 +31,8 @@ export function App() {
           <Content>
             <CardsList />
             <Routes>
+            <Route path="/" element={<></>} />
             <Route path="/posts/:id" element ={
-              
             <Post card={{
               id: '',
               tittle: '',

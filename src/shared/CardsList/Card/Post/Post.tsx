@@ -25,10 +25,6 @@ export function Post({card}: ICardProps) {
 
     useEffect(() => {
         function handleClick(event: MouseEvent) {
-            if (isInitialClickIgnored) {
-                setIsInitialClickIgnored(false);
-                return;
-            }
 
             if (event.target instanceof Node && !ref.current?.contains(event.target)) {
                 navigate('/');
@@ -40,7 +36,7 @@ export function Post({card}: ICardProps) {
         return () => {
             document.removeEventListener("click", handleClick);
         };
-    }, [navigate('/'), isInitialClickIgnored]);
+    }, [navigate, isInitialClickIgnored]);
 
 
     const node = document.querySelector("#modal_root");
