@@ -1,11 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
-const postsResolver = ({ request }) => {
-  const url = new URL(request.url);
-  const limit = parseInt(url.searchParams.get('limit')) || 6; // По умолчанию 6 постов
-  const offset = parseInt(url.searchParams.get('offset')) || 0;
 
-  const allPosts = [
+  let allPosts = [
       {
             id: '1',
             tittle: 'Противоположная точка зрения на данную проблему',
@@ -14,7 +10,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-02T12:00:00Z',
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/123.png',
-            karmaValue: 1,
+            karmaValue: 456,
           },
           {
             id: '2',
@@ -24,7 +20,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2024-10-04T12:00:00Z',
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/aa27b0b476c3a1694ceb93619c3336a2.jpg',
-            karmaValue: 1,
+            karmaValue: 645,
           },
           {
             id: '3',
@@ -34,7 +30,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-06T12:00:00Z',
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/163929ed4b94a92fcf4b8095dec463e4.jpg',
-            karmaValue: 1,
+            karmaValue: 110,
           },
           {
             id: '4',
@@ -44,7 +40,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2022-10-08T12:00:00Z',
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/78cb15be0e98336709f47fcc97224b40.jpg',
-            karmaValue: 1,
+            karmaValue: 104,
           },
           {
             id: '5',
@@ -54,7 +50,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-10T12:00:00Z',
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/29b238fbdba8a13367c5ba34892f0341.jpg',
-            karmaValue: 1,
+            karmaValue: 176,
           },
           {
             id: '6',
@@ -64,7 +60,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/0ca6a655c3e85932027ca9c3a8f8b13d.jpg',
-            karmaValue: 1,
+            karmaValue: 234,
           },
           {
             id: '7',
@@ -74,7 +70,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Рашид Гаев',
             avatar: '/static/images/d5bfbc966738da2bd35395967c9a1754.jpg',
-            karmaValue: 1,
+            karmaValue: 345,
           },
           {
             id: '8',
@@ -84,7 +80,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Мария Белова',
             avatar: '/static/images/eeadb05bd433a816487cb204f7b15a3e.jpg',
-            karmaValue: 1,
+            karmaValue: 53,
           },
           {
             id: '9',
@@ -94,7 +90,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Инга Золотова',
             avatar: '/static/images/30c62d8876aae07c862c94bcd47c391c.jpg',
-            karmaValue: 1,
+            karmaValue: 2,
           },
           {
             id: '10',
@@ -104,7 +100,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Арсен Кааянц',
             avatar: '/static/images/917a8c7c98dcafff723bccecbf9dd539.jpg',
-            karmaValue: 1,
+            karmaValue: 324,
           },
           {
             id: '11',
@@ -114,7 +110,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Мария Белова',
             avatar: '/static/images/eeadb05bd433a816487cb204f7b15a3e.jpg',
-            karmaValue: 1,
+            karmaValue: 12,
           },
           {
             id: '12',
@@ -124,7 +120,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Виктор Пылёв',
             avatar: '/static/images/8cbe7d2546755e0333cd6eebc66b4386.jpg',
-            karmaValue: 1,
+            karmaValue: 24,
           },
           {
             id: '13',
@@ -134,7 +130,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Владислав Куняев',
             avatar: '/static/images/0ca6a655c3e85932027ca9c3a8f8b13d.jpg',
-            karmaValue: 1,
+            karmaValue: 5,
           },
           {
             id: '14',
@@ -144,7 +140,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Алексей Минаев',
             avatar: '/static/images/281aa067a45f28630b0e6bbc85f7a687.jpg',
-            karmaValue: 1,
+            karmaValue: 456,
           },
           {
             id: '15',
@@ -154,7 +150,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Инна Семёнова',
             avatar: '/static/images/ceb17f0a2c236eb7ea1c4dfb38af6b24.jpg',
-            karmaValue: 1,
+            karmaValue: 67,
           },
           {
             id: '16',
@@ -164,7 +160,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Олег Звеньев',
             avatar: '/static/images/b741c992952abd58393cac9b729ea13c.jpg',
-            karmaValue: 1,
+            karmaValue: 3,
           },
           {
             id: '17',
@@ -174,7 +170,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'София Ломова',
             avatar: '/static/images/5e6dca4423329dd52bf9df2bdfeb2b93.jpg',
-            karmaValue: 1,
+            karmaValue: 45,
           },
           {
             id: '18',
@@ -184,14 +180,37 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Дмитрий Швец',
             avatar: '/static/images/34bfb238ea654d377506fe099501b3fc.jpg',
-            karmaValue: 1,
+            karmaValue: 456,
           },
     ];
-    const posts = allPosts.slice(offset, offset + limit);
 
-    return HttpResponse.json(posts);
-  };
 
-// request handler
-const postsHandler = http.get("/api/posts", postsResolver);
-export const handlers = [postsHandler];
+    // Обработчик для обновления кармы
+const updateKarmaHandler = http.put('/api/posts/:id/karma', async ({ request, params }) => {
+  const { id } = params;
+  const { delta } = await request.json(); // delta может быть +1 или -1
+
+  // Находим пост по id
+  const post = allPosts.find((post) => post.id === id);
+  if (!post) {
+    return HttpResponse.json({ error: 'Post not found' }, { status: 404 });
+  }
+
+  // Обновляем karmaValue
+  post.karmaValue += delta;
+
+  return HttpResponse.json(post);
+});
+
+// Обработчик для получения постов
+const postsResolver = http.get('/api/posts', ({ request }) => {
+  const url = new URL(request.url);
+  const limit = parseInt(url.searchParams.get('limit')) || 6;
+  const offset = parseInt(url.searchParams.get('offset')) || 0;
+
+  const posts = allPosts.slice(offset, offset + limit);
+  return HttpResponse.json(posts);
+});
+
+// Экспортируем все обработчики
+export const handlers = [postsResolver, updateKarmaHandler];
