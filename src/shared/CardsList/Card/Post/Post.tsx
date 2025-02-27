@@ -15,6 +15,7 @@ interface ICardProps {
         timeViewed: string;
         avtor: string;
         avatar: string;
+        karmaValue: number;
     };
 }
 

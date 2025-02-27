@@ -11,19 +11,42 @@ interface ICardProps {
         timeViewed: string;
         avtor: string;
         avatar: string;
+        karmaValue: number;
     };
 }
 
 const KarmaCounter = ({card}: ICardProps) => {
-    const [karmaValue, setKarmaValue] = useState(234);
+    const [karmaValue, setKarmaValue] = useState(card.karmaValue);
+    
+    // Функция для обновления кармы на сервере
+const updateKarma = async (delta: number) => {
+  try {
+    const response = await fetch(`/api/posts/${card.id}/karma`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ delta }), // Отправляем изменение кармы (+1 или -1)
+    });
 
-    const handleUpClick = () => {
-        setKarmaValue(karmaValue + 1);
-    };
+    if (!response.ok) {
+      throw new Error('Failed to update karma');
+    }
 
-    const handleDownClick = () => {
-        setKarmaValue(karmaValue - 1);
-    };
+    const updatedPost = await response.json();
+    setKarmaValue(updatedPost.karmaValue); // Обновляем состояние
+  } catch (error) {
+    console.error('Error updating karma:', error);
+  }
+};
+
+const handleUpClick = () => {
+  updateKarma(1); // Увеличиваем карму на 1
+};
+
+const handleDownClick = () => {
+  updateKarma(-1); // Уменьшаем карму на 1
+};
 
 
     return (

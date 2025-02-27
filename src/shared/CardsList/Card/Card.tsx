@@ -21,15 +21,6 @@ interface ICardProps {
 }
 
 export function Card({ card }: ICardProps) {
-    const [karmaValue, setKarmaValue] = useState(card.karmaValue);
-
-    const handleUpClick = () => {
-        setKarmaValue(karmaValue + 1);
-    };
-
-    const handleDownClick = () => {
-        setKarmaValue(karmaValue - 1);
-    };
 
 
     function getviewAgo({ card }: ICardProps): string {
