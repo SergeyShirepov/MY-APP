@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Card } from './Card';
 import * as styles from './cardslist.css';
 
-interface ICardType {
+export interface ICardType {
   id: string;
   tittle: string;
   cardPreview: string;
@@ -10,6 +10,7 @@ interface ICardType {
   timeViewed: string;
   avtor: string;
   avatar: string;
+  karmaValue: number;
 }
 
 export function CardsList() {

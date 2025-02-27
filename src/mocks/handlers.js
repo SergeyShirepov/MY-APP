@@ -14,6 +14,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-02T12:00:00Z',
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/123.png',
+            karmaValue: 1,
           },
           {
             id: '2',
@@ -23,6 +24,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2024-10-04T12:00:00Z',
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/aa27b0b476c3a1694ceb93619c3336a2.jpg',
+            karmaValue: 1,
           },
           {
             id: '3',
@@ -32,6 +34,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-06T12:00:00Z',
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/163929ed4b94a92fcf4b8095dec463e4.jpg',
+            karmaValue: 1,
           },
           {
             id: '4',
@@ -41,6 +44,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2022-10-08T12:00:00Z',
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/78cb15be0e98336709f47fcc97224b40.jpg',
+            karmaValue: 1,
           },
           {
             id: '5',
@@ -50,6 +54,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-10T12:00:00Z',
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/29b238fbdba8a13367c5ba34892f0341.jpg',
+            karmaValue: 1,
           },
           {
             id: '6',
@@ -59,6 +64,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Дмитрий Гришин',
             avatar: '/static/images/0ca6a655c3e85932027ca9c3a8f8b13d.jpg',
+            karmaValue: 1,
           },
           {
             id: '7',
@@ -68,6 +74,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Рашид Гаев',
             avatar: '/static/images/d5bfbc966738da2bd35395967c9a1754.jpg',
+            karmaValue: 1,
           },
           {
             id: '8',
@@ -77,6 +84,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Мария Белова',
             avatar: '/static/images/eeadb05bd433a816487cb204f7b15a3e.jpg',
+            karmaValue: 1,
           },
           {
             id: '9',
@@ -86,6 +94,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Инга Золотова',
             avatar: '/static/images/30c62d8876aae07c862c94bcd47c391c.jpg',
+            karmaValue: 1,
           },
           {
             id: '10',
@@ -95,6 +104,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Арсен Кааянц',
             avatar: '/static/images/917a8c7c98dcafff723bccecbf9dd539.jpg',
+            karmaValue: 1,
           },
           {
             id: '11',
@@ -104,6 +114,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Мария Белова',
             avatar: '/static/images/eeadb05bd433a816487cb204f7b15a3e.jpg',
+            karmaValue: 1,
           },
           {
             id: '12',
@@ -113,6 +124,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Виктор Пылёв',
             avatar: '/static/images/8cbe7d2546755e0333cd6eebc66b4386.jpg',
+            karmaValue: 1,
           },
           {
             id: '13',
@@ -122,6 +134,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Владислав Куняев',
             avatar: '/static/images/0ca6a655c3e85932027ca9c3a8f8b13d.jpg',
+            karmaValue: 1,
           },
           {
             id: '14',
@@ -131,6 +144,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Алексей Минаев',
             avatar: '/static/images/281aa067a45f28630b0e6bbc85f7a687.jpg',
+            karmaValue: 1,
           },
           {
             id: '15',
@@ -140,6 +154,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Инна Семёнова',
             avatar: '/static/images/ceb17f0a2c236eb7ea1c4dfb38af6b24.jpg',
+            karmaValue: 1,
           },
           {
             id: '16',
@@ -149,6 +164,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Олег Звеньев',
             avatar: '/static/images/b741c992952abd58393cac9b729ea13c.jpg',
+            karmaValue: 1,
           },
           {
             id: '17',
@@ -158,6 +174,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'София Ломова',
             avatar: '/static/images/5e6dca4423329dd52bf9df2bdfeb2b93.jpg',
+            karmaValue: 1,
           },
           {
             id: '18',
@@ -167,6 +184,7 @@ const postsResolver = ({ request }) => {
             timeViewed: '2023-10-12T12:00:00Z',
             avtor: 'Дмитрий Швец',
             avatar: '/static/images/34bfb238ea654d377506fe099501b3fc.jpg',
+            karmaValue: 1,
           },
     ];
     const posts = allPosts.slice(offset, offset + limit);
