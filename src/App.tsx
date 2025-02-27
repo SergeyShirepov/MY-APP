@@ -30,21 +30,6 @@ export function App() {
           <Header />
           <Content>
             <CardsList />
-            <Routes>
-            <Route path="/" element={<></>} />
-            <Route path="/posts/:id" element ={
-            <Post card={{
-              id: '',
-              tittle: '',
-              cardPreview: '',
-              timePublished: '',
-              timeViewed: '',
-              avtor: '',
-              avatar: ''
-            }} />
-            }>
-            </Route>
-            </Routes>
           </Content>
         </Layout>
         </BrowserRouter>
