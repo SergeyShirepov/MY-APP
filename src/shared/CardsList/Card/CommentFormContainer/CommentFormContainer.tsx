@@ -3,13 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateComment } from '../../../../store/store'; // Импортируйте экшен из commentSlice
 import { CommentForm } from '../CommentForm/CommentForm';
 
-interface RootState {
-  commentText: string;
-}
+ type RootState = {
+  comment: {
+    commentText: string;
+  }
+  };
 
 export function CommentFormContainer() {
 
-  const value = useSelector((state: RootState) => state.commentText);
+  const value = useSelector((state: RootState) => state.comment.commentText);
   const dispatch = useDispatch();
 
   function handleChange(e: ChangeEvent<HTMLTextAreaElement>) {
