@@ -22,7 +22,7 @@ export type RootState = {
 
 // Начальное состояние для комментариев
 const initialCommentState = {
-  commentText: 'Privet',
+  commentText: '',
 };
 
 // Слайс для комментариев
