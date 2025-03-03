@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateComment } from '../../../../store/store'; // Импортируйте экшен из commentSlice
+import { updateComment } from '../../../../../store/store'; // Импортируйте экшен из commentSlice
 import { CommentForm } from '../CommentForm/CommentForm';
 
  type RootState = {
@@ -9,8 +9,12 @@ import { CommentForm } from '../CommentForm/CommentForm';
   }
   };
 
-export function CommentFormContainer() {
+  type Props = {
+    
+    setComments: (updateFn: (prevComments: string[]) => string[]) => void;
+  }
 
+export function CommentFormContainer( {setComments} :Props ) {
   const value = useSelector((state: RootState) => state.comment.commentText);
   const dispatch = useDispatch();
 
@@ -21,6 +25,8 @@ export function CommentFormContainer() {
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     console.log('Comment submitted:', value);
+    setComments((prevComments: string[]) => [...prevComments, value]);
+    dispatch(updateComment(''));
   }
 
   return (

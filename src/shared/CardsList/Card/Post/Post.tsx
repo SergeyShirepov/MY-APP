@@ -3,8 +3,9 @@ import {createPortal} from "react-dom";
 import * as styles from "./post.css";
 import AvtorPublished from "../AvtorPublished/AvtorPublished";
 import KarmaCounter from "../KarmaCounter/KarmaCounter";
-import { CommentFormContainer } from "../CommentFormContainer/CommentFormContainer";
+import { CommentFormContainer } from "./CommentFormContainer/CommentFormContainer";
 import { useNavigate } from 'react-router-dom';
+import { Comments } from './Comments/Comments';
 
 interface ICardProps {
     card: {
@@ -24,6 +25,7 @@ export function Post({card}: ICardProps) {
     const ref = useRef<HTMLDivElement>(null);
     const [isInitialClickIgnored, setIsInitialClickIgnored] = useState(true);
     const navigate = useNavigate();
+    const [comments, setComments] = useState<string[]>([]);
 
     useEffect(() => {
         function handleClick(event: MouseEvent) {
@@ -76,7 +78,8 @@ console.log(card.cardPreview);
                     конкретные выводы,
                     разумеется, описаны максимально подробно.
                 </div>
-                <CommentFormContainer />
+                <CommentFormContainer setComments={setComments} />
+                <Comments comments={comments} />
             </div>
         </div>,
         node
