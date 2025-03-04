@@ -8,11 +8,9 @@ interface Props {
 
 export function Comments ( {comments}:Props) {
     return (
-        <div>
-            <h1 style={{textAlign: 'center'}}>
-                </h1>
+        <div style={{marginTop: '20px'}}>
                 {comments.map((comment:string, index:number) =>
-                    <CommentItem number={index+1} comment ={comment} key ={index} />
+                    <CommentItem comment ={comment} key ={index} />
                 )}
         </div>
     )

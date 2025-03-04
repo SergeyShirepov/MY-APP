@@ -8,13 +8,13 @@ import { useToken } from './Hooks/useToken';
 import { tokenContext } from './shared/context/tokenContext';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Post } from './shared/CardsList/Card/Post';
+import { BrowserRouter } from 'react-router-dom';
 
 // The main App component
 export function App() {
   const [token] = useToken();
   const [mounted, setMounted] = useState(false);
+  const [sortBy, setSortBy] = useState('');
 
   useEffect(() => {
     setMounted(true);
@@ -27,9 +27,9 @@ export function App() {
       <tokenContext.Provider value={token}>
         <BrowserRouter>
         <Layout>
-          <Header />
+          <Header onSortChange={setSortBy} />
           <Content>
-            <CardsList />
+            <CardsList sortBy={sortBy} />
           </Content>
         </Layout>
         </BrowserRouter>
