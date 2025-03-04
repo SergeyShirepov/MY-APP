@@ -13,13 +13,19 @@ export interface ICardType {
   karmaValue: number;
 }
 
-export function CardsList() {
-  const [posts, setPosts] = useState<ICardType[] | null>(null);
+type CardsListProps = {
+  sortBy: string;
+};
+
+export function CardsList({ sortBy }: CardsListProps) {
+  const [posts, setPosts] = useState<ICardType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [offset, setOffset] = useState(0);
   const limit = 6;
   const observerTarget = useRef(null); // Референс на элемент-триггер
+
+
 
   // Функция для загрузки постов
   const loadPosts = async (offset: number, limit: number) => {
@@ -79,6 +85,23 @@ export function CardsList() {
   }, [isLoading, offset]);
 
   if (error) return <div>{error}</div>;
+
+      // Сортировка постов при изменении параметра сортировки
+      useEffect(() => {
+        if (posts) {
+          const sortedPosts = [...posts].sort((a, b) => {
+            if (sortBy === 'karma') {
+              return b.karmaValue - a.karmaValue; // Сортировка по убыванию кармы
+            } else if (sortBy === 'dataPost') {
+              return new Date(b.timePublished).getTime() - new Date(a.timePublished).getTime(); // Сортировка по дате (новые сначала)
+            }
+            return 0;
+          });
+          setPosts(sortedPosts);
+          console.log(posts);
+        }
+        console.log(posts);
+      }, [sortBy]);
 
   return (
     <div>
