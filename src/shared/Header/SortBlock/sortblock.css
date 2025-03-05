@@ -14,15 +14,3 @@
     cursor: pointer;
   }
   
-  /* Кастомная стрелка */
-  .sortblock::after {
-    content: "";
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 14px;
-    height: 16px;
-    background-image: url('data:image/svg+xml;utf8,<svg ...></svg>');
-    pointer-events: none;
-  }
