@@ -6,8 +6,10 @@
     padding: 14px 20px;
     background-color: var(--white);
     border-radius: 0 0 7px 7px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     margin: 0 0 38px;
+}
+
+.serchblock:active {
 }
 
 .searchForm {}
@@ -19,7 +21,6 @@
     border: none;
     border-radius: 30px;
     background-color: var(--white);
-    box-shadow: 0px 0px 20px 0px #0000001A;
     font-weight: 400;
     font-size: 20px;
     line-height: 23.44px;
@@ -29,6 +30,7 @@
 
 .searchInput:focus {
     outline: none;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .searchInput::placeholder {
