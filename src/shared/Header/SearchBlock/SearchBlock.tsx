@@ -1,6 +1,6 @@
 import React from 'react';
 import * as styles from './searchblock.css';
-import { UserBlock } from './UserBlock';
+import {UserBlock} from './UserBlock';
 import { useUserData } from '../../../Hooks/useUserData';
 
 interface SearchBlockProps {
