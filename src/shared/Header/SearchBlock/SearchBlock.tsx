@@ -3,7 +3,23 @@ import * as styles from './searchblock.css';
 import { UserBlock } from './UserBlock';
 import { useUserData } from '../../../Hooks/useUserData';
 
-export function SearchBlock() {
+interface SearchBlockProps {
+  value: string;
+  onChange: (search: string) => void;
+  type: string;
+  name: string;
+  placeholder: string;
+  required?: boolean;
+}
+
+export function SearchBlock({
+  value,
+  onChange,
+  type,
+  name,
+  placeholder,
+  required,
+}: SearchBlockProps) {
   const { data, loading } = useUserData();
 
   console.log('SearchBlock render:', { data, loading });
@@ -11,10 +27,15 @@ export function SearchBlock() {
   return (
     <div className={styles.serchblock}>
       <form className={styles.searchForm} action="/search" method="GET">
-        <input type="text" name="query" className={styles.searchInput} 
-        placeholder="
-        Поиск
-        " required />
+        <input 
+        type={type}
+        name={name}
+        className={styles.searchInput}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        required={required}
+         />
       </form>
       <UserBlock
         avatarSrc={data?.iconImg}
