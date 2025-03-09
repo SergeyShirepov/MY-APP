@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { RootState, store } from '../store/store';
+import { store } from '../store/store';
 import { setToken } from '../store/store';
 
 export function useToken(): [string | null] {
