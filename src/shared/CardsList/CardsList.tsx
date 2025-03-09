@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React  from 'react';
 import { Card } from './Card';
 import * as styles from './cardslist.css';
 
