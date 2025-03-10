@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { Card } from './Card';
 import * as styles from './cardslist.css';
 
@@ -21,10 +21,10 @@ type CardsListProps = {
 
 export function CardsList({ sortBy, serchBy, posts }: CardsListProps) {
   return (
-      <ul className={styles.cardlist}>
-        {posts?.map((post: ICardType) => (
-          <Card key={post.id} card={post} />
-        ))}
-      </ul>
+    <ul className={styles.cardlist}>
+      {posts?.map((post: ICardType) => (
+        <Card key={post.id} card={post} />
+      ))}
+    </ul>
   );
 }
