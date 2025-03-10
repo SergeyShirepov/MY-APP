@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Layout } from './shared/Layout';
 import { Header } from './shared/Header';
 import { Content } from './shared/Content';
+import { Navi } from './shared/Navi/Navi';
 import './main.global.css';
 import { CardsList } from './shared/CardsList';
 import { useToken } from './Hooks/useToken';
@@ -58,6 +59,7 @@ export function App() {
         <BrowserRouter>
           <Layout>
             <Header onSortChange={setSortBy} onSearchChange={setSearchBy} />
+            <Navi />
             <Content>
               <CardsList sortBy={sortBy} serchBy={serchBy} posts={sortedAndSearchPosts} />
               <div ref={observerTarget} style={{ height: '10px' }}></div>

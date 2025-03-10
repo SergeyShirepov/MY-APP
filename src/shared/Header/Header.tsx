@@ -40,9 +40,8 @@ export function Header({ onSortChange, onSearchChange }: HeaderProps) {
         onChange={handleSearchChange}
         type="text"
         name="query"
-        placeholder="
-              Поиск
-              " required
+        placeholder=" Поиск " 
+        required
       />
     </header>
   );
