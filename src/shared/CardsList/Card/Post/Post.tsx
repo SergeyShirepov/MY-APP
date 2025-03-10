@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {createPortal} from "react-dom";
 import * as styles from "./post.css";
-import AvtorPublished from "../AvtorPublished/AvtorPublished";
+import {AvtorPublished} from "../AvtorPublished/AvtorPublished";
 import KarmaCounter from "../KarmaCounter/KarmaCounter";
 import { CommentFormContainer } from "./CommentFormContainer/CommentFormContainer";
 import { useNavigate } from 'react-router-dom';

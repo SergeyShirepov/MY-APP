@@ -4,24 +4,24 @@ import { Link } from 'react-router-dom';
 
 interface ICardProps {
     card: {
-      id: string;
-      tittle: string;
-      cardPreview: string;
-      timePublished: string;
-      timeViewed: string;
-      avtor: string;
-      avatar: string;
+        id: string;
+        tittle: string;
+        cardPreview: string;
+        timePublished: string;
+        timeViewed: string;
+        avtor: string;
+        avatar: string;
     }
-  }
+}
 
 
-export function Tittle ({ card }: ICardProps) {
+export function Tittle({ card }: ICardProps) {
     let cardLength: number = card.tittle.length;
     let cardTittle;
 
     if (cardLength >= 62) {
         cardTittle = [card.tittle.slice(0, 62), `...`].join('');
-    } else{
+    } else {
         cardTittle = card.tittle.slice(0, 62);
     }
 
@@ -30,10 +30,6 @@ export function Tittle ({ card }: ICardProps) {
             <Link to={`/posts/${card.id}`} className={styles.postlink} >
                 {cardTittle}
             </Link>
-
-
-
-
         </h2>
     );
 }

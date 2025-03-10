@@ -1,19 +1,7 @@
 import React, {useState} from 'react';
 import * as styles from './karmacounter.css';
+import { ICardProps } from '../Card';
 
-
-interface ICardProps {
-    card: {
-        id: string;
-        tittle: string;
-        cardPreview: string;
-        timePublished: string;
-        timeViewed: string;
-        avtor: string;
-        avatar: string;
-        karmaValue: number;
-    };
-}
 
 const KarmaCounter = ({card}: ICardProps) => {
     const [karmaValue, setKarmaValue] = useState(card.karmaValue);

@@ -3,14 +3,14 @@ import { Layout } from './shared/Layout';
 import { Header } from './shared/Header';
 import { Content } from './shared/Content';
 import './main.global.css';
-import { CardsList, ICardType } from './shared/CardsList';
+import { CardsList } from './shared/CardsList';
 import { useToken } from './Hooks/useToken';
 import { tokenContext } from './shared/context/tokenContext';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { useSortedAndSearchPosts } from './Hooks/useSortedAndSearchPosts';
-import usePosts from './Hooks/useLoadPosts'; 
+import usePosts from './Hooks/useLoadPosts';
 
 export function App() {
   const [token] = useToken();
@@ -19,7 +19,7 @@ export function App() {
   const [serchBy, setSearchBy] = useState('');
   const observerTarget = useRef(null);
 
-  const { posts, isLoading, error, hasMore, loadMorePosts } = usePosts(0, 6); 
+  const { posts, isLoading, error, hasMore, loadMorePosts } = usePosts(0, 6);
 
   const sortedAndSearchPosts = useSortedAndSearchPosts(posts, sortBy, serchBy);
 

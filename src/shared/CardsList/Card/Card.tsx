@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as styles from './card.css';
 import { Menu } from './Menu';
 import { Tittle } from './Tittle';
-import AvtorPublished from "./AvtorPublished/AvtorPublished";
+import {AvtorPublished} from "./AvtorPublished/AvtorPublished";
 import KarmaCounter from "./KarmaCounter/KarmaCounter";
 import { Route, Routes } from 'react-router-dom';
 import { Post } from './Post';
+import { useGetviewAgo } from '../../../Hooks/useGetviewAgo';
 
-interface ICardProps {
+
+export interface ICardProps {
     card: {
         id: string;
         tittle: string;
@@ -21,38 +23,9 @@ interface ICardProps {
 }
 
 export function Card({ card }: ICardProps) {
-
-
-    function getviewAgo({ card }: ICardProps): string {
-        const ViewedDate = new Date(card.timeViewed);
-        const currentDate = new Date();
-        const timeDifference = currentDate.getTime() - ViewedDate.getTime();
-
-        const millisecondsInHour = 1000 * 60 * 60;
-        const millisecondsInDay = millisecondsInHour * 24;
-        const millisecondsInMonth = millisecondsInDay * 30; // Упрощенно считаем месяц как 30 дней
-        const millisecondsInYear = millisecondsInDay * 365; // Упрощенно считаем год как 365 дней
-
-        if (timeDifference >= millisecondsInYear) {
-            const yearsAgo = Math.floor(timeDifference / millisecondsInYear);
-            if (yearsAgo === 1) {
-                return 'более 1 года назад';
-            } else {
-                return `более ${yearsAgo} лет назад`;
-            }
-        } else if (timeDifference >= millisecondsInMonth) {
-            const monthsAgo = Math.floor(timeDifference / millisecondsInMonth);
-            return `более ${monthsAgo} месяцев назад`;
-        } else if (timeDifference >= millisecondsInDay) {
-            const daysAgo = Math.floor(timeDifference / millisecondsInDay);
-            return `более ${daysAgo} дней назад`;
-        } else if (timeDifference >= millisecondsInHour) {
-            const hoursAgo = Math.floor(timeDifference / millisecondsInHour);
-            return `более ${hoursAgo} часов назад`;
-        } else {
-            return 'Меньше часа назад';
-        }
-    }
+    const getviewAgo = useGetviewAgo({
+        card: { id: '', tittle: '', cardPreview: '', timePublished: '', timeViewed: '', avtor: '', avatar: '', karmaValue: 0, }
+    });
 
     return (
         <li className={styles.card}>
@@ -64,7 +37,7 @@ export function Card({ card }: ICardProps) {
                             fill="#999999" />
                     </svg>
                     <span className={styles.whitespace}>
-                        {getviewAgo({ card })}
+                        {getviewAgo}
                     </span>
                 </div>
                 <AvtorPublished card={card} />
