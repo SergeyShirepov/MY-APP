@@ -1,0 +1,29 @@
+.navi {
+    list-style: none;
+    display: flex;
+    margin-left: 40px;
+    width: 981px;
+    height: 38px;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+}
+
+.navi li {
+    padding-bottom: 13px;
+    margin-right: 60px;
+}
+
+.navi li:hover,
+.navi li:hover {
+    border-top: 0px;
+    border-right: 0px;
+    border-bottom: 2px;
+    border-left: 0px;
+    border-style: solid;
+    border-color: var(--grayd9);
+    color: var(--orange);
+    border-color: var(--orange);
+}
