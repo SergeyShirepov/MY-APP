@@ -1,18 +1,7 @@
 import React from 'react';
 import * as styles from './tittle.css';
 import { Link } from 'react-router-dom';
-
-interface ICardProps {
-    card: {
-        id: string;
-        tittle: string;
-        cardPreview: string;
-        timePublished: string;
-        timeViewed: string;
-        avtor: string;
-        avatar: string;
-    }
-}
+import { ICardProps } from '../Card';
 
 
 export function Tittle({ card }: ICardProps) {

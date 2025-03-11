@@ -6,19 +6,8 @@ import KarmaCounter from "../KarmaCounter/KarmaCounter";
 import { CommentFormContainer } from "./CommentFormContainer/CommentFormContainer";
 import { useNavigate } from 'react-router-dom';
 import { Comments } from './Comments/Comments';
+import { ICardProps } from "../Card";
 
-interface ICardProps {
-    card: {
-        id: string;
-        tittle: string;
-        cardPreview: string;
-        timePublished: string;
-        timeViewed: string;
-        avtor: string;
-        avatar: string;
-        karmaValue: number;
-    };
-}
 
 export function Post({card}: ICardProps) {
 
