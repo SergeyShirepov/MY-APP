@@ -4,7 +4,7 @@ import * as styles from './cardslist.css';
 
 export interface ICardType {
   id: string;
-  tittle: string;
+  title: string;
   cardPreview: string;
   timePublished: string;
   timeViewed: string;

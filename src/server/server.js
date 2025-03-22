@@ -9,6 +9,8 @@ import { indexTemplate } from './indexTemplate.tsx';
 import axios from 'axios';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import mongoose from 'mongoose';
+import { Post } from '../models/Post.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,8 +28,32 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Добавляем отдельный middleware для mockServiceWorker.js
-app.use('/mockServiceWorker.js', express.static(path.join(__dirname, '../../dist/client/mockServiceWorker.js')));
+// Подключение к MongoDB
+mongoose.connect('mongodb://localhost:27017/My-app', {
+})
+  .then(() => console.log('Подключение к MongoDB'))
+  .catch((err) => console.error('Ошибка подключения к MongoDB', err));
+
+app.get('/api/posts', async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 6;
+    const offset = parseInt(req.query.offset) || 0;
+
+    const posts = await Post
+      .find()
+      .sort({ id: 1 })
+      .skip(offset)
+      .limit(limit);
+
+    const totalPosts = await Post.countDocuments();
+    const hasMore = offset + limit < totalPosts;
+
+    res.json({ posts, hasMore });
+  } catch (error) {
+    console.error('Ошибка загрузки постов', error);
+    res.status(500).json({ error: 'Ошибка загрузки постов' });
+  }
+});
 
 app.use('/static', express.static(path.join(__dirname, '../../dist/client')));
 

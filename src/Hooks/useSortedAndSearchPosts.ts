@@ -9,7 +9,7 @@ export const useSortedAndSearchPosts = (  posts: ICardType[],  sortBy: string,  
     // Фильтрация по поиску
     if (serchBy) {
       filteredPosts = filteredPosts.filter((post) =>
-        post.tittle.toLowerCase().includes(serchBy.toLowerCase())
+        post.title.toLowerCase().includes(serchBy.toLowerCase())
       );
     }
 

@@ -39,7 +39,7 @@ console.log(card.cardPreview);
                     <KarmaCounter card={card}/>
                     <div className={styles.infoAvtor}>
                         <div className={styles.postTittle}>
-                            {card.tittle}
+                            {card.title}
                         </div>
                             <AvtorPublished card={card}/>
                     </div>

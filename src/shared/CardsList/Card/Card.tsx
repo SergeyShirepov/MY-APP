@@ -1,7 +1,7 @@
 import React from 'react';
 import * as styles from './card.css';
 import { Menu } from './Menu';
-import { Tittle } from './Tittle';
+import { Title } from './Tittle';
 import {AvtorPublished} from "./AvtorPublished/AvtorPublished";
 import KarmaCounter from "./KarmaCounter/KarmaCounter";
 import { Route, Routes } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { useGetviewAgo } from '../../../Hooks/useGetviewAgo';
 export interface ICardProps {
     card: {
         id: string;
-        tittle: string;
+        title: string;
         cardPreview: string;
         timePublished: string;
         timeViewed: string;
@@ -24,7 +24,7 @@ export interface ICardProps {
 
 export function Card({ card }: ICardProps) {
     const getviewAgo = useGetviewAgo({
-        card: { id: '', tittle: '', cardPreview: '', timePublished: '', timeViewed: '', avtor: '', avatar: '', karmaValue: 0, }
+        card: { id: '', title: '', cardPreview: '', timePublished: '', timeViewed: '', avtor: '', avatar: '', karmaValue: 0, }
     });
 
     return (
@@ -41,7 +41,7 @@ export function Card({ card }: ICardProps) {
                     </span>
                 </div>
                 <AvtorPublished card={card} />
-                <Tittle card={card} />
+                <Title card={card} />
             </div>
             <Menu />
             <div className={styles.preview}>
