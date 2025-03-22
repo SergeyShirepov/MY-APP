@@ -1,8 +1,8 @@
-  Это простое приложение на React 18, использующее webpack 5.97.1 с SSR на Axios, Redux, react-router-dom и MSW. <br> <br>
-Для установки проекта нужно выполнить следующие команды: <br>
+  Это простое приложение на React 18, использующее webpack 5.97.1 с SSR на Axios, Redux, react-router-dom. <br> <br>
+Для установки проекта нужно установить MongoDB и выполнить следующие команды: <br>
 npm install  <br>
-npx msw init ./dist/client <br>
+node ./src/models/seed.js (Для загрузки первичных данных в MongoDB) <br>
 
-Запуск dev<br>
-npm run dev соберет dev версию и будет слушать порт сервера <br>
-npm run start запускает сервер <br>
+Запуск: <br>
+dev <br>
+npm run start <br>
