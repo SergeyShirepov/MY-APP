@@ -36,23 +36,35 @@ mongoose.connect('mongodb://localhost:27017/My-app', {
 
 app.get('/api/posts', async (req, res) => {
   try {
-    const limit = parseInt(req.query.limit) || 6;
-    const offset = parseInt(req.query.offset) || 0;
+    const { limit, offset, sortBy } = req.query;
+    let sort = {};
 
-    const posts = await Post
-      .find()
-      .sort({ id: 1 })
-      .skip(offset)
-      .limit(limit);
+    switch (sortBy) {
+      case 'karma':
+        sort = { karmaValue: -1 };
+        break;
+      case 'date':
+        sort = { timePublished: -1 };
+        break;
+        default:
+        sort = { id: 1 };
+    }
+  
 
-    const totalPosts = await Post.countDocuments();
-    const hasMore = offset + limit < totalPosts;
+const posts = await Post
+  .find()
+  .sort(sort)
+  .skip(offset)
+  .limit(limit);
 
-    res.json({ posts, hasMore });
+const totalPosts = await Post.countDocuments();
+const hasMore = offset + limit < totalPosts;
+res.json({ posts, hasMore });
+
   } catch (error) {
-    console.error('Ошибка загрузки постов', error);
-    res.status(500).json({ error: 'Ошибка загрузки постов' });
-  }
+  console.error('Ошибка загрузки постов', error);
+  res.status(500).json({ error: 'Ошибка загрузки постов' });
+}
 });
 
 app.use('/static', express.static(path.join(__dirname, '../../dist/client')));

@@ -9,30 +9,29 @@ interface UsePostsResult {
   loadMorePosts: () => void;
 }
 
-const usePosts = (initialOffset: number, limit: number): UsePostsResult => {
+const usePosts = (initialOffset: number, limit: number, sortBy: string): UsePostsResult => {
   const [posts, setPosts] = useState<ICardType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [offset, setOffset] = useState(initialOffset);
   const [hasMore, setHasMore] = useState(true);
 
-  const loadPosts = async (offset: number, limit: number): Promise<{ posts: ICardType[]; hasMore: boolean }> => {
+  const loadPosts = async (offset: number, limit: number, sortBy: string): Promise<{ posts: ICardType[]; hasMore: boolean }> => {
     try {
-      const response = await fetch(`/api/posts?limit=${limit}&offset=${offset}`);
+      const response = await fetch(`/api/posts?limit=${limit}&offset=${offset}&sortBy=${sortBy}`);
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Ошибка сети');
       }
       const newPosts = await response.json();
       return newPosts;
     } catch (error) {
       setError('Ошибка загрузки данных');
-      console.error('Error:', error);
       return { posts: [], hasMore: false };
     }
   };
 
   const fetchInitialPosts = async () => {
-    const { posts, hasMore } = await loadPosts(offset, limit);
+    const { posts, hasMore } = await loadPosts(offset, limit, sortBy);
     setPosts(posts);
     setHasMore(hasMore);
     setIsLoading(false);
@@ -42,7 +41,7 @@ const usePosts = (initialOffset: number, limit: number): UsePostsResult => {
     if (!isLoading && hasMore) {
       setIsLoading(true);
       const newOffset = offset + limit;
-      const { posts: newPosts, hasMore: newHasMore } = await loadPosts(newOffset, limit);
+      const { posts: newPosts, hasMore: newHasMore } = await loadPosts(newOffset, limit, sortBy);
 
       setPosts((prevPosts) => {
         const updatedPosts = [...prevPosts, ...newPosts];
@@ -57,7 +56,7 @@ const usePosts = (initialOffset: number, limit: number): UsePostsResult => {
 
   useEffect(() => {
     fetchInitialPosts();
-  }, []);
+  }, [sortBy]);
 
   return {
     posts,

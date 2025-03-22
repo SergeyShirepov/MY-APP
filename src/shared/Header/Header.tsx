@@ -13,6 +13,8 @@ export function Header({ onSortChange, onSearchChange }: HeaderProps) {
   const [selectorSort, setSelectorSort] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
+  
+
   const handleSortChange = (sort: string) => {
     setSelectorSort(sort);
     onSortChange(sort);
