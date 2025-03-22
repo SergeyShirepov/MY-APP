@@ -1,5 +1,5 @@
 import { configureStore, createSlice, PayloadAction, ThunkAction, Action, combineReducers } from "@reduxjs/toolkit";
-import { ME_REQUEST, ME_REQUEST_SUCCESS, ME_REQUEST_ERROR, MeRequestSuccessAction, MeRequestErrorAction } from './actions';
+import { ME_REQUEST, ME_REQUEST_SUCCESS, ME_REQUEST_ERROR } from './actions';
 
 // Определение типа для состояния пользователя
 interface IUserData {

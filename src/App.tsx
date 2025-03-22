@@ -6,12 +6,11 @@ import { Navi } from './shared/Navi/Navi';
 import './main.global.css';
 import { CardsList } from './shared/CardsList';
 import { useToken } from './Hooks/useToken';
-import { tokenContext } from './shared/context/tokenContext';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { useSortedAndSearchPosts } from './Hooks/useSortedAndSearchPosts';
-import usePosts from './Hooks/useLoadPosts';
+import usePosts from './Hooks/usePosts';
 
 export function App() {
   const [token] = useToken();
@@ -19,8 +18,7 @@ export function App() {
   const [sortBy, setSortBy] = useState('');
   const [serchBy, setSearchBy] = useState('');
   const observerTarget = useRef(null);
-
-  const { posts, isLoading, error, hasMore, loadMorePosts } = usePosts(0, 6);
+  const { posts = [], isLoading, error, hasMore, loadMorePosts } = usePosts(0, 6);
 
   const sortedAndSearchPosts = useSortedAndSearchPosts(posts, sortBy, serchBy);
 
@@ -50,24 +48,21 @@ export function App() {
   useEffect(() => {
     setMounted(true);
   }, []);
-
   if (!mounted) return null;
 
   return (
     <Provider store={store}>
-      <tokenContext.Provider value={token}>
-        <BrowserRouter>
-          <Layout>
-            <Header onSortChange={setSortBy} onSearchChange={setSearchBy} />
-            <Navi />
-            <Content>
-              <CardsList sortBy={sortBy} serchBy={serchBy} posts={sortedAndSearchPosts} />
-              <div ref={observerTarget} style={{ height: '10px' }}></div>
-              {isLoading && <div>Loading...</div>}
-            </Content>
-          </Layout>
-        </BrowserRouter>
-      </tokenContext.Provider>
+      <BrowserRouter>
+        <Layout>
+          <Header onSortChange={setSortBy} onSearchChange={setSearchBy} />
+          { }<Navi />
+          <Content>
+            <CardsList sortBy={sortBy} serchBy={serchBy} posts={sortedAndSearchPosts} />
+            <div ref={observerTarget} style={{ height: '10px' }}></div>
+            {isLoading && <div>Loading...</div>}
+          </Content>
+        </Layout>
+      </BrowserRouter>
     </Provider>
   );
 }

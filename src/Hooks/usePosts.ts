@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ICardType } from '../shared/CardsList';
 
-
-
 interface UsePostsResult {
   posts: ICardType[];
   isLoading: boolean;
@@ -18,7 +16,7 @@ const usePosts = (initialOffset: number, limit: number): UsePostsResult => {
   const [offset, setOffset] = useState(initialOffset);
   const [hasMore, setHasMore] = useState(true);
 
-  const loadPosts = async (offset: number, limit: number): Promise<ICardType[]> => {
+  const loadPosts = async (offset: number, limit: number): Promise<{ posts: ICardType[]; hasMore: boolean }> => {
     try {
       const response = await fetch(`/api/posts?limit=${limit}&offset=${offset}`);
       if (!response.ok) {
@@ -29,33 +27,30 @@ const usePosts = (initialOffset: number, limit: number): UsePostsResult => {
     } catch (error) {
       setError('Ошибка загрузки данных');
       console.error('Error:', error);
-      return [];
+      return { posts: [], hasMore: false };
     }
   };
 
   const fetchInitialPosts = async () => {
-    const initialPosts = await loadPosts(offset, limit);
-    setPosts(initialPosts);
+    const { posts, hasMore } = await loadPosts(offset, limit);
+    setPosts(posts);
+    setHasMore(hasMore);
     setIsLoading(false);
-    if (initialPosts.length < limit) {
-      setHasMore(false);
-    }
   };
 
   const fetchMorePosts = async () => {
     if (!isLoading && hasMore) {
       setIsLoading(true);
       const newOffset = offset + limit;
-      const newPosts = await loadPosts(newOffset, limit);
-      if (newPosts.length > 0) {
-        setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-        setOffset(newOffset);
-        if (newPosts.length < limit) {
-          setHasMore(false);
-        }
-      } else {
-        setHasMore(false);
-      }
+      const { posts: newPosts, hasMore: newHasMore } = await loadPosts(newOffset, limit);
+
+      setPosts((prevPosts) => {
+        const updatedPosts = [...prevPosts, ...newPosts];
+        return updatedPosts;
+      });
+
+      setOffset(newOffset);
+      setHasMore(newHasMore);
       setIsLoading(false);
     }
   };
