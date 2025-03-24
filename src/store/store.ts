@@ -75,15 +75,33 @@ const userDataSlice = createSlice({
   }
 });
 
+// Начальное состояние для сортировки
+const initialSortState = {
+  sortBy: '',
+};
+
+// Слайс для сортировки
+const sortBySlice = createSlice({
+  name: 'sortBy',
+  initialState: initialSortState,
+  reducers: {
+    setSortBy: (state, action) => {
+      state.sortBy = action.payload;
+    },
+  },
+});
+
 // Комбинируем редьюсеры
 const rootReducer = combineReducers({
   comment: commentSlice.reducer,
   userData: userDataSlice.reducer,
+  sortBy: sortBySlice.reducer,
 });
 
 // Экспортируем actions из обоих слайсов
 export const { updateComment } = commentSlice.actions;
 export const { setToken } = userDataSlice.actions;
+export const { setSortBy } = sortBySlice.actions;
 
 // Настраиваем хранилище
 export const store = configureStore({

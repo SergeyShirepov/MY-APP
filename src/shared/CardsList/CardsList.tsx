@@ -14,12 +14,10 @@ export interface ICardType {
 }
 
 type CardsListProps = {
-  sortBy: string;
-  serchBy: string;
   posts: ICardType[];
 };
 
-export function CardsList({ sortBy, serchBy, posts }: CardsListProps) {
+export function CardsList({ posts }: CardsListProps) {
   return (
     <ul className={styles.cardlist}>
       {posts?.map((post: ICardType) => (
