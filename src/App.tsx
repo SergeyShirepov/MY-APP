@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout } from './shared/Layout';
 import './main.global.css';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 export function App() {
+    const [mounted, setMounted] = useState(false);
+
+    
+      useEffect(() => {
+        setMounted(true);
+      }, []);
+      if (!mounted) return null;
 
   return (
     <Provider store={store}>
       <BrowserRouter>
+      <Routes>
+      <Route path="/" element={<></>} />
+      </Routes>
         <Layout>
         </Layout>
       </BrowserRouter>

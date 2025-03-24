@@ -19,7 +19,7 @@ export function Post({card}: ICardProps) {
     useEffect(() => {
         function handleClick(event: MouseEvent) {
             if (event.target instanceof Node && !ref.current?.contains(event.target)) {
-                navigate('/');
+                navigate(-1);
             }
         }
         document.addEventListener("click", handleClick);
@@ -31,7 +31,6 @@ export function Post({card}: ICardProps) {
 
     const node = document.querySelector("#modal_root");
     if (!node) return null;
-console.log(card.cardPreview);
     return createPortal(
         <div className={styles.postСontainer}>
             <div className={styles.post} ref={ref}>

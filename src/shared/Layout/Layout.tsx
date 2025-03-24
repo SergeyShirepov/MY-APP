@@ -8,23 +8,31 @@ import { Navi } from '../Navi/Navi';
 import { CardsList } from '../CardsList';
 import { Content } from '../Content';
 import { Header } from '../Header';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSortBy } from '../../store/store';
 
 
 
 export function Layout() {
   const [token] = useToken();
-  const [mounted, setMounted] = useState(false);
-  const [sortBy, setSortBy] = useState('');
+  const sortBy = useSelector((state: any) => state.sortBy.sortBy);
   const [serchBy, setSearchBy] = useState('');
   const observerTarget = useRef(null);
   const { posts = [], isLoading, error, hasMore, loadMorePosts } = usePosts(0, 6, sortBy);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+ 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const newSortBy = searchParams.get('sortBy') || '';
-    setSortBy(newSortBy);
+    const newSortBy = searchParams.get('sortBy');
+
+     if (newSortBy !== null) {
+      dispatch(setSortBy(newSortBy));
+     }
+    
   }, [location.search]);
+
 
   const handleSortChange = (newSortBy: string) => {
     navigate(`/posts?sortBy=${newSortBy}`);
@@ -55,19 +63,13 @@ export function Layout() {
 
   if (error) return <div>{error}</div>;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) return null;
-
-
 
   return (
     <>
       <Header onSortChange={handleSortChange} onSearchChange={setSearchBy} />
       { }<Navi />
       <Content>
-        <CardsList sortBy={sortBy} serchBy={serchBy} posts={sortedAndSearchPosts} />
+        <CardsList posts={sortedAndSearchPosts} />
         <div ref={observerTarget} style={{ height: '10px' }}></div>
         {isLoading && <div>Loading...</div>}
       </Content>

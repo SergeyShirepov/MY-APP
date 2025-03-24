@@ -7,6 +7,7 @@ import KarmaCounter from "./KarmaCounter/KarmaCounter";
 import { Route, Routes } from 'react-router-dom';
 import { Post } from './Post';
 import { useGetviewAgo } from '../../../Hooks/useGetviewAgo';
+import { useSelector } from 'react-redux';
 
 
 export interface ICardProps {
@@ -22,7 +23,8 @@ export interface ICardProps {
     };
 }
 
-export function Card({ card }: ICardProps) {
+export function Card( { card }: ICardProps ) {
+    const sortBy = useSelector((state: any) => state.sortBy.sortBy);
     const getviewAgo = useGetviewAgo({
         card: { id: '', title: '', cardPreview: '', timePublished: '', timeViewed: '', avtor: '', avatar: '', karmaValue: 0, }
     });
@@ -79,7 +81,6 @@ export function Card({ card }: ICardProps) {
                 </div>
             </div>
             <Routes>
-                <Route path="/" element={<></>} />
                 <Route path={`/posts/${card.id}`} element={
                     <Post card={card} />
                 }>
