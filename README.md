@@ -4,5 +4,5 @@ npm install  <br>
 node ./src/models/seed.js (Для загрузки первичных данных в MongoDB) <br>
 
 Запуск: <br><br>
-dev <br>
+npm run dev <br>
 npm run start <br>
