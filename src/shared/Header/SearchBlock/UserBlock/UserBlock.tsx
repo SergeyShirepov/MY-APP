@@ -2,6 +2,7 @@ import React from 'react';
 import { Break } from '../../../Break'
 import { EColor, Text } from '../../../Text';
 import * as styles from './userblock.css';
+import { useNavigate } from 'react-router-dom';
 
 interface IUserBlockProps {
   avatarSrc?: string,
@@ -10,6 +11,8 @@ interface IUserBlockProps {
 }
 
 export function UserBlock({ avatarSrc, username, loading }: IUserBlockProps) {
+  const navigate = useNavigate();
+
   const AuthBlock = (
     <a
       href={`https://www.reddit.com/api/v1/authorize?client_id=SI6_ql3msvAkDVKeffKG_w&response_type=code&state=random_string&redirect_uri=http://localhost:8080/auth&duration=permanent&scope=read%20submit%20identity`}
@@ -28,7 +31,7 @@ export function UserBlock({ avatarSrc, username, loading }: IUserBlockProps) {
   );
 
   const UserInfo = (
-    <div className={styles.userBox}>
+    <div className={styles.userBox} onClick={() => navigate('/account')}>
       <div className={styles.avatarBox}>
         {avatarSrc && <img src={avatarSrc} alt="user avatar" className={styles.avatarImage} />}
       </div>
