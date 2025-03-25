@@ -24,9 +24,12 @@ app.use(cookieParser());
 app.use(cors({
   origin: ['http://localhost:3000', 'http://localhost:8080'],
   credentials: true,
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Middleware для парсинга JSON
+app.use(express.json());
 
 // Подключение к MongoDB
 mongoose.connect('mongodb://localhost:27017/My-app', {
@@ -65,6 +68,33 @@ res.json({ posts, hasMore });
   console.error('Ошибка загрузки постов', error);
   res.status(500).json({ error: 'Ошибка загрузки постов' });
 }
+});
+
+// Обновление кармы поста
+app.put('/api/posts/:postId/karma', async (req, res) => {
+  const { postId } = req.params;
+  const { delta } = req.body;
+
+  if (typeof delta !== 'number' || (delta !== 1 && delta !== -1)) {
+    return res.status(400).json({ error: 'Неправильное значение delta' });
+  }
+
+  try {
+    const post = await Post.findOneAndUpdate(
+      { id: Number(postId) },
+      { $inc: { karmaValue: delta } },
+      { new: true }
+    );
+
+    if (!post) {
+      return res.status(404).json({ error: 'Пост не найден' });
+    }
+
+    res.json({ karmaValue: post.karmaValue });
+  } catch (error) {
+    console.error('Ошибка обновления кармы:', error);
+    res.status(500).json({ error: 'Не удалось обновить карму' });
+  }
 });
 
 app.use('/static', express.static(path.join(__dirname, '../../dist/client')));
