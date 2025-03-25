@@ -1,7 +1,7 @@
 import React from 'react';
 import * as styles from './karmacounter.css';
 import { ICardProps } from '../Card';
-import useKarma from '../../../../Hooks/useUpdateKarma';
+import useKarma from '../../../../Hooks/useKarma';
 
 
 const KarmaCounter = ({card}: ICardProps) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as styles from './layout.css';
-import { BrowserRouter, useNavigate } from 'react-router-dom';
+import { BrowserRouter, useLocation, useNavigate } from 'react-router-dom';
 import { useToken } from '../../Hooks/useToken';
 import usePosts from '../../Hooks/usePosts';
 import { useSortedAndSearchPosts } from '../../Hooks/useSortedAndSearchPosts';
@@ -21,7 +21,9 @@ export function Layout() {
   const { posts = [], isLoading, error, hasMore, loadMorePosts } = usePosts(0, 6, sortBy);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
+  const isAccountPage = location.pathname === '/account';
  
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -67,7 +69,7 @@ export function Layout() {
   return (
     <>
       <Header onSortChange={handleSortChange} onSearchChange={setSearchBy} />
-      { }<Navi />
+      {isAccountPage && <Navi /> }
       <Content>
         <CardsList posts={sortedAndSearchPosts} />
         <div ref={observerTarget} style={{ height: '10px' }}></div>
