@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import * as styles from './header.css';
 import { SearchBlock } from './SearchBlock';
-import { ThreadTitle } from './ThreadTitle';
 import { SortBlock } from './SortBlock';
+import { useLocation } from 'react-router-dom';
+import { Navi } from './Navi/Navi';
 
 type HeaderProps = {
   onSortChange: (sort: string) => void;
@@ -12,8 +13,9 @@ type HeaderProps = {
 export function Header({ onSortChange, onSearchChange }: HeaderProps) {
   const [selectorSort, setSelectorSort] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const location = useLocation();
 
-  
+  const isAccountPage = location.pathname === '/account';
 
   const handleSortChange = (sort: string) => {
     setSelectorSort(sort);
@@ -26,8 +28,12 @@ export function Header({ onSortChange, onSearchChange }: HeaderProps) {
   };
 
   return (
+    <>
     <header className={styles.header}>
-      <ThreadTitle />
+      <div className={styles.topHeader}>
+    <h1 className={styles.threadTitle}>
+      {isAccountPage ? 'Личный кабинет' : 'Дискуссии'}
+    </h1>
       <SortBlock
         value={selectorSort}
         onChange={handleSortChange}
@@ -37,6 +43,7 @@ export function Header({ onSortChange, onSearchChange }: HeaderProps) {
           { value: 'dataPost', name: 'По дате' },
         ]}
       />
+    
       <SearchBlock
         value={searchQuery}
         onChange={handleSearchChange}
@@ -45,7 +52,10 @@ export function Header({ onSortChange, onSearchChange }: HeaderProps) {
         placeholder=" Поиск " 
         required
       />
+      </div>
+    { isAccountPage && <Navi /> }
     </header>
+    </>
   );
 }
 

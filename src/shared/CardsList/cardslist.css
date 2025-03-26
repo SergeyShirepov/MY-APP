@@ -5,5 +5,8 @@
 @media all and (min-width: 724px) {
     .cardlist {
         padding: 40px;
+        width: 1215px;
+        height: 800px;
+        overflow-y: scroll;
     }
 }
