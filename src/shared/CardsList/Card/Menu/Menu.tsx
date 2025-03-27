@@ -6,7 +6,7 @@ import { MenuItemList } from './MenuItemList';
 
 export function Menu() {
   return (
-    <div className={styles.menu}>
+    <div className={styles.menu} onClick={(e) => e.preventDefault()}>
       <Dropdown
         button={
           <button className={styles.menuButton}>

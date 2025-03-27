@@ -4,7 +4,7 @@ import { Menu } from './Menu';
 import { Title } from './Tittle';
 import {AvtorPublished} from "./AvtorPublished/AvtorPublished";
 import KarmaCounter from "./KarmaCounter/KarmaCounter";
-import { Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { Post } from './Post';
 import { useGetviewAgo } from '../../../Hooks/useGetviewAgo';
 import { useSelector } from 'react-redux';
@@ -30,6 +30,7 @@ export function Card( { card }: ICardProps ) {
     });
 
     return (
+            <Link to={`/posts/${card.id}`} className={styles.postlink} >
         <li className={styles.card}>
             <div className={styles.textContent}>
                 <div className={styles.createdAt}>
@@ -49,9 +50,9 @@ export function Card( { card }: ICardProps ) {
             <div className={styles.preview}>
                 <img className={styles.previewImg} src={card.cardPreview} alt="preview" />
             </div>
-            <div className={styles.controls}>
-                <KarmaCounter card={card} />
-                <button className={styles.commentsButton}>
+            <div className={styles.controls} onClick={(e) => e.preventDefault()}>
+                <KarmaCounter card={card}  />
+                <button className={styles.commentsButton} >
                     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M12.75 0H1.41667C0.6375 0 0 0.6375 0 1.41667V9.91667C0 10.6958 0.6375 11.3333 1.41667 11.3333H11.3333L14.1667 14.1667V1.41667C14.1667 0.6375 13.5292 0 12.75 0ZM11.3333 8.5H2.83333V7.08333H11.3333V8.5ZM11.3333 6.375H2.83333V4.95833H11.3333V6.375ZM11.3333 4.25H2.83333V2.83333H11.3333V4.25Z"
@@ -87,5 +88,6 @@ export function Card( { card }: ICardProps ) {
                 </Route>
             </Routes>
         </li >
+        </Link>
     );
 }
