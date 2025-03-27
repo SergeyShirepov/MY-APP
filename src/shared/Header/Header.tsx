@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as styles from './header.css';
 import { SearchBlock } from './SearchBlock';
 import { SortBlock } from './SortBlock';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Navi } from './Navi/Navi';
 
 type HeaderProps = {
@@ -32,8 +32,12 @@ export function Header({ onSortChange, onSearchChange }: HeaderProps) {
     <header className={styles.header}>
       <div className={styles.topHeader}>
     <h1 className={styles.threadTitle}>
-      {isAccountPage ? 'Личный кабинет' : 'Дискуссии'}
+      {isAccountPage ? 
+      <Link to={'/'}>Дискуссии</Link>
+      : <Link to={'/account'}>Личный кабинет</Link>
+      }
     </h1>
+    {!isAccountPage &&
       <SortBlock
         value={selectorSort}
         onChange={handleSortChange}
@@ -43,7 +47,7 @@ export function Header({ onSortChange, onSearchChange }: HeaderProps) {
           { value: 'dataPost', name: 'По дате' },
         ]}
       />
-    
+    }
       <SearchBlock
         value={searchQuery}
         onChange={handleSearchChange}

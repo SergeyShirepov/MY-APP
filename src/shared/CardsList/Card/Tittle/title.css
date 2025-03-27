@@ -11,8 +11,3 @@
     cursor: pointer;
 }
 
-.postlink {
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-}
