@@ -33,8 +33,8 @@ export function Header({ onSortChange, onSearchChange }: HeaderProps) {
       <div className={styles.topHeader}>
     <h1 className={styles.threadTitle}>
       {isAccountPage ? 
-      <Link to={'/'}>Дискуссии</Link>
-      : <Link to={'/account'}>Личный кабинет</Link>
+      <Link to={'/'}>Личный кабинет</Link>
+      : <Link to={'/account'}>Дискуссии</Link>
       }
     </h1>
     {!isAccountPage &&

@@ -1,19 +1,16 @@
 import { useMemo } from 'react';
 import { ICardType } from '../shared/CardsList/CardsList';
 
-export const useSortedAndSearchPosts = (  posts: ICardType[],  sortBy: string,  serchBy: string) => {
-
+export const useSortedAndSearchPosts = (posts: ICardType[], sortBy: string, searchBy: string) => {
   return useMemo(() => {
     let filteredPosts = [...posts];
 
-    // Фильтрация по поиску
-    if (serchBy) {
+    if (searchBy) {
       filteredPosts = filteredPosts.filter((post) =>
-        post.title.toLowerCase().includes(serchBy.toLowerCase())
+        post.title.toLowerCase().includes(searchBy.toLowerCase())
       );
     }
 
-    // Сортировка
     if (sortBy === 'karma') {
       filteredPosts.sort((a, b) => b.karmaValue - a.karmaValue);
     } else if (sortBy === 'dataPost') {
@@ -21,6 +18,5 @@ export const useSortedAndSearchPosts = (  posts: ICardType[],  sortBy: string,  
     }
 
     return filteredPosts;
-  }, [posts, sortBy, serchBy]);
-  
+  }, [posts, sortBy, searchBy]);
 };

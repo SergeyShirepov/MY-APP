@@ -4,8 +4,7 @@ import { Menu } from './Menu';
 import { Title } from './Tittle';
 import {AvtorPublished} from "./AvtorPublished/AvtorPublished";
 import KarmaCounter from "./KarmaCounter/KarmaCounter";
-import { Link, Route, Routes } from 'react-router-dom';
-import { Post } from './Post';
+import { Link } from 'react-router-dom';
 import { useGetviewAgo } from '../../../Hooks/useGetviewAgo';
 import { useSelector } from 'react-redux';
 
@@ -81,12 +80,6 @@ export function Card( { card }: ICardProps ) {
                     </button>
                 </div>
             </div>
-            <Routes>
-                <Route path={`/posts/${card.id}`} element={
-                    <Post card={card} />
-                }>
-                </Route>
-            </Routes>
         </li >
         </Link>
     );

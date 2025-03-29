@@ -8,8 +8,11 @@
 @media all and (min-width: 1024px) {
 
     .card {
-        background-color: var(--white);
+        box-sizing: border-box;
+        border: 1px solid var(--white);
         border-radius: 7px;
+        transition: border-color 0.1s ease-in-out;
+        background-color: var(--white);
         display: flex;
         justify-content: start;
         align-items: center;
@@ -17,13 +20,13 @@
         padding-bottom: 20px;
         padding-left: 20px;
         position: relative;
+        margin-bottom: 2px;
     }
 
     
 
 .postlink :hover {
-    background-color: var(--grayf4);
-    transition: background-color 0.1s ease-in-out;
+    border-color: var(--grayd9);
 }
 
 
