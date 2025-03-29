@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as styles from './layout.css';
-import { useNavigate } from 'react-router-dom';
+import { useMatch, useNavigate } from 'react-router-dom';
 import { useToken } from '../../Hooks/useToken';
 import usePosts from '../../Hooks/usePosts';
 import { useSortedAndSearchPosts } from '../../Hooks/useSortedAndSearchPosts';
@@ -10,25 +10,26 @@ import { Header } from '../Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSortBy } from '../../store/store';
 
-
-
 export function Layout() {
   const [token] = useToken();
   const sortBy = useSelector((state: any) => state.sortBy.sortBy);
-  const [serchBy, setSearchBy] = useState('');
-  const observerTarget = useRef(null);
-  const { posts = [], isLoading, error, hasMore, loadMorePosts } = usePosts(0, 6, sortBy);
+  const [searchBy, setSearchBy] = useState('');
+  const { posts = [], isLoading, error, hasMore, loadMorePosts } = usePosts(0, 7, sortBy, searchBy);
   const navigate = useNavigate();
   const dispatch = useDispatch();
- 
+  const match = useMatch('/posts/:id');
+
+
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const newSortBy = searchParams.get('sortBy');
 
-     if (newSortBy !== null) {
+    if (!match) {
+      const searchParams = new URLSearchParams(location.search);
+      const newSortBy = searchParams.get('sortBy');
       dispatch(setSortBy(newSortBy));
-     }
-    
+    }
+
   }, [location.search]);
 
 
@@ -36,39 +37,22 @@ export function Layout() {
     navigate(`/posts?sortBy=${newSortBy}`);
   }
 
-  const sortedAndSearchPosts = useSortedAndSearchPosts(posts, sortBy, serchBy);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          loadMorePosts();
-        }
-      },
-      { threshold: 1.0 }
-    );
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
-    }
-
-    return () => {
-      if (observerTarget.current) {
-        observer.unobserve(observerTarget.current);
-      }
-    };
-  }, [hasMore, loadMorePosts]);
+  const sortedAndSearchPosts = useSortedAndSearchPosts(posts, sortBy, searchBy);
 
   if (error) return <div>{error}</div>;
-
 
   return (
     <div className={styles.container}>
       <Header onSortChange={handleSortChange} onSearchChange={setSearchBy} />
       <Content>
-        <CardsList posts={sortedAndSearchPosts} />
-        <div ref={observerTarget} style={{ height: '10px' }}></div>
-        {isLoading && <div>Loading...</div>}
+        <div style={{ height: 'calc(90vh - 150px)' }}>
+          <CardsList
+            posts={sortedAndSearchPosts}
+            isLoading={isLoading}
+            hasMore={hasMore}
+            loadMorePosts={loadMorePosts}
+          />
+        </div>
       </Content>
     </div>
   );

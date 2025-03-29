@@ -4,6 +4,7 @@ import './main.global.css';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Post } from './shared/CardsList/Card/Post/Post';
 
 export function App() {
     const [mounted, setMounted] = useState(false);
@@ -19,6 +20,16 @@ export function App() {
       <BrowserRouter>
       <Routes>
       <Route path="/" element={<></>} />
+      <Route path="/posts/:id" element={<Post card={{
+            id: '',
+            title: '',
+            cardPreview: '',
+            timePublished: '',
+            timeViewed: '',
+            avtor: '',
+            avatar: '',
+            karmaValue: 0
+          }} />} />
       </Routes>
         <Layout>
         </Layout>

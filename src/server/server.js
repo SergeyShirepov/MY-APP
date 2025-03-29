@@ -37,38 +37,51 @@ mongoose.connect('mongodb://localhost:27017/My-app', {
   .then(() => console.log('Подключение к MongoDB'))
   .catch((err) => console.error('Ошибка подключения к MongoDB', err));
 
-app.get('/api/posts', async (req, res) => {
-  try {
-    const { limit, offset, sortBy } = req.query;
-    let sort = {};
-
-    switch (sortBy) {
-      case 'karma':
-        sort = { karmaValue: -1 };
-        break;
-      case 'date':
-        sort = { timePublished: -1 };
-        break;
-        default:
-        sort = { id: 1 };
-    }
+  app.get('/api/posts', async (req, res) => {
+    try {
+      // Преобразуем параметры в числа и задаем значения по умолчанию
+      const limit = parseInt(req.query.limit, 10);
+      const offset = parseInt(req.query.offset, 10);
+      const { sortBy, searchBy } = req.query;
   
-
-const posts = await Post
-  .find()
-  .sort(sort)
-  .skip(offset)
-  .limit(limit);
-
-const totalPosts = await Post.countDocuments();
-const hasMore = offset + limit < totalPosts;
-res.json({ posts, hasMore });
-
-  } catch (error) {
-  console.error('Ошибка загрузки постов', error);
-  res.status(500).json({ error: 'Ошибка загрузки постов' });
-}
-});
+      let sort = {};
+      let query = {};
+  
+      if (searchBy && typeof searchBy === 'string') {
+        query = {
+          title: { $regex: searchBy, $options: 'i' }
+        };
+      }
+  
+      switch (sortBy) {
+        case 'karma':
+          sort = { karmaValue: -1 };
+          break;
+        case 'date':
+          sort = { timePublished: -1 };
+          break;
+        default:
+          sort = { id: 1 };
+      }
+  
+      // Выполняем запрос и получаем массив постов
+      const posts = await Post
+        .find(query)
+        .sort(sort)
+        .skip(offset)
+        .limit(limit);
+  
+      // Получаем общее количество постов
+      const totalPosts = await Post.countDocuments(query);
+      const hasMore = offset + limit < totalPosts;
+  
+      // Отправляем результат в формате JSON
+      res.json({ posts, hasMore });
+    } catch (error) {
+      console.error('Ошибка загрузки постов', error);
+      res.status(500).json({ error: 'Ошибка загрузки постов' });
+    }
+  });
 
 // Обновление кармы поста
 app.put('/api/posts/:postId/karma', async (req, res) => {
