@@ -83,6 +83,23 @@ mongoose.connect('mongodb://localhost:27017/My-app', {
     }
   });
 
+  // Получаем пост по его id
+  app.get('/api/posts/:postId', async (req, res) => {
+    try {
+      const { postId } = req.params;
+      const post = await Post.findOne({ id: Number(postId) });
+      
+      if (!post) {
+        return res.status(404).json({ error: 'Пост не найден' });
+      }
+      
+      res.json(post);
+    } catch (error) {
+      console.error('Ошибка загрузки поста', error);
+      res.status(500).json({ error: 'Ошибка загрузки поста' });
+    }
+  });
+
 // Обновление кармы поста
 app.put('/api/posts/:postId/karma', async (req, res) => {
   const { postId } = req.params;

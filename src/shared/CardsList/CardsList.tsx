@@ -30,7 +30,6 @@ export const CardsList: React.FC<CardsListProps> = ({ posts, isLoading, hasMore,
   const onItemsRendered = ({ visibleStopIndex }: { visibleStopIndex: number }) => {
     const triggerPoint = Math.floor(posts.length * 0.75);
     if (visibleStopIndex >= triggerPoint && !isLoading && hasMore && loadMorePosts) {
-      console.log(`Triggering loadMorePosts at index: ${visibleStopIndex}`); // Логирование
       loadMorePosts();
     }
   };

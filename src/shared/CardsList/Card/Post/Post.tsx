@@ -4,17 +4,50 @@ import * as styles from "./post.css";
 import {AvtorPublished} from "../AvtorPublished/AvtorPublished";
 import KarmaCounter from "../KarmaCounter/KarmaCounter";
 import { CommentFormContainer } from "./CommentFormContainer/CommentFormContainer";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Comments } from './Comments/Comments';
-import { ICardProps } from "../Card";
+import axios from "axios";
+
+interface ICard {
+    id: string;
+    title: string;
+    cardPreview: string;
+    timePublished: string;
+    timeViewed: string;
+    avtor: string;
+    avatar: string;
+    karmaValue: number;
+  }
 
 
-export function Post({card}: ICardProps) {
+export function Post() {
 
     const ref = useRef<HTMLDivElement>(null);
     const [isInitialClickIgnored, setIsInitialClickIgnored] = useState(true);
     const navigate = useNavigate();
     const [comments, setComments] = useState<string[]>([]);
+    const [card, setCard] = useState<ICard | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const { id } = useParams();
+    console.log(id);
+
+    useEffect(() => {
+        async function fetchPost() {
+            try {
+                const response = await axios.get(`http://localhost:3000/api/posts/${id}`);
+                console.log(response.data);
+                setCard(response.data);
+                setLoading(false);
+            } catch (err) {
+                setError('Не удалось загрузить пост');
+                setLoading(false);
+                console.error('Ошибка загрузки поста:', err);
+            }
+        }
+        
+        fetchPost();
+    }, [id]);
 
     useEffect(() => {
         function handleClick(event: MouseEvent) {
@@ -31,6 +64,27 @@ export function Post({card}: ICardProps) {
 
     const node = document.querySelector("#modal_root");
     if (!node) return null;
+
+    if (loading) return createPortal(
+        <div className={styles.postСontainer}>
+            <div className={styles.post} ref={ref}>
+                Загрузка...
+            </div>
+        </div>,
+        node
+    );
+
+    if (error) return createPortal(
+        <div className={styles.postСontainer}>
+            <div className={styles.post} ref={ref}>
+                {error}
+            </div>
+        </div>,
+        node
+    );
+
+    if (!card) return null;
+    
     return createPortal(
         <div className={styles.postСontainer}>
             <div className={styles.post} ref={ref}>
