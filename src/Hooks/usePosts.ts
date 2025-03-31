@@ -23,7 +23,6 @@ const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy
         throw new Error('Ошибка сети');
       }
       const newPosts = await response.json();
-      console.log('Server response:', newPosts);
       return newPosts;
     } catch (error) {
       setError('Ошибка загрузки данных');
@@ -45,7 +44,6 @@ const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy
     if (!isLoading && hasMore) {
       setIsLoading(true);
       const newOffset = offset + limit;
-      console.log(`Loading more posts with offset: ${newOffset}`);
       const { posts: newPosts, hasMore: newHasMore } = await loadPosts(newOffset, limit, sortBy, searchBy);
       setPosts((prevPosts) => {
         const updatedPosts = [...prevPosts, ...newPosts];

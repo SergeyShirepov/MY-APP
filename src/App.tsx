@@ -20,16 +20,7 @@ export function App() {
       <BrowserRouter>
       <Routes>
       <Route path="/" element={<></>} />
-      <Route path="/posts/:id" element={<Post card={{
-            id: '',
-            title: '',
-            cardPreview: '',
-            timePublished: '',
-            timeViewed: '',
-            avtor: '',
-            avatar: '',
-            karmaValue: 0
-          }} />} />
+      <Route path="/posts/:id" element={<Post />} />
       </Routes>
         <Layout>
         </Layout>
