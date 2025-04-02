@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
 import { ICardType } from '../shared/CardsList';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { useToken } from './useToken';
+import { RootState } from '../store/store';
+import { IUserData } from '../store/actions';
 
 interface UsePostsResult {
   posts: ICardType[];
@@ -15,24 +20,55 @@ const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy
   const [error, setError] = useState('');
   const [offset, setOffset] = useState(initialOffset);
   const [hasMore, setHasMore] = useState(true);
+  const { name } = useSelector<RootState, IUserData>(state => state.userData.data);
+  const [token] = useToken();
 
-  const loadPosts = async (offset: number, limit: number, sortBy: string, searchBy: string): Promise<{ posts: ICardType[]; hasMore: boolean }> => {
+  const loadPosts = async (
+    offset: number, 
+    limit: number, 
+    sortBy: string, 
+    searchBy: string
+  ): Promise<{ posts: ICardType[]; hasMore: boolean }> => {
     try {
-      const response = await fetch(`/api/posts?limit=${limit}&offset=${offset}&sortBy=${sortBy}`);
-      if (!response.ok) {
-        throw new Error('Ошибка сети');
+      const response = await axios.get<{ posts: ICardType[]; hasMore: boolean }>(`/api/posts`, {
+        params: {
+          limit,
+          offset,
+          sortBy,
+          search: searchBy
+        },
+        headers: {
+          'X-User-Name': name || '',
+          ...(token && { 'Authorization': `Bearer ${token}` })
+        }
+      });
+  
+      return {
+        posts: response.data.posts,
+        hasMore: response.data.hasMore
+      };
+      
+    } catch (error: unknown) {
+      let errorMessage = 'Ошибка загрузки данных';
+      
+      if (axios.isAxiosError(error)) {
+        // Ошибка от axios
+        errorMessage = error.response?.data?.message || error.message;
+      } else if (error instanceof Error) {
+        // Стандартная ошибка JavaScript
+        errorMessage = error.message;
       }
-      const newPosts = await response.json();
-      return newPosts;
-    } catch (error) {
-      setError('Ошибка загрузки данных');
+      
+      setError(errorMessage);
+      console.error('Ошибка загрузки постов:', error);
       return { posts: [], hasMore: false };
     }
   };
 
+
   const fetchInitialPosts = async () => {
     setIsLoading(true);
-    setPosts([]); // Очищаем старые посты
+    setPosts([]);
     setOffset(initialOffset);
     const { posts, hasMore } = await loadPosts(initialOffset, limit, sortBy, searchBy);
     setPosts(posts);
@@ -59,6 +95,7 @@ const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy
   useEffect(() => {
     fetchInitialPosts();
   }, [sortBy, searchBy]);
+  
 
   return {
     posts,

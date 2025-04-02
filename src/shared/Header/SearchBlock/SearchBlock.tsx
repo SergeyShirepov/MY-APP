@@ -12,7 +12,7 @@ interface SearchBlockProps {
   required?: boolean;
 }
 
-export function SearchBlock({  value,  onChange,  type,  name,  placeholder,  required,}: SearchBlockProps) {
+export function SearchBlock({  value,  onChange,  type,  name,  placeholder,  required }: SearchBlockProps) {
   const { data, loading } = useUserData();
 
   return (

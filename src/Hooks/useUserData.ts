@@ -11,9 +11,23 @@ export function useUserData() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!token) return;
-    dispatch(meRequestAsync());
-  }, [token, dispatch]);
+    if (!token || !data) return;
+    
+    // Задержкf для демонстрации
+    const timer = setTimeout(() => {
+      dispatch(meRequestAsync());
+    }, 1000);
+    
+    return () => clearTimeout(timer);
+  }, [token, dispatch, data]);
 
-  return { data, loading, error };
+  return { 
+    data,
+    loading,
+    error,
+    // Добавляем вспомогательные флаги
+    isAuthenticated: !!data,
+    isLoading: loading,
+    hasError: !!error
+  };
 }

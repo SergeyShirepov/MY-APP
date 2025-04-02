@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as styles from './layout.css';
 import { useMatch, useNavigate } from 'react-router-dom';
 import { useToken } from '../../Hooks/useToken';
@@ -21,9 +21,6 @@ export function Layout() {
 
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const newSortBy = searchParams.get('sortBy');
-
     if (!match) {
       const searchParams = new URLSearchParams(location.search);
       const newSortBy = searchParams.get('sortBy');

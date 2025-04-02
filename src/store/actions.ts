@@ -38,7 +38,6 @@ export type MeRequestSuccessAction = {
   data: IUserData;
 };
 export const meRequestSuccess: ActionCreator<MeRequestSuccessAction> = (data: IUserData) => {
-  console.log('meRequestSuccess called with data:', data);
   return {
     type: ME_REQUEST_SUCCESS,
     data,
@@ -60,33 +59,59 @@ export const meRequestError: ActionCreator<MeRequestErrorAction> = (error: { mes
 
 // Асинхронное действие
 export const meRequestAsync = (): ThunkAction<void, RootState, unknown, Action<string>> => 
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
     const { token, data } = getState().userData;
-
     if (!token || (data && data.name)) return;
 
     dispatch(meRequest());
 
-    // Запрос к вашему серверу вместо прямого запроса к Reddit API
-    fetch('/api/me', {
-      credentials: 'include', // Для передачи кук
-    })
-      .then(response => {
-        if (!response.ok) throw response;
-        return response.json();
-      })
-      .then((userData: { name: string; icon_img: string }) => {
-        dispatch(meRequestSuccess({ 
-          name: userData.name, 
-          iconImg: userData.icon_img 
-        }));
-      })
-      .catch(error => {
-        error.json().then((errData: { error: string }) => {
-          dispatch(meRequestError({
-            message: errData.error || 'Unknown error',
-            code: error.status || 500,
-          }));
-        });
+    try {
+      // 1. Получаем данные пользователя из вашего API
+      const meResponse = await fetch('/api/me', {
+        credentials: 'include',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
+
+      if (!meResponse.ok) throw meResponse;
+      const redditUserData = await meResponse.json();
+      console.log(redditUserData);
+
+      // 2. Отправляем данные для создания/обновления в MongoDB
+      const mongoResponse = await fetch('/api/user/upsert', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          name: redditUserData.name,
+          iconImg: redditUserData.icon_img,
+          redditId: redditUserData.id
+        })
+      });
+
+      if (!mongoResponse.ok) throw mongoResponse;
+      const mongoUserData = await mongoResponse.json();
+
+      // 3. Сохраняем полученные данные в Redux
+      dispatch(meRequestSuccess({
+        name: mongoUserData.name,
+        iconImg: mongoUserData.iconImg,
+        id: mongoUserData.redditId,
+        created: mongoUserData.created,
+        lastLogin: mongoUserData.lastLogin
+      }));
+
+    } catch (error) {
+      const err = error as Response;
+      const errorData = await err.json().catch(() => ({ error: 'Шибка' }));
+      
+      dispatch(meRequestError({
+        message: errorData.error || 'Ошибка получения данных',
+        code: err.status || 500,
+      }));
+    }
   };

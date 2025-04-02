@@ -1,23 +1,13 @@
-import React, {useEffect, useRef, useState} from "react";
-import {createPortal} from "react-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import * as styles from "./post.css";
-import {AvtorPublished} from "../AvtorPublished/AvtorPublished";
+import { AvtorPublished } from "../AvtorPublished/AvtorPublished";
 import KarmaCounter from "../KarmaCounter/KarmaCounter";
 import { CommentFormContainer } from "./CommentFormContainer/CommentFormContainer";
 import { useNavigate, useParams } from 'react-router-dom';
 import { Comments } from './Comments/Comments';
-import axios from "axios";
+import useOpenPost from "../../../../Hooks/useOpenPost";
 
-interface ICard {
-    id: string;
-    title: string;
-    cardPreview: string;
-    timePublished: string;
-    timeViewed: string;
-    avtor: string;
-    avatar: string;
-    karmaValue: number;
-  }
 
 
 export function Post() {
@@ -26,28 +16,11 @@ export function Post() {
     const [isInitialClickIgnored, setIsInitialClickIgnored] = useState(true);
     const navigate = useNavigate();
     const [comments, setComments] = useState<string[]>([]);
-    const [card, setCard] = useState<ICard | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const { id } = useParams();
-    console.log(id);
+    if (!id) return null;
+    const { card, loading, error } = useOpenPost(id);
 
-    useEffect(() => {
-        async function fetchPost() {
-            try {
-                const response = await axios.get(`http://localhost:3000/api/posts/${id}`);
-                console.log(response.data);
-                setCard(response.data);
-                setLoading(false);
-            } catch (err) {
-                setError('Не удалось загрузить пост');
-                setLoading(false);
-                console.error('Ошибка загрузки поста:', err);
-            }
-        }
-        
-        fetchPost();
-    }, [id]);
+
 
     useEffect(() => {
         function handleClick(event: MouseEvent) {
@@ -84,21 +57,20 @@ export function Post() {
     );
 
     if (!card) return null;
-    
+
     return createPortal(
         <div className={styles.postСontainer}>
             <div className={styles.post} ref={ref}>
                 <div className={styles.headPost}>
-                    <KarmaCounter card={card}/>
                     <div className={styles.infoAvtor}>
                         <div className={styles.postTittle}>
                             {card.title}
                         </div>
-                            <AvtorPublished card={card}/>
+                        <AvtorPublished card={card} />
                     </div>
                 </div>
                 <div className={styles.textPost}>
-                      Есть над чем задуматься: тщательные исследования конкурентов представляют собой не что иное, как
+                    Есть над чем задуматься: тщательные исследования конкурентов представляют собой не что иное, как
                     квинтэссенцию
                     победы маркетинга над разумом и должны быть ассоциативно распределены по отраслям. Прежде всего,
                     начало
@@ -108,12 +80,12 @@ export function Post() {
                     превращены в
                     посмешище, хотя само их существование приносит несомненную пользу обществу.
                 </div>
-                <img src={card.cardPreview} alt="preview" className={styles.postPreview}/>
+                <img src={card.cardPreview} alt="preview" className={styles.postPreview} />
                 <div className={styles.abbreviated}>
                     Учитывая ключевые сценарии поведения, социально-экономическое развитие играет определяющее значение.
                 </div>
                 <div className={styles.textPost}>
-                      Безусловно, глубокий уровень погружения создаёт необходимость включения в производственный план
+                    Безусловно, глубокий уровень погружения создаёт необходимость включения в производственный план
                     целого ряда
                     внеочередных мероприятий с учётом комплекса системы массового участия. Внезапно, сделанные на базе
                     интернет-аналитики выводы освещают чрезвычайно интересные особенности картины в целом, однако

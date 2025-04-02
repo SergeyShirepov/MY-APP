@@ -3,7 +3,7 @@
     height: 100%;
     top: 0;
     position: absolute;
-    padding-bottom: 100%; 
+    padding-bottom: 50%; 
     background-color: rgba(22,22,22,0.5); /* complimenting your modal colors */
     z-index: 2;
 }

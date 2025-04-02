@@ -39,9 +39,9 @@ const commentSlice = createSlice({
 // Начальное состояние для пользовательских данных
 const initialUserDataState = {
   loading: false,
-  error: null as Error | null, // Явно указываем тип error как Error | null
+  error: null as Error | null,
   data: {} as IUserData,
-  token: null as string | null, // Явно указываем тип token как string | null
+  token: null as string | null,
 };
 
 // Слайс для пользовательских данных
@@ -50,7 +50,7 @@ const userDataSlice = createSlice({
   initialState: initialUserDataState,
   reducers: {
     setToken(state, action: PayloadAction<string | null>) {
-      state.token = action.payload; // Тип action.payload соответствует string | null
+      state.token = action.payload;
     },
   },
   extraReducers: (builder) => {
