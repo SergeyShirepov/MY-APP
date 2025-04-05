@@ -15,7 +15,7 @@ export function UserBlock({ avatarSrc, username, loading }: IUserBlockProps) {
 
   const AuthBlock = (
     <a
-      href={`https://www.reddit.com/api/v1/authorize?client_id=SI6_ql3msvAkDVKeffKG_w&response_type=code&state=random_string&redirect_uri=http://localhost:8080/auth&duration=permanent&scope=read%20submit%20identity`}
+      href={`https://www.reddit.com/api/v1/authorize?client_id=SI6_ql3msvAkDVKeffKG_w&response_type=code&state=random_string&redirect_uri=http://localhost:8080/api/auth&duration=permanent&scope=read%20submit%20identity`}
       className={styles.userBox}
     >
       <div className={styles.avatarBox}>
