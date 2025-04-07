@@ -1,30 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as styles from './searchblock.css';
 import {UserBlock} from './UserBlock';
 import { useUserData } from '../../../Hooks/useUserData';
 
 interface SearchBlockProps {
-  value: string;
-  onChange: (search: string) => void;
+  onSearchSubmit: (search: string) => void;
   type: string;
   name: string;
   placeholder: string;
   required?: boolean;
 }
 
-export function SearchBlock({  value,  onChange,  type,  name,  placeholder,  required }: SearchBlockProps) {
+export function SearchBlock({  onSearchSubmit,  type,  name,  placeholder,  required }: SearchBlockProps) {
   const { data, loading } = useUserData();
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSearchSubmit(searchValue);
+  };
+
+  useEffect(() => {
+    onSearchSubmit('');
+  }, [searchValue==='']);
 
   return (
     <div className={styles.serchblock}>
-      <form className={styles.searchForm} action="/search" method="GET">
+      <form className={styles.searchForm} onSubmit={handleSubmit}>
         <input 
         type={type}
         name={name}
         className={styles.searchInput}
         placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
         required={required}
          />
       </form>

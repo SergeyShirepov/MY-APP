@@ -3,7 +3,6 @@ import * as styles from './layout.css';
 import { useMatch, useNavigate } from 'react-router-dom';
 import { useToken } from '../../Hooks/useToken';
 import usePosts from '../../Hooks/usePosts';
-import { useSortedAndSearchPosts } from '../../Hooks/useSortedAndSearchPosts';
 import { CardsList } from '../CardsList';
 import { Content } from '../Content';
 import { Header } from '../Header';
@@ -34,17 +33,20 @@ export function Layout() {
     navigate(`/posts?sortBy=${newSortBy}`);
   }
 
-  const sortedAndSearchPosts = useSortedAndSearchPosts(posts, sortBy, searchBy);
+  const handleSearchSubmit = (search: string) => {
+    setSearchBy(search);
+  }
+console.log(searchBy);
 
   if (error) return <div>{error}</div>;
 
   return (
     <div className={styles.container}>
-      <Header onSortChange={handleSortChange} onSearchChange={setSearchBy} />
+      <Header onSortChange={handleSortChange} onSearchSubmit={handleSearchSubmit} />
       <Content>
         <div style={{ height: 'calc(90vh - 150px)' }}>
           <CardsList
-            posts={sortedAndSearchPosts}
+            posts={posts}
             isLoading={isLoading}
             hasMore={hasMore}
             loadMorePosts={loadMorePosts}
