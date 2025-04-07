@@ -35,7 +35,7 @@ const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy
           limit,
           offset,
           sortBy,
-          search: searchBy
+          searchBy
         },
         headers: {
           'X-User-Name': name || '',

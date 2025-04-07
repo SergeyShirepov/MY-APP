@@ -2,7 +2,6 @@ import React from 'react';
 import { Break } from '../../../Break'
 import { EColor, Text } from '../../../Text';
 import * as styles from './userblock.css';
-import { useNavigate } from 'react-router-dom';
 
 interface IUserBlockProps {
   avatarSrc?: string,
@@ -11,7 +10,6 @@ interface IUserBlockProps {
 }
 
 export function UserBlock({ avatarSrc, username, loading }: IUserBlockProps) {
-  const navigate = useNavigate();
 
   const AuthBlock = (
     <a
@@ -31,7 +29,7 @@ export function UserBlock({ avatarSrc, username, loading }: IUserBlockProps) {
   );
 
   const UserInfo = (
-    <div className={styles.userBox} onClick={() => navigate('/account')}>
+    <div className={styles.userBox}>
       <div className={styles.avatarBox}>
         {avatarSrc && <img src={avatarSrc} alt="user avatar" className={styles.avatarImage} />}
       </div>
