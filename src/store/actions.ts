@@ -76,7 +76,6 @@ export const meRequestAsync = (): ThunkAction<void, RootState, unknown, Action<s
 
       if (!meResponse.ok) throw meResponse;
       const redditUserData = await meResponse.json();
-      console.log(redditUserData);
 
       // 2. Отправляем данные для создания/обновления в MongoDB
       const mongoResponse = await fetch('/api/user/upsert', {

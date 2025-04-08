@@ -12,16 +12,12 @@ export function useUserData() {
 
   useEffect(() => {
     if (!token || !data) return;
-    
-    // Задержкf для демонстрации
-    const timer = setTimeout(() => {
-      dispatch(meRequestAsync());
-    }, 1000);
-    
-    return () => clearTimeout(timer);
+
+    dispatch(meRequestAsync());
+
   }, [token, dispatch, data]);
 
-  return { 
+  return {
     data,
     loading,
     error,

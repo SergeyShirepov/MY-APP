@@ -14,7 +14,7 @@ interface UsePostsResult {
   loadMorePosts: () => void;
 }
 
-const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy: string): UsePostsResult => {
+const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy: string, accountPoint: string): UsePostsResult => {
   const [posts, setPosts] = useState<ICardType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -24,10 +24,11 @@ const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy
   const [token] = useToken();
 
   const loadPosts = async (
-    offset: number, 
-    limit: number, 
-    sortBy: string, 
-    searchBy: string
+    offset: number,
+    limit: number,
+    sortBy: string,
+    searchBy: string,
+    accountPoint: string
   ): Promise<{ posts: ICardType[]; hasMore: boolean }> => {
     try {
       const response = await axios.get<{ posts: ICardType[]; hasMore: boolean }>(`/api/posts`, {
@@ -35,22 +36,23 @@ const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy
           limit,
           offset,
           sortBy,
-          searchBy
+          searchBy,
+          accountPoint
         },
         headers: {
           'X-User-Name': name || '',
           ...(token && { 'Authorization': `Bearer ${token}` })
         }
       });
-  
+
       return {
         posts: response.data.posts,
         hasMore: response.data.hasMore
       };
-      
+
     } catch (error: unknown) {
       let errorMessage = 'Ошибка загрузки данных';
-      
+
       if (axios.isAxiosError(error)) {
         // Ошибка от axios
         errorMessage = error.response?.data?.message || error.message;
@@ -58,7 +60,7 @@ const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy
         // Стандартная ошибка JavaScript
         errorMessage = error.message;
       }
-      
+
       setError(errorMessage);
       console.error('Ошибка загрузки постов:', error);
       return { posts: [], hasMore: false };
@@ -70,7 +72,7 @@ const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy
     setIsLoading(true);
     setPosts([]);
     setOffset(initialOffset);
-    const { posts, hasMore } = await loadPosts(initialOffset, limit, sortBy, searchBy);
+    const { posts, hasMore } = await loadPosts(initialOffset, limit, sortBy, searchBy, accountPoint);
     setPosts(posts);
     setHasMore(hasMore);
     setIsLoading(false);
@@ -80,7 +82,7 @@ const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy
     if (!isLoading && hasMore) {
       setIsLoading(true);
       const newOffset = offset + limit;
-      const { posts: newPosts, hasMore: newHasMore } = await loadPosts(newOffset, limit, sortBy, searchBy);
+      const { posts: newPosts, hasMore: newHasMore } = await loadPosts(newOffset, limit, sortBy, searchBy, accountPoint);
       setPosts((prevPosts) => {
         const updatedPosts = [...prevPosts, ...newPosts];
         return updatedPosts;
@@ -94,8 +96,8 @@ const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy
 
   useEffect(() => {
     fetchInitialPosts();
-  }, [sortBy, searchBy]);
-  
+  }, [sortBy, searchBy, accountPoint]);
+
 
   return {
     posts,

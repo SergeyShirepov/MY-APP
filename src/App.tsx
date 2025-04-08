@@ -20,6 +20,8 @@ export function App() {
       <BrowserRouter>
       <Routes>
       <Route path="/" element={<></>} />
+      <Route path="/account" element={<></>} />
+      <Route path="/account/viewed" element={<></>} />
       <Route path="/posts/:id" element={<Post />} />
       </Routes>
         <Layout>

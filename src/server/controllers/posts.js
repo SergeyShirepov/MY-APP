@@ -6,7 +6,7 @@ export const getPosts = async (req, res) => {
     // Преобразуем параметры в числа и задаем значения по умолчанию
     const limit = parseInt(req.query.limit, 10) || 10;
     const offset = parseInt(req.query.offset, 10) || 0;
-    const { sortBy, searchBy } = req.query;
+    const { sortBy, searchBy, accountPoint } = req.query;
 
     let sort = {};
     let query = {};
@@ -39,6 +39,12 @@ export const getPosts = async (req, res) => {
       const user = await User.findOne({ name: userName });
       if (user) {
         viewedPosts = user.viewedPosts.map(vp => vp.postId); // Извлекаем postId из viewedPosts
+
+        // Фильтруем только если явно запрошены просмотренные посты
+        if (accountPoint === 'viewed') {
+          query.id = { $in: viewedPosts };
+        }
+
       }
     }
 
