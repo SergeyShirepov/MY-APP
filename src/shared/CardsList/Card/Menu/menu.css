@@ -32,8 +32,11 @@
 }
 
 .closeButton {
-    background-color: var(--greyD9);
     padding: 12px 23px;
     border-radius: 0 0 3px 3px;
     width: 100%;
+}
+.closeButton:hover {
+    background-color: var(--grayf4);
+    border-radius: 0 0 3px 3px;
 }

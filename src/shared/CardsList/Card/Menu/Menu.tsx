@@ -1,10 +1,10 @@
 import React from 'react';
 import * as styles from './menu.css';
-import { Dropdown } from '../../../Dropdown';
+import { Dropdown } from './Dropdown';
 import { EColor, Text } from '../../../Text';
 import { MenuItemList } from './MenuItemList';
 
-export function Menu() {
+export function Menu( {postId}: {postId: string} ) {
   return (
     <div className={styles.menu} onClick={(e) => e.preventDefault()}>
       <Dropdown
@@ -19,7 +19,7 @@ export function Menu() {
         }
       >
         <div className={styles.dropDown}>
-          <MenuItemList postId='1234' />
+          <MenuItemList postId={postId} />
           <button className={styles.closeButton}>
             <Text mobileSize={12} size={14} color={EColor.gray66} >
               Закрыть

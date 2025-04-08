@@ -4,20 +4,18 @@ import { SearchBlock } from './SearchBlock';
 import { SortBlock } from './SortBlock';
 import { Link, useLocation } from 'react-router-dom';
 import { Navi } from './Navi/Navi';
+import { useUserData } from '../../Hooks/useUserData';
 
 type HeaderProps = {
   onSortChange: (sort: string) => void;
-  onSearchSubmit: (search: string) => void; // Изменено с onSearchChange
+  onSearchSubmit: (search: string) => void;
 };
 
 export function Header({ onSortChange, onSearchSubmit }: HeaderProps) {
   const [selectorSort, setSelectorSort] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
   const [head, setHead] = useState('Дискуссии');
   const location = useLocation();
-
-  // Определяем, находимся ли мы на странице аккаунта
-  // const isAccountPage = location.pathname === '/account';
+  const { data, loading } = useUserData();
 
   // Обновляем заголовок при изменении пути
   useEffect(() => {
@@ -39,8 +37,10 @@ export function Header({ onSortChange, onSearchSubmit }: HeaderProps) {
         <h1 className={styles.threadTitle}>
           {head === 'Личный кабинет' ? (
             <Link to="/">{head}</Link>
-          ) : (
-            <Link to="/account">{head}</Link>
+          ) : ( 
+            data.name ?
+            <Link to="/account">{head}</Link>:
+            <div style={{color: 'black'}}>{head}</div>
           )}
         </h1>
         
