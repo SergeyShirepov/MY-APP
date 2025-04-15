@@ -13,19 +13,8 @@ export function CommentForm({value, onChange, onSubmit}: Props) {
 
   return (
     <form className={styles.form} onSubmit={onSubmit}>
-      {/* <textarea
-      /> */}
-      <MyTextarea       
-      value={value}
-      onChange={onChange}
-      placeholder="Write your comment here..."
-      />
-      <MyButton>
-      Комментировать
-      </MyButton>
-      {/* <button type="submit" className={styles.button}>
-        
-      </button> */}
+      <MyTextarea value={value} onChange={onChange} placeholder="Напишите комментарий..." />
+      <MyButton> Комментировать </MyButton>
     </form>
   );
 }

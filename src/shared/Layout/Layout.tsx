@@ -10,17 +10,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSortBy } from '../../store/store';
 
 export function Layout() {
-  const [token] = useToken();
-  const sortBy = useSelector((state: any) => state.sortBy.sortBy);
   const [searchBy, setSearchBy] = useState('');
+  const [accountPoint, setAccountPoint] = useState('');
+  const sortBy = useSelector((state: any) => state.sortBy.sortBy);
+  const [token] = useToken();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const match = useMatch('/posts/:id');
   const location = useLocation();
-  const [accountPoint, setAccountPoint] = useState('');
-
-
-
   const { posts = [], isLoading, error, hasMore, loadMorePosts } = usePosts(0, 7, sortBy, searchBy, accountPoint);
 
   useEffect(() => {
@@ -28,32 +25,29 @@ export function Layout() {
       const searchParams = new URLSearchParams(location.search);
       const newSortBy = searchParams.get('sortBy');
       dispatch(setSortBy(newSortBy));
-      
-    switch (location.pathname) {
-      case '/account/viewed':
-        setAccountPoint('viewed');
-        break;
-      case '/account/saved':
-        setAccountPoint('saved');
-        break;
-      case '/account/my':
-        setAccountPoint('my');
-        break;
-      case '/account/commented': // Исправленная опечатка
-        setAccountPoint('commented');
-        break;
+
+      switch (location.pathname) {
+        case '/account/viewed':
+          setAccountPoint('viewed');
+          break;
+        case '/account/saved':
+          setAccountPoint('saved');
+          break;
+        case '/account/my':
+          setAccountPoint('my');
+          break;
+        case '/account/commented': // Исправленная опечатка
+          setAccountPoint('commented');
+          break;
         default:
-        setAccountPoint('');
+          setAccountPoint('');
+      }
     }
-    }
-
   }, [location.search, location.pathname]);
-
 
   const handleSortChange = (newSortBy: string) => {
     navigate(`/posts?sortBy=${newSortBy}`);
   }
-
   const handleSearchSubmit = (search: string) => {
     setSearchBy(search);
   }
@@ -64,7 +58,7 @@ export function Layout() {
     <div className={styles.container}>
       <Header onSortChange={handleSortChange} onSearchSubmit={handleSearchSubmit} />
       <Content>
-        <div style={{ height: '1300px' }}>
+        <div style={{ height: '1100px' }}>
           <CardsList
             posts={posts}
             isLoading={isLoading}

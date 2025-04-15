@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
   viewedPosts: [{ 
     postId: { type: Number, required: true },
     viewedAt: { type: Date, default: Date.now }
+  }],
+  savedPosts: [{
+    postId: { type: Number, required: true },
+    savedAt: { type: Date, default: Date.now }
   }]
 });
 

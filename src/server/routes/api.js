@@ -2,6 +2,7 @@ import express from 'express';
 import {
   getPosts,
   getPostById,
+  toggleSavePost,
   updatePostKarma
 } from '../controllers/posts.js';
 import { getToken, authHandler } from '../controllers/auth.js';
@@ -13,6 +14,7 @@ const router = express.Router();
 // Posts роутер
 router.get('/posts', getPosts);
 router.get('/posts/:postId', getPostById);
+router.post('/posts/:postId/save', toggleSavePost);
 router.put('/posts/:postId/karma', updatePostKarma);
 
 // Auth роутер
