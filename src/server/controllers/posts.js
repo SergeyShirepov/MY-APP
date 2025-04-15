@@ -35,14 +35,19 @@ export const getPosts = async (req, res) => {
 
     // Получаем список просмотренных постов пользователя
     let viewedPosts = [];
+    let savedPosts = [];
     if (userName) {
       const user = await User.findOne({ name: userName });
       if (user) {
         viewedPosts = user.viewedPosts.map(vp => vp.postId); // Извлекаем postId из viewedPosts
+        savedPosts = user.savedPosts.map(vp => vp.postId);
 
         // Фильтруем только если явно запрошены просмотренные посты
         if (accountPoint === 'viewed') {
           query.id = { $in: viewedPosts };
+        }
+        if (accountPoint === 'saved') {
+          query.id = { $in: savedPosts  };
         }
 
       }
@@ -132,6 +137,50 @@ export const getPostById = async (req, res) => {
     res.json(post);
   } catch (error) {
     console.error('Server error:', error);
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
+};
+
+export const toggleSavePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const userName = req.headers['x-user-name'];
+    
+    if (!userName) {
+      return res.status(401).json({ error: 'Необходима авторизация' });
+    }
+
+    // Проверяем, сохранен ли уже пост
+    const user = await User.findOne({ name: userName });
+    const isSaved = user.savedPosts.some(sp => sp.postId === Number(postId));
+
+    let result;
+    if (isSaved) {
+      // Удаляем из сохраненных
+      result = await User.findOneAndUpdate(
+        { name: userName },
+        { $pull: { savedPosts: { postId: Number(postId) } } },
+        { new: true }
+      );
+    } else {
+      // Добавляем в сохраненные
+      result = await User.findOneAndUpdate(
+        { name: userName },
+        { 
+          $push: { 
+            savedPosts: { 
+              postId: Number(postId),
+              savedAt: new Date()
+            } 
+          } 
+        },
+        { new: true }
+      );
+    }
+
+    res.json({ isSaved: !isSaved });
+  } catch (error) {
+    console.error('Ошибка сохранения поста:', error);
     res.status(500).json({ error: 'Ошибка сервера' });
   }
 };

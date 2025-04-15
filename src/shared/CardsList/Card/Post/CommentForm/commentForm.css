@@ -1,5 +1,8 @@
 .form {
-    width: 840px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    width: 100%;
     height: 139px;
     top: 2606px;
     left: 540px;
