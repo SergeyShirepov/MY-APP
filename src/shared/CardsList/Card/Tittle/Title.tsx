@@ -1,10 +1,9 @@
 import React from 'react';
 import * as styles from './title.css';
-import { Link } from 'react-router-dom';
-import { ICardProps } from '../Card';
+import { ICardType } from '../../../../types/ICardType';
 
 
-export function Title({ card }: ICardProps) {
+export function Title({ card }: { card: ICardType }) {
     let cardLength: number = card.title.length;
     let cardTitle;
 
@@ -16,7 +15,7 @@ export function Title({ card }: ICardProps) {
 
     return (
         <h2 className={styles.title}>
-                {cardTitle}
+            {cardTitle}
         </h2>
     );
 }

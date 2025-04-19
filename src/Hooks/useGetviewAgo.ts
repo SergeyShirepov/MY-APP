@@ -1,6 +1,6 @@
-import { ICardProps } from '../shared/CardsList/Card';
+import { ICardType } from '../types/ICardType';
 
-export function useGetviewAgo({ card }: ICardProps): string {
+export function useGetviewAgo({ card }: {card: ICardType}): string {
     const ViewedDate = new Date(card.timeViewed);
     const currentDate = new Date();
     const timeDifference = currentDate.getTime() - ViewedDate.getTime();

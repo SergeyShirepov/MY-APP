@@ -1,6 +1,6 @@
-import { ICardProps } from "../shared/CardsList/Card";
+import { ICardType } from "../types/ICardType";
 
-export function useGetTimeAgo({card}: ICardProps): string {
+export function useGetTimeAgo({card}: {card: ICardType}): string {
     const publishedDate = new Date(card.timePublished);
     const currentDate = new Date();
     const timeDifference = currentDate.getTime() - publishedDate.getTime();
