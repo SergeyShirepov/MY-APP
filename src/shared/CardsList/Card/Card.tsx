@@ -3,26 +3,14 @@ import * as styles from './card.css';
 import { Menu } from './Menu';
 import { Title } from './Tittle';
 import { AvtorPublished } from "./AvtorPublished/AvtorPublished";
-import KarmaCounter from "./KarmaCounter/KarmaCounter";
+import { KarmaCounter } from "./KarmaCounter/KarmaCounter";
 import { Link } from 'react-router-dom';
 import { useGetviewAgo } from '../../../Hooks/useGetviewAgo';
 import { useSelector } from 'react-redux';
+import { ICardType } from '../../../types/ICardType';
 
 
-export interface ICardProps {
-    card: {
-        id: string;
-        title: string;
-        cardPreview: string;
-        timePublished: string;
-        timeViewed: string;
-        avtor: string;
-        avatar: string;
-        karmaValue: number;
-    };
-}
-
-export function Card({ card }: ICardProps) {
+export function Card({ card }: { card: ICardType }) {
     const sortBy = useSelector((state: any) => state.sortBy.sortBy);
     const getviewAgo = useGetviewAgo({
         card: { id: '', title: '', cardPreview: '', timePublished: '', timeViewed: '', avtor: '', avatar: '', karmaValue: 0, }
@@ -45,7 +33,7 @@ export function Card({ card }: ICardProps) {
                     <AvtorPublished card={card} />
                     <Title card={card} />
                 </div>
-                <Menu postId={card.id}/>
+                <Menu postId={card.id} />
                 <div className={styles.preview}>
                     <img className={styles.previewImg} src={card.cardPreview} alt="preview" />
                 </div>

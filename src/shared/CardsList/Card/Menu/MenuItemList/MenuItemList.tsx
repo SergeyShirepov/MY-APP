@@ -2,28 +2,25 @@ import React from 'react';
 import * as styles from './menuitemlist.css';
 import { Text } from '../../../../Text';
 import { EColor } from '../../../../Text';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useUserData } from '../../../../../Hooks/useUserData';
 
-const postId = 1;
 
-interface IMenuItemListProps {
-  postId: string;
-}
 
-export function MenuItemList({ postId }: IMenuItemListProps) {
+export function MenuItemList({ postId }: { postId: string }) {
 
   const dispatch = useDispatch();
-    const { data, loading } = useUserData();
-    const userName = data?.name;
+  const { data, loading } = useUserData();
+  const userName = data?.name;
 
   const handleSaveClick = async () => {
     if (!userName) {
       console.log('Требуется авторизация');
       return;
     }
-    
+
     try {
+
       const response = await fetch(`http://localhost:3000/api/posts/${postId}/save`, {
         method: 'POST',
         headers: {
@@ -31,16 +28,16 @@ export function MenuItemList({ postId }: IMenuItemListProps) {
           'x-user-name': userName
         }
       });
-      
       if (!response.ok) {
         throw new Error('Ошибка сохранения поста');
       }
-      
       const data = await response.json();
       console.log('Пост сохранен:', data);
+
     } catch (error) {
       console.error('Ошибка:', error);
     }
+
   };
 
   return (

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { ICardType } from '../shared/CardsList';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useToken } from './useToken';
 import { RootState } from '../store/store';
 import { IUserData } from '../store/actions';
+import { ICardType } from '../types/ICardType';
 
 interface UsePostsResult {
   posts: ICardType[];

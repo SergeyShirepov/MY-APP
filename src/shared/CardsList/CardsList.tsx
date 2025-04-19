@@ -2,17 +2,8 @@ import React, { useRef } from 'react';
 import { FixedSizeList } from 'react-window';
 import AutoSizer, { Size } from 'react-virtualized-auto-sizer';
 import { Card } from './Card';
+import { ICardType } from '../../types/ICardType';
 
-export interface ICardType {
-  id: string;
-  title: string;
-  cardPreview: string;
-  timePublished: string;
-  timeViewed: string;
-  avtor: string;
-  avatar: string;
-  karmaValue: number;
-}
 
 type CardsListProps = {
   posts: ICardType[];
@@ -38,7 +29,7 @@ export const CardsList: React.FC<CardsListProps> = ({ posts, isLoading, hasMore,
     const post = posts[index];
     return (
       <div style={style}>
-        <Card key={post.id} card={post} />
+        <Card card={post} />
       </div>
     );
   };

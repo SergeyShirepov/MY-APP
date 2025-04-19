@@ -1,11 +1,10 @@
 import React from 'react';
 import * as styles from "../card.css";
-import { ICardProps } from '../Card';
 import { useGetTimeAgo } from '../../../../Hooks/useGetTimeAgo';
+import { ICardType } from '../../../../types/ICardType';
 
-export function AvtorPublished ({card}: ICardProps) {
+export function AvtorPublished ( {card} : {card: ICardType} ) {
     const getTimeAgo = useGetTimeAgo ({card});
-
 
     return (
             <div className={styles.metaData}>
