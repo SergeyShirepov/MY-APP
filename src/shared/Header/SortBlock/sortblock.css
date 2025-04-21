@@ -1,16 +1,29 @@
 .sortblock {
-    position: relative;
-    display: inline-block;
+  height: 37px;
+  min-width: 187px;
+  position: relative;
+  display: inline-block;
+}
+
+.sortblock select {
+  background-color: var(--grayf4);
+  border: none;
+  color: var(--orange);
+  padding: 6px 35px 11px 10px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+@media (width < 1024px) {
+
+  .sortblock {
+    padding-left: 40px;
+    padding-bottom: 0px;
   }
-  
+
   .sortblock select {
-    background-color: var(--grayf4);
-    border: none;
-    color: var(--orange);
-    padding: 11px 35px 11px 20px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    cursor: pointer;
+    padding-bottom: 0px;
   }
-  
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import * as styles from './searchblock.css';
-import { UserBlock } from './UserBlock';
 import { useUserData } from '../../../Hooks/useUserData';
+import { UserBlock } from './UserBlock';
+import * as styles from './searchblock.css';
 
 interface SearchBlockProps {
   onSearchSubmit: (search: string) => void;
@@ -11,7 +11,7 @@ interface SearchBlockProps {
   required?: boolean;
 }
 
-export function SearchBlock({  onSearchSubmit,  type,  name,  placeholder,  required }: SearchBlockProps) {
+export function SearchBlock({ onSearchSubmit, type, name, placeholder, required }: SearchBlockProps) {
   const { data, loading } = useUserData();
   const [searchValue, setSearchValue] = useState('');
 
@@ -22,20 +22,20 @@ export function SearchBlock({  onSearchSubmit,  type,  name,  placeholder,  requ
 
   useEffect(() => {
     onSearchSubmit('');
-  }, [searchValue==='']);
+  }, [searchValue === '']);
 
   return (
     <div className={styles.serchblock}>
       <form className={styles.searchForm} onSubmit={handleSubmit}>
-        <input 
-        type={type}
-        name={name}
-        className={styles.searchInput}
-        placeholder={placeholder}
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
-        required={required}
-         />
+        <input
+          type={type}
+          name={name}
+          className={styles.searchInput}
+          placeholder={placeholder}
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          required={required}
+        />
       </form>
       <UserBlock
         avatarSrc={data?.iconImg}

@@ -1,7 +1,7 @@
 import React from 'react';
-import * as styles from './karmacounter.css';
 import { ICardType } from '../../../../types/ICardType';
 import useKarma from '../../../../Hooks/useKarma';
+import * as styles from './karmacounter.css';
 
 
 export function KarmaCounter ({ card }: { card: ICardType }) {

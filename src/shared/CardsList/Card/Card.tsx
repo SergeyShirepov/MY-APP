@@ -1,13 +1,13 @@
 import React from 'react';
-import * as styles from './card.css';
-import { Menu } from './Menu';
-import { Title } from './Tittle';
-import { AvtorPublished } from "./AvtorPublished/AvtorPublished";
-import { KarmaCounter } from "./KarmaCounter/KarmaCounter";
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useGetviewAgo } from '../../../Hooks/useGetviewAgo';
-import { useSelector } from 'react-redux';
 import { ICardType } from '../../../types/ICardType';
+import { AvtorPublished } from "./AvtorPublished/AvtorPublished";
+import { KarmaCounter } from "./KarmaCounter/KarmaCounter";
+import { Menu } from './Menu';
+import { Title } from './Tittle';
+import * as styles from './card.css';
 
 
 export function Card({ card }: { card: ICardType }) {

@@ -37,7 +37,7 @@ export function UserBlock({ avatarSrc, username, loading }: IUserBlockProps) {
         <Break size={12} />
         {loading ? (
           <Text size={20} color={EColor.gray99}>Загрузка...</Text>
-        ) : (  
+        ) : (
           <Text size={20} color={username ? EColor.black : EColor.gray99}>{username || 'Аноним'}</Text>
         )}
       </div>

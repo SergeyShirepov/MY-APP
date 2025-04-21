@@ -1,8 +1,10 @@
 .navi {
     list-style: none;
     display: flex;
-    margin-left: 40px;
-    width: 981px;
+    margin-right: auto;
+    padding-left: 20px;
+    width: 100%;
+    max-width: 1000px;
     height: 38px;
     font-weight: 400;
     font-size: 20px;
@@ -13,7 +15,7 @@
 
 .navi li {
     padding-bottom: 13px;
-    margin-right: 60px;
+    margin-right: auto;
 }
 
 .navi li:hover,
@@ -27,3 +29,10 @@
     color: var(--orange);
     border-color: var(--orange);
 }
+/* 
+@media (max-width: 920px) {
+
+    .navi {
+    
+    }
+} */
