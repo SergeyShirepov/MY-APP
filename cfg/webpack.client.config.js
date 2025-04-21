@@ -140,7 +140,6 @@ const clientConfig = {
     new CopyPlugin({
       patterns: [
         { from: "src/shared/img", to: "images" },
-        { from: "src/mockServiceWorker.js", to: "mockServiceWorker.js" },
       ],
     }),
     new BundleAnalyzerPlugin({
