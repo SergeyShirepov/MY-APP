@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { FixedSizeList } from 'react-window';
+import { ICardType } from '../../types/ICardType';
 import AutoSizer, { Size } from 'react-virtualized-auto-sizer';
 import { Card } from './Card';
-import { ICardType } from '../../types/ICardType';
 
 
 type CardsListProps = {
@@ -35,7 +35,7 @@ export const CardsList: React.FC<CardsListProps> = ({ posts, isLoading, hasMore,
   };
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
+    <div style={{ height: '100%', width: '100%', padding: '0px' }}>
       <AutoSizer>
         {({ height, width }: Size) => (
           <FixedSizeList

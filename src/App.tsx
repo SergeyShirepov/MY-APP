@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Layout } from './shared/Layout';
-import './main.global.css';
-import { store } from './store/store';
-import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import { Layout } from './shared/Layout';
 import { Post } from './shared/CardsList/Card/Post/Post';
+import './main.global.css';
 
 export function App() {
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   if (!mounted) return null;
 
   return (

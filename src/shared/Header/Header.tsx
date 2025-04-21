@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import * as styles from './header.css';
+import { Link, useLocation } from 'react-router-dom';
+import { useUserData } from '../../Hooks/useUserData';
+import { Navi } from './Navi/Navi';
 import { SearchBlock } from './SearchBlock';
 import { SortBlock } from './SortBlock';
-import { Link, useLocation } from 'react-router-dom';
-import { Navi } from './Navi/Navi';
-import { useUserData } from '../../Hooks/useUserData';
+import * as styles from './header.css';
 
 type HeaderProps = {
   onSortChange: (sort: string) => void;
@@ -12,6 +12,7 @@ type HeaderProps = {
 };
 
 export function Header({ onSortChange, onSearchSubmit }: HeaderProps) {
+
   const [selectorSort, setSelectorSort] = useState('');
   const [head, setHead] = useState('Дискуссии');
   const location = useLocation();
@@ -34,16 +35,17 @@ export function Header({ onSortChange, onSearchSubmit }: HeaderProps) {
   return (
     <header className={styles.header}>
       <div className={styles.topHeader}>
+        <div className={styles.topHeaderLeft}>
         <h1 className={styles.threadTitle}>
           {head === 'Личный кабинет' ? (
             <Link to="/">{head}</Link>
-          ) : ( 
+          ) : (
             data.name ?
-            <Link to="/account">{head}</Link>:
-            <div style={{color: 'black'}}>{head}</div>
+              <Link to="/account">{head}</Link> :
+              <div style={{ color: 'black' }}>{head}</div>
           )}
         </h1>
-        
+
         {head !== 'Личный кабинет' && (
           <SortBlock
             value={selectorSort}
@@ -55,7 +57,8 @@ export function Header({ onSortChange, onSearchSubmit }: HeaderProps) {
             ]}
           />
         )}
-        
+        </div>
+
         <SearchBlock
           onSearchSubmit={onSearchSubmit}
           type="text"
@@ -64,7 +67,7 @@ export function Header({ onSortChange, onSearchSubmit }: HeaderProps) {
           required
         />
       </div>
-      
+
       {head === 'Личный кабинет' && <Navi />}
     </header>
   );

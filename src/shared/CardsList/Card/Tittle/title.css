@@ -7,7 +7,7 @@
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     max-width: 761px;
-    height: 23px;
+    min-height: 23px;
     cursor: pointer;
 }
 

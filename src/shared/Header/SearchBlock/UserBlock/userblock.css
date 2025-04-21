@@ -4,7 +4,7 @@
     align-items: center;
     border-radius: 100%;
     box-shadow: none;
-    margin-left: 40px;
+    margin: 0px 40px;
 }
 
 .userBox:hover span {
@@ -28,4 +28,10 @@ color: var(--orange);
 }
 
 .username {
+}
+
+@media (width < 1114px) {
+    .userBox {
+        margin: 0px 10px;
+    }
 }

@@ -1,4 +1,23 @@
-@media all and (min-width: 1024px) {
+.threadTitle {
+    font-weight: normal;
+    font-size: 28px;
+    padding: 0 20px;
+    font-size: 20px;
+    line-height: 23px;
+    margin: 0 0 15px;
+}
+
+.threadTitle :hover {
+    color: var(--orange);
+}
+
+.topHeaderLeft {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
     .header {
         height: 180px;
         box-sizing: border-box;
@@ -15,23 +34,23 @@
     }
 }
 
-.threadTitle {
-    font-weight: normal;
-    padding: 0 20px;
-    font-size: 20px;
-    line-height: 23px;
-    margin: 0 0 15px;
+@media (width < 1114px) {
+    .topHeader {
+        padding: 40px 5px;
+    }
 }
 
-.threadTitle :hover {
-    color: var(--orange);
-}
-
-@media all and (min-width: 1024px) {
-    .threadTitle{
-        padding: 0;
+@media (width < 1024px) {
+    .threadTitle {
+        padding: 40px;
         margin: 0 27px 0 0;
-        font-size: 28px;
         line-height: 33px;
     }
+
+    .topHeaderLeft {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
 }

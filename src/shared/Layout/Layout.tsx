@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import * as styles from './layout.css';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
-import { useToken } from '../../Hooks/useToken';
 import usePosts from '../../Hooks/usePosts';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSortBy } from '../../store/store';
 import { CardsList } from '../CardsList';
 import { Content } from '../Content';
 import { Header } from '../Header';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSortBy } from '../../store/store';
+import * as styles from './layout.css';
 
 export function Layout() {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const match = useMatch('/posts/:id');
   const [searchBy, setSearchBy] = useState('');
   const [accountPoint, setAccountPoint] = useState('');
   const sortBy = useSelector((state: any) => state.sortBy.sortBy);
-  const [token] = useToken();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const match = useMatch('/posts/:id');
-  const location = useLocation();
   const { posts = [], isLoading, error, hasMore, loadMorePosts } = usePosts(0, 7, sortBy, searchBy, accountPoint);
 
   useEffect(() => {

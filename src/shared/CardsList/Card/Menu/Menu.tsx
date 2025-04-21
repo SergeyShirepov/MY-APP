@@ -1,8 +1,8 @@
 import React from 'react';
-import * as styles from './menu.css';
-import { Dropdown } from './Dropdown';
 import { EColor, Text } from '../../../Text';
+import { Dropdown } from './Dropdown';
 import { MenuItemList } from './MenuItemList';
+import * as styles from './menu.css';
 
 export function Menu( {postId}: {postId: string} ) {
   return (
