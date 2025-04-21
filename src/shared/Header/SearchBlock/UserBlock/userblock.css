@@ -30,7 +30,6 @@ color: var(--orange);
 .username {
 }
 
-
 @media (width < 1114px) {
     .userBox {
         margin: 0px 10px;
