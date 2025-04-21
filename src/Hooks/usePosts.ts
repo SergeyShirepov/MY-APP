@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useToken } from './useToken';
@@ -14,50 +14,56 @@ interface UsePostsResult {
   loadMorePosts: () => void;
 }
 
-const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy: string, accountPoint: string): UsePostsResult => {
+interface PostsResponse {
+  posts: ICardType[];
+  hasMore: boolean;
+}
+
+const usePosts = (
+  initialOffset: number, 
+  limit: number, 
+  sortBy: string, 
+  searchBy: string, 
+  accountPoint: string
+): UsePostsResult => {
+
   const [posts, setPosts] = useState<ICardType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [offset, setOffset] = useState(initialOffset);
   const [hasMore, setHasMore] = useState(true);
-  const { name } = useSelector<RootState, IUserData>(state => state.userData.data);
+  
+  const { name } = useSelector<RootState, IUserData>((state) => state.userData.data);
   const [token] = useToken();
 
-  const loadPosts = async (
-    offset: number,
-    limit: number,
-    sortBy: string,
-    searchBy: string,
-    accountPoint: string
-  ): Promise<{ posts: ICardType[]; hasMore: boolean }> => {
+  const loadPosts = useCallback(async (
+    currentOffset: number,
+    currentSortBy: string,
+    currentSearchBy: string,
+    currentAccountPoint: string
+  ): Promise<PostsResponse> => {
     try {
-      const response = await axios.get<{ posts: ICardType[]; hasMore: boolean }>(`/api/posts`, {
+      const response = await axios.get<PostsResponse>('/api/posts', {
         params: {
           limit,
-          offset,
-          sortBy,
-          searchBy,
-          accountPoint
+          offset: currentOffset,
+          sortBy: currentSortBy,
+          searchBy: currentSearchBy,
+          accountPoint: currentAccountPoint,
         },
         headers: {
           'X-User-Name': name || '',
-          ...(token && { 'Authorization': `Bearer ${token}` })
-        }
+          ...(token && { 'Authorization': `Bearer ${token}` }),
+        },
       });
 
-      return {
-        posts: response.data.posts,
-        hasMore: response.data.hasMore
-      };
-
-    } catch (error: unknown) {
+      return response.data;
+    } catch (error) {
       let errorMessage = 'Ошибка загрузки данных';
 
       if (axios.isAxiosError(error)) {
-        // Ошибка от axios
         errorMessage = error.response?.data?.message || error.message;
       } else if (error instanceof Error) {
-        // Стандартная ошибка JavaScript
         errorMessage = error.message;
       }
 
@@ -65,39 +71,53 @@ const usePosts = (initialOffset: number, limit: number, sortBy: string, searchBy
       console.error('Ошибка загрузки постов:', error);
       return { posts: [], hasMore: false };
     }
-  };
+  }, [limit, name, token]);
 
-
-  const fetchInitialPosts = async () => {
+  const fetchInitialPosts = useCallback(async () => {
     setIsLoading(true);
-    setPosts([]);
-    setOffset(initialOffset);
-    const { posts, hasMore } = await loadPosts(initialOffset, limit, sortBy, searchBy, accountPoint);
-    setPosts(posts);
-    setHasMore(hasMore);
-    setIsLoading(false);
-  };
-
-  const loadMorePosts = async () => {
-    if (!isLoading && hasMore) {
-      setIsLoading(true);
-      const newOffset = offset + limit;
-      const { posts: newPosts, hasMore: newHasMore } = await loadPosts(newOffset, limit, sortBy, searchBy, accountPoint);
-      setPosts((prevPosts) => {
-        const updatedPosts = [...prevPosts, ...newPosts];
-        return updatedPosts;
-      });
-
-      setOffset(newOffset);
+    setError('');
+    
+    try {
+      const { posts: newPosts, hasMore: newHasMore } = await loadPosts(
+        initialOffset,
+        sortBy,
+        searchBy,
+        accountPoint
+      );
+      
+      setPosts(newPosts);
       setHasMore(newHasMore);
+      setOffset(initialOffset);
+    } finally {
       setIsLoading(false);
     }
-  };
+  }, [initialOffset, sortBy, searchBy, accountPoint]);
+
+  const loadMorePosts = useCallback(async () => {
+    if (isLoading || !hasMore) return;
+
+    setIsLoading(true);
+    
+    try {
+      const newOffset = offset + limit;
+      const { posts: newPosts, hasMore: newHasMore } = await loadPosts(
+        newOffset,
+        sortBy,
+        searchBy,
+        accountPoint
+      );
+
+      setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      setOffset(newOffset);
+      setHasMore(newHasMore);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [isLoading, hasMore, offset, limit, sortBy, searchBy, accountPoint]);
 
   useEffect(() => {
     fetchInitialPosts();
-  }, [sortBy, searchBy, accountPoint]);
-
+  }, [fetchInitialPosts]);
 
   return {
     posts,

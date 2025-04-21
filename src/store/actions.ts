@@ -59,9 +59,11 @@ export const meRequestError: ActionCreator<MeRequestErrorAction> = (error: { mes
 
 // Асинхронное действие
 export const meRequestAsync = (): ThunkAction<void, RootState, unknown, Action<string>> => 
+  
   async (dispatch, getState) => {
-    const { token, data } = getState().userData;
-    if (!token || (data && data.name)) return;
+    
+    const { token, data, loading } = getState().userData;
+    if (!token || (data && data.name) || loading) return;
 
     dispatch(meRequest());
 

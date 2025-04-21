@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import * as styles from "./post.css";
+import { useNavigate, useParams } from 'react-router-dom';
+import useOpenPost from "../../../../Hooks/useOpenPost";
 import { AvtorPublished } from "../AvtorPublished/AvtorPublished";
 import { CommentFormContainer } from "./CommentFormContainer/CommentFormContainer";
-import { useNavigate, useParams } from 'react-router-dom';
 import { Comments } from './Comments/Comments';
-import useOpenPost from "../../../../Hooks/useOpenPost";
+import * as styles from "./post.css";
 
 
 
@@ -18,8 +18,6 @@ export function Post() {
     const { id } = useParams();
     if (!id) return null;
     const { card, loading, error } = useOpenPost(id);
-
-
 
     useEffect(() => {
         function handleClick(event: MouseEvent) {

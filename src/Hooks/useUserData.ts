@@ -17,6 +17,7 @@ export function useUserData() {
 
   }, [token, dispatch, data]);
 
+  console.log(data);
   return {
     data,
     loading,
