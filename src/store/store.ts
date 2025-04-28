@@ -7,7 +7,7 @@ interface IUserData {
   iconImg?: string;
 }
 
-// Обновляем тип RootState
+// Обновленный RootState с searchBy
 export type RootState = {
   comment: {
     commentText: string;
@@ -17,6 +17,15 @@ export type RootState = {
     error: Error | null;
     data: IUserData;
     token: string | null;
+  };
+  sortBy: {
+    sortBy: string;
+  };
+  searchBy: {
+    searchBy: string;
+  };
+  accountPoint: {
+    accountPoint: string;
   };
 };
 
@@ -85,8 +94,38 @@ const sortBySlice = createSlice({
   name: 'sortBy',
   initialState: initialSortState,
   reducers: {
-    setSortBy: (state, action) => {
+    setSortBy: (state, action: PayloadAction<string>) => {
       state.sortBy = action.payload;
+    },
+  },
+});
+
+// Начальное состояние для поиска
+const initialSearchState = {
+  searchBy: '',
+};
+
+// Слайс для поиска
+const searchSlice = createSlice({
+  name: 'searchBy',
+  initialState: initialSearchState,
+  reducers: {
+    setSearchBy: (state, action: PayloadAction<string>) => {
+      state.searchBy = action.payload;
+    },
+  },
+});
+
+const initialAccountPointState = {
+  accountPoint: '',
+}
+
+const accountPointSlice = createSlice({
+  name: 'accountPoint',
+  initialState: initialAccountPointState,
+  reducers: {
+    setAccountPoint: (state, action: PayloadAction<string>) => {
+      state.accountPoint = action.payload;
     },
   },
 });
@@ -96,12 +135,16 @@ const rootReducer = combineReducers({
   comment: commentSlice.reducer,
   userData: userDataSlice.reducer,
   sortBy: sortBySlice.reducer,
+  searchBy: searchSlice.reducer,
+  accountPoint: accountPointSlice.reducer
 });
 
-// Экспортируем actions из обоих слайсов
+// Экспортируем actions из всех слайсов
 export const { updateComment } = commentSlice.actions;
 export const { setToken } = userDataSlice.actions;
 export const { setSortBy } = sortBySlice.actions;
+export const { setSearchBy } = searchSlice.actions;
+export const { setAccountPoint } = accountPointSlice.actions;
 
 // Настраиваем хранилище
 export const store = configureStore({

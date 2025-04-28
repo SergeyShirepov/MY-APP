@@ -6,6 +6,8 @@ interface IContentProps {
 }
 
 export function Content({ children }: IContentProps) {
+
+console.log('Рендер Content');
   return (
     <main className={styles.content}>
       {children}

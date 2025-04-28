@@ -2,6 +2,7 @@ import React from 'react';
 import { Break } from '../../../Break'
 import { EColor, Text } from '../../../Text';
 import * as styles from './userblock.css';
+import { useUserData } from '../../../../Hooks/useUserData';
 
 interface IUserBlockProps {
   avatarSrc?: string,
@@ -10,6 +11,7 @@ interface IUserBlockProps {
 }
 
 export function UserBlock({ avatarSrc, username, loading }: IUserBlockProps) {
+  const { data } = useUserData();
 
   const AuthBlock = (
     <a

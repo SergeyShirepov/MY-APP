@@ -65,9 +65,9 @@ export const meRequestAsync = (): ThunkAction<void, RootState, unknown, Action<s
     const { token, data, loading } = getState().userData;
     if (!token || (data && data.name) || loading) return;
 
-    dispatch(meRequest());
-
+    
     try {
+      dispatch(meRequest());
       // 1. Получаем данные пользователя из вашего API
       const meResponse = await fetch('/api/me', {
         credentials: 'include',

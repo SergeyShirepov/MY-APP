@@ -2,22 +2,24 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { IUserData, meRequestAsync, useAppDispatch } from '../store/actions';
+import { useToken } from './useToken';
 
 export function useUserData() {
+  const [token] = useToken();
   const data = useSelector<RootState, IUserData>(state => state.userData.data);
   const loading = useSelector<RootState, boolean>(state => state.userData.loading);
   const error = useSelector<RootState, Error | null>(state => state.userData.error);
-  const token = useSelector<RootState, string | null>(state => state.userData.token);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!token || !data) return;
 
-    dispatch(meRequestAsync());
+    dispatch(meRequestAsync() as any);
+  }, [token]);
 
-  }, [token, dispatch, data]);
+  
+  console.log('ВЫЗОВ USEUSERDATA');
 
-  console.log(data);
   return {
     data,
     loading,

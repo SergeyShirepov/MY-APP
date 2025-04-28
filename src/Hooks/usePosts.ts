@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { useToken } from './useToken';
 import { RootState } from '../store/store';
-import { IUserData } from '../store/actions';
 import { ICardType } from '../types/ICardType';
 
 interface UsePostsResult {
@@ -19,30 +17,44 @@ interface PostsResponse {
   hasMore: boolean;
 }
 
-const usePosts = (
-  initialOffset: number, 
-  limit: number, 
-  sortBy: string, 
-  searchBy: string, 
-  accountPoint: string
-): UsePostsResult => {
 
-  const [posts, setPosts] = useState<ICardType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [offset, setOffset] = useState(initialOffset);
-  const [hasMore, setHasMore] = useState(true);
-  
-  const { name } = useSelector<RootState, IUserData>((state) => state.userData.data);
-  const [token] = useToken();
+
+const usePosts = (
+  initialOffset: number,
+  limit: number,
+  name: string
+): UsePostsResult => {
+  console.log('usePosts ', {name});
+
+  const accountPoint = useSelector((state: RootState) => state.accountPoint.accountPoint);
+  const sortBy = useSelector((state: RootState) => state.sortBy.sortBy);
+  const searchBy = useSelector((state: RootState) => state.searchBy.searchBy);
+
+
+  const [state, setState] = useState<{
+    posts: ICardType[];
+    isLoading: boolean;
+    error: string;
+    offset: number;
+    hasMore: boolean;
+  }>({
+    posts: [],
+    isLoading: true,
+    error: '',
+    offset: initialOffset,
+    hasMore: true,
+  });
+
 
   const loadPosts = useCallback(async (
+    
     currentOffset: number,
     currentSortBy: string,
     currentSearchBy: string,
     currentAccountPoint: string
   ): Promise<PostsResponse> => {
     try {
+      console.log('Вызван LOADMORE');
       const response = await axios.get<PostsResponse>('/api/posts', {
         params: {
           limit,
@@ -52,8 +64,7 @@ const usePosts = (
           accountPoint: currentAccountPoint,
         },
         headers: {
-          'X-User-Name': name || '',
-          ...(token && { 'Authorization': `Bearer ${token}` }),
+          'X-User-Name': name || ''
         },
       });
 
@@ -67,16 +78,15 @@ const usePosts = (
         errorMessage = error.message;
       }
 
-      setError(errorMessage);
+      setState(prev => ({ ...prev, error: errorMessage }));
       console.error('Ошибка загрузки постов:', error);
       return { posts: [], hasMore: false };
     }
-  }, [limit, name, token]);
+  }, [sortBy, searchBy, accountPoint]);
 
   const fetchInitialPosts = useCallback(async () => {
-    setIsLoading(true);
-    setError('');
-    
+    setState(prev => ({ ...prev, isLoading: true, error: '' }));
+
     try {
       const { posts: newPosts, hasMore: newHasMore } = await loadPosts(
         initialOffset,
@@ -84,22 +94,29 @@ const usePosts = (
         searchBy,
         accountPoint
       );
-      
-      setPosts(newPosts);
-      setHasMore(newHasMore);
-      setOffset(initialOffset);
+
+      setState(prev => ({
+        ...prev,
+        posts: newPosts,
+        hasMore: newHasMore,
+        offset: initialOffset,
+        isLoading: false,
+      }));
+    // } catch {
+    //   setState(prev => ({ ...prev, isLoading: false }));
     } finally {
-      setIsLoading(false);
+      setState(prev => ({ ...prev, isLoading: false }));
     }
-  }, [initialOffset, sortBy, searchBy, accountPoint]);
+  }, [sortBy, searchBy, accountPoint]);
 
   const loadMorePosts = useCallback(async () => {
-    if (isLoading || !hasMore) return;
+    console.log('loadMorePosts вызван с:', { initialOffset, sortBy, searchBy, accountPoint });
+    if (state.isLoading || !state.hasMore) return;
 
-    setIsLoading(true);
-    
+    setState(prev => ({ ...prev, isLoading: true }));
+
     try {
-      const newOffset = offset + limit;
+      const newOffset = state.offset + limit;
       const { posts: newPosts, hasMore: newHasMore } = await loadPosts(
         newOffset,
         sortBy,
@@ -107,25 +124,41 @@ const usePosts = (
         accountPoint
       );
 
-      setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-      setOffset(newOffset);
-      setHasMore(newHasMore);
+      setState(prev => {
+        const existingIds = new Set(prev.posts.map(post => post.id));
+        const filtered = newPosts.filter(post => !existingIds.has(post.id));
+        return {
+          ...prev,
+          posts: [...prev.posts, ...filtered],
+          offset: newOffset,
+          hasMore: newHasMore,
+          isLoading: false,
+        };
+      });
     } finally {
-      setIsLoading(false);
+      setState(prev => ({ ...prev, isLoading: false }));
     }
-  }, [isLoading, hasMore, offset, limit, sortBy, searchBy, accountPoint]);
+  }, [state.isLoading, state.hasMore]);
 
   useEffect(() => {
+    console.log('fetchInitialPosts вызван с:', { initialOffset, sortBy, searchBy, accountPoint });
     fetchInitialPosts();
-  }, [fetchInitialPosts]);
+  }, [sortBy, searchBy, accountPoint]);
 
-  return {
-    posts,
-    isLoading,
-    error,
-    hasMore,
+  
+  console.log(    state.posts,
+    state.isLoading,
+    state.error,
+    state.hasMore);
+
+  return{
+    posts: state.posts,
+    isLoading: state.isLoading,
+    error: state.error,
+    hasMore: state.hasMore,
     loadMorePosts,
   };
+  
 };
 
 export default usePosts;

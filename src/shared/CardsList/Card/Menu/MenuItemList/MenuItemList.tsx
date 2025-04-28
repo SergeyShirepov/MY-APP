@@ -10,7 +10,7 @@ import { useUserData } from '../../../../../Hooks/useUserData';
 export function MenuItemList({ postId }: { postId: string }) {
 
   const dispatch = useDispatch();
-  const { data, loading } = useUserData();
+  const { data } = useUserData();
   const userName = data?.name;
 
   const handleSaveClick = async () => {

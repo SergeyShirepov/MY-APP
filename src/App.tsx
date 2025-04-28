@@ -12,6 +12,7 @@ export function App() {
   useEffect(() => { setMounted(true); }, []);
   if (!mounted) return null;
 
+  console.log('Рендер App');
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -19,6 +20,10 @@ export function App() {
           <Route path="/" element={<></>} />
           <Route path="/account" element={<></>} />
           <Route path="/account/viewed" element={<></>} />
+          <Route path="/account/saved" element={<></>} />
+          <Route path="account/my" element={<></>} />
+          <Route path="account/comented" element={<></>} />
+          <Route path="/posts" element={<></>} />
           <Route path="/posts/:id" element={<Post />} />
         </Routes>
         <Layout>

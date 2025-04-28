@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useUserData } from '../../Hooks/useUserData';
 import { Navi } from './Navi/Navi';
 import { SearchBlock } from './SearchBlock';
 import { SortBlock } from './SortBlock';
 import * as styles from './header.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
-type HeaderProps = {
-  onSortChange: (sort: string) => void;
-  onSearchSubmit: (search: string) => void;
-};
 
-export function Header({ onSortChange, onSearchSubmit }: HeaderProps) {
+export function Header() {
 
-  const [selectorSort, setSelectorSort] = useState('');
   const [head, setHead] = useState('Дискуссии');
   const location = useLocation();
-  const { data, loading } = useUserData();
+
+  
+  console.log('----------HEADER-------------',[location.pathname]);
+  const accountPoint = useSelector((state: RootState) => state.accountPoint.accountPoint);
+  const sortBy = useSelector((state: RootState) => state.sortBy.sortBy);
+  const searchBy = useSelector((state: RootState) => state.searchBy.searchBy);
 
   // Обновляем заголовок при изменении пути
   useEffect(() => {
@@ -27,40 +28,31 @@ export function Header({ onSortChange, onSearchSubmit }: HeaderProps) {
     }
   }, [location.pathname]);
 
-  const handleSortChange = (sort: string) => {
-    setSelectorSort(sort);
-    onSortChange(sort);
-  };
-
   return (
+    <>
     <header className={styles.header}>
       <div className={styles.topHeader}>
         <div className={styles.topHeaderLeft}>
-        <h1 className={styles.threadTitle}>
-          {head === 'Личный кабинет' ? (
-            <Link to="/">{head}</Link>
-          ) : (
-            data.name ?
-              <Link to="/account">{head}</Link> :
-              <div style={{ color: 'black' }}>{head}</div>
-          )}
-        </h1>
+          <h1 className={styles.threadTitle}>
+            {head === 'Личный кабинет' ? (
+              <Link to="/">{head}</Link>
+            ) : (
+                <Link to="/account">{head}</Link> 
+            )}
+          </h1>
 
-        {head !== 'Личный кабинет' && (
-          <SortBlock
-            value={selectorSort}
-            onChange={handleSortChange}
-            defaultValue="Сортировать список"
-            options={[
-              { value: 'karma', name: 'Лучшие' },
-              { value: 'dataPost', name: 'По дате' },
-            ]}
-          />
-        )}
+          {head !== 'Личный кабинет' && (
+            <SortBlock
+              defaultValue="Сортировать список"
+              options={[
+                { value: 'karma', name: 'Лучшие' },
+                { value: 'dataPost', name: 'По дате' },
+              ]}
+            />
+          )}
         </div>
 
         <SearchBlock
-          onSearchSubmit={onSearchSubmit}
           type="text"
           name="query"
           placeholder="Поиск"
@@ -70,5 +62,6 @@ export function Header({ onSortChange, onSearchSubmit }: HeaderProps) {
 
       {head === 'Личный кабинет' && <Navi />}
     </header>
+    </>
   );
 }

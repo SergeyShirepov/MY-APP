@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { useUserData } from '../../../Hooks/useUserData';
 import { UserBlock } from './UserBlock';
 import * as styles from './searchblock.css';
+import { RootState, setSearchBy } from '../../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { IUserData } from '../../../store/actions';
 
 interface SearchBlockProps {
-  onSearchSubmit: (search: string) => void;
   type: string;
   name: string;
   placeholder: string;
   required?: boolean;
 }
 
-export function SearchBlock({ onSearchSubmit, type, name, placeholder, required }: SearchBlockProps) {
-  const { data, loading } = useUserData();
+export function SearchBlock({ type, name, placeholder, required }: SearchBlockProps) {
+  const {loading, data} = useSelector((state: RootState) => state.userData);
   const [searchValue, setSearchValue] = useState('');
+  const dispatch = useDispatch();
+
+  
+  const onSearchSubmit = (search: string) => {
+    dispatch(setSearchBy(search));
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,8 +30,9 @@ export function SearchBlock({ onSearchSubmit, type, name, placeholder, required 
   useEffect(() => {
     onSearchSubmit('');
   }, [searchValue === '']);
-
+  
   return (
+    <>
     <div className={styles.serchblock}>
       <form className={styles.searchForm} onSubmit={handleSubmit}>
         <input
@@ -43,5 +51,6 @@ export function SearchBlock({ onSearchSubmit, type, name, placeholder, required 
         loading={loading}
       />
     </div>
+    </>
   );
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useGetviewAgo } from '../../../Hooks/useGetviewAgo';
 import { ICardType } from '../../../types/ICardType';
@@ -11,7 +10,6 @@ import * as styles from './card.css';
 
 
 export function Card({ card }: { card: ICardType }) {
-    const sortBy = useSelector((state: any) => state.sortBy.sortBy);
     const getviewAgo = useGetviewAgo({
         card: { id: '', title: '', cardPreview: '', timePublished: '', timeViewed: '', avtor: '', avatar: '', karmaValue: 0, }
     });

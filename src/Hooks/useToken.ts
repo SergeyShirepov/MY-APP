@@ -1,30 +1,29 @@
 import { useEffect, useState } from 'react';
-import { store } from '../store/store';
+import { RootState, store } from '../store/store';
 import { setToken } from '../store/store';
+import { useSelector } from 'react-redux';
 
 export function useToken(): [string | null] {
   const [token, setTokenState] = useState<string | null>(null);
+  const reduxToken = useSelector((state: RootState) => state.userData.token);
 
-  useEffect( () => {
-    
+  useEffect(() => {
     const fetchToken = async () => {
-    try {
-      // Запрос к серверу для получения токена из кук
-      const response = await fetch('/api/token', { credentials: 'include' })
-      const data = await response.json();
-      if (data.token) {
-        store.dispatch(setToken(data.token));
-        setTokenState(data.token);
-      }
+      try {
+        const response = await fetch('/api/token', { credentials: 'include' });
+        const data = await response.json();
 
-    } catch (error) {
-      console.error('Error fetching token:', error);
-    }
-  };
+        if (data.token !== reduxToken) {
+          store.dispatch(setToken(data.token));
+          setTokenState(data.token);
+        }
+      } catch (error) {
+        console.error('Error fetching token:', error);
+      }
+    };
 
     fetchToken();
-    
-}, []);
+  }, []);
 
   return [token];
 }
