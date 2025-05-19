@@ -6,7 +6,6 @@ import { Header } from '../Header';
 
 export function Layout() {
 
-console.log('Рендер Layout');
   return (
     <div className={styles.container}>
       <Header  />

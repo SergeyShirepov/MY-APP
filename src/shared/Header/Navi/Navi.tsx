@@ -1,14 +1,13 @@
 import React from "react";
 import * as styles from './navi.css';
 import { Link, useMatch } from "react-router-dom";
-import { setAccountPoint } from "../../../store/store";
 import { useDispatch } from "react-redux";
+import { setAccountPoint } from "../../../store/features/accountPoint";
 
 export function Navi () {
     const dispatch = useDispatch();
     const match = useMatch('/posts/:id');
 
-console.log('рендер Navi');
     return (
         <nav>
             <ul className={styles.navi}>

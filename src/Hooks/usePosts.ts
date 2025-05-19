@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
 import { ICardType } from '../types/ICardType';
+import { RootState } from '../store';
 
 interface UsePostsResult {
   posts: ICardType[];
@@ -27,8 +27,8 @@ const usePosts = (
   console.log('usePosts ', {name});
 
   const accountPoint = useSelector((state: RootState) => state.accountPoint.accountPoint);
-  const sortBy = useSelector((state: RootState) => state.sortBy.sortBy);
-  const searchBy = useSelector((state: RootState) => state.searchBy.searchBy);
+  const sortBy = useSelector((state: RootState) => state.sort.sortBy);
+  const searchBy = useSelector((state: RootState) => state.search.searchBy);
 
 
   const [state, setState] = useState<{

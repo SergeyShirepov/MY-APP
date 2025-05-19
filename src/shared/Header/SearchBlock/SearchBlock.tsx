@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { UserBlock } from './UserBlock';
 import * as styles from './searchblock.css';
-import { RootState, setSearchBy } from '../../../store/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { IUserData } from '../../../store/actions';
+import { useDispatch } from 'react-redux';
+import { setSearchBy } from '../../../store/features/search';
+import { useUserData } from '../../../Hooks/useUserData';
 
 interface SearchBlockProps {
   type: string;
@@ -13,11 +13,10 @@ interface SearchBlockProps {
 }
 
 export function SearchBlock({ type, name, placeholder, required }: SearchBlockProps) {
-  const {loading, data} = useSelector((state: RootState) => state.userData);
+  const { data, loading } = useUserData();
   const [searchValue, setSearchValue] = useState('');
   const dispatch = useDispatch();
 
-  
   const onSearchSubmit = (search: string) => {
     dispatch(setSearchBy(search));
   }
@@ -30,27 +29,27 @@ export function SearchBlock({ type, name, placeholder, required }: SearchBlockPr
   useEffect(() => {
     onSearchSubmit('');
   }, [searchValue === '']);
-  
+
   return (
     <>
-    <div className={styles.serchblock}>
-      <form className={styles.searchForm} onSubmit={handleSubmit}>
-        <input
-          type={type}
-          name={name}
-          className={styles.searchInput}
-          placeholder={placeholder}
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          required={required}
+      <div className={styles.serchblock}>
+        <form className={styles.searchForm} onSubmit={handleSubmit}>
+          <input
+            type={type}
+            name={name}
+            className={styles.searchInput}
+            placeholder={placeholder}
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            required={required}
+          />
+        </form>
+        <UserBlock
+          avatarSrc={data?.iconImg}
+          username={data?.name}
+          loading={loading}
         />
-      </form>
-      <UserBlock
-        avatarSrc={data?.iconImg}
-        username={data?.name}
-        loading={loading}
-      />
-    </div>
+      </div>
     </>
   );
 }

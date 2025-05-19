@@ -5,7 +5,7 @@ import { SearchBlock } from './SearchBlock';
 import { SortBlock } from './SortBlock';
 import * as styles from './header.css';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { RootState } from '../../store';
 
 
 export function Header() {
@@ -13,11 +13,9 @@ export function Header() {
   const [head, setHead] = useState('Дискуссии');
   const location = useLocation();
 
-  
-  console.log('----------HEADER-------------',[location.pathname]);
   const accountPoint = useSelector((state: RootState) => state.accountPoint.accountPoint);
-  const sortBy = useSelector((state: RootState) => state.sortBy.sortBy);
-  const searchBy = useSelector((state: RootState) => state.searchBy.searchBy);
+  const sortBy = useSelector((state: RootState) => state.sort.sortBy);
+  const searchBy = useSelector((state: RootState) => state.search.searchBy);
 
   // Обновляем заголовок при изменении пути
   useEffect(() => {

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateComment } from '../../../../../store/store'; // Импортируйте экшен из commentSlice
 import { CommentForm } from '../CommentForm/CommentForm';
+import { setCommentText } from '../../../../../store/features/comment';
 
  type RootState = {
   comment: {
@@ -19,14 +19,14 @@ export function CommentFormContainer( {setComments} :Props ) {
   const dispatch = useDispatch();
 
   function handleChange(e: ChangeEvent<HTMLTextAreaElement>) {
-    dispatch(updateComment(e.target.value));
+    dispatch(setCommentText(e.target.value));
   }
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     console.log('Comment submitted:', value);
     setComments((prevComments: string[]) => [...prevComments, value]);
-    dispatch(updateComment(''));
+    dispatch(setCommentText(''));
   }
 
   return (

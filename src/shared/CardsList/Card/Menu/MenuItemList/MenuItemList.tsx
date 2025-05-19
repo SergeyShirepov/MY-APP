@@ -2,14 +2,12 @@ import React from 'react';
 import * as styles from './menuitemlist.css';
 import { Text } from '../../../../Text';
 import { EColor } from '../../../../Text';
-import { useDispatch } from 'react-redux';
 import { useUserData } from '../../../../../Hooks/useUserData';
 
 
 
 export function MenuItemList({ postId }: { postId: string }) {
 
-  const dispatch = useDispatch();
   const { data } = useUserData();
   const userName = data?.name;
 
@@ -20,7 +18,6 @@ export function MenuItemList({ postId }: { postId: string }) {
     }
 
     try {
-
       const response = await fetch(`http://localhost:3000/api/posts/${postId}/save`, {
         method: 'POST',
         headers: {
@@ -37,7 +34,6 @@ export function MenuItemList({ postId }: { postId: string }) {
     } catch (error) {
       console.error('Ошибка:', error);
     }
-
   };
 
   return (

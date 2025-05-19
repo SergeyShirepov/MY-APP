@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { RootState, store } from '../store/store';
-import { setToken } from '../store/store';
 import { useSelector } from 'react-redux';
+import { setToken } from '../store/features/user';
+import { RootState, store } from '../store';
 
 export function useToken(): [string | null] {
   const [token, setTokenState] = useState<string | null>(null);
-  const reduxToken = useSelector((state: RootState) => state.userData.token);
+  const reduxToken = useSelector((state: RootState) => state.user.token);
 
   useEffect(() => {
     const fetchToken = async () => {
